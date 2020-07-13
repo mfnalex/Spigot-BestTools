@@ -127,7 +127,23 @@ public class BestToolUtils {
         addToMap(Material.MAGMA_BLOCK,Tool.PICKAXE);
         // Issue #2 End
 
-
+        // Issue #3
+        addToMap(Material.TARGET,Tool.HOE);
+        addToMap(Material.SHROOMLIGHT,Tool.HOE);
+        addToMap(Material.BELL,Tool.PICKAXE);
+        addToMap(Material.STONECUTTER,Tool.PICKAXE);
+        addToMap(Material.SMITHING_TABLE,Tool.AXE);
+        addToMap(Material.LECTERN,Tool.AXE);
+        addToMap(Material.GRINDSTONE,Tool.PICKAXE);
+        addToMap(Material.FLETCHING_TABLE,Tool.AXE);
+        addToMap(Material.CARTOGRAPHY_TABLE,Tool.AXE);
+        addToMap(Material.BLAST_FURNACE,Tool.PICKAXE);
+        addToMap(Material.SMOKER,Tool.PICKAXE);
+        addToMap(Material.BARREL,Tool.AXE);
+        addToMap(Material.COMPOSTER,Tool.AXE);
+        addToMap(Material.LOOM,Tool.AXE);
+        addToMap(Material.DRIED_KELP_BLOCK,Tool.HOE);
+        // Issue #3 End
 
         addToMap(Material.ACACIA_BUTTON, Tool.AXE);
         addToMap(Material.ACACIA_FENCE, Tool.AXE);
@@ -391,6 +407,7 @@ public class BestToolUtils {
             }
             if(n.contains("PRISMARINE")) {
                 addToMap(mat,Tool.PICKAXE);
+                continue
             }
             // Issue #2 End
 
