@@ -28,6 +28,7 @@ public class PlayerInteractListener implements Listener {
         Player p = event.getPlayer();
         PlayerInventory inv = p.getInventory();
         Block block = event.getClickedBlock();
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
 
         if(!p.hasPermission("besttool.use")) return;
 
@@ -36,7 +37,13 @@ public class PlayerInteractListener implements Listener {
         if (block == null) return;
 
         // TODO: Show message here
-        if(!main.getPlayerSetting(p).bestToolEnabled) return;
+        if(!playerSetting.bestToolEnabled) {
+            if(!playerSetting.hasSeenMessage) {
+                p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
+                playerSetting.setHasSeenMessage(true);
+            }
+            return;
+        }
 
         ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), inv);
         if(bestTool == null) {

@@ -19,12 +19,18 @@ public class PlayerSetting {
                 this.bestToolEnabled = bestToolEnabled;
                 this.hasSeenMessage = hasSeenMessage;
                 this.changed = false;
+                System.out.println(String.format("Creating player setting: enabled: %s, message: %s, changed: %s",bestToolEnabled,hasSeenMessage,changed));
         }
 
         boolean toggleBestToolEnabled() {
                 bestToolEnabled=!bestToolEnabled;
                 changed = true;
                 return bestToolEnabled;
+        }
+
+        void setHasSeenMessage(boolean seen) {
+                hasSeenMessage = seen;
+                changed = true;
         }
 
 }
