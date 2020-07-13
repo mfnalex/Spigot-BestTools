@@ -11,13 +11,12 @@ import java.util.Objects;
 
 public class BestToolUtils {
 
-    BestToolHandler handler;
     Main main;
 
     public BestToolUtils(@NotNull Main main) {
 
         this.main = Objects.requireNonNull(main,"Main must not be null");
-        this.handler = Objects.requireNonNull(main.toolHandler,"BestToolHandler must not be null");
+        //this.handler = Objects.requireNonNull(main.toolHandler,"BestToolHandler must not be null");
     }
 
     private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool) {
@@ -46,7 +45,7 @@ public class BestToolUtils {
     }
 
     private void addToMap(@NotNull Material mat, @NotNull Tool tool) {
-        handler.toolMap.put(Objects.requireNonNull(mat,"Material must not be null"),
+        main.toolHandler.toolMap.put(Objects.requireNonNull(mat,"Material must not be null"),
                 Objects.requireNonNull(tool,"Tool must not be null"));
     }
 

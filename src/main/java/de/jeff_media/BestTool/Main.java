@@ -25,6 +25,9 @@ public class Main extends JavaPlugin {
     }
 
     PlayerSetting getPlayerSetting(Player player) {
+
+        System.out.println("Getting player setting");
+
         if(Objects.requireNonNull(playerSettings,"PlayerSettings must not be null").containsKey(player.getUniqueId())) {
             return playerSettings.get(player.getUniqueId());
         }
