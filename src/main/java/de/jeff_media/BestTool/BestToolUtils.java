@@ -2,27 +2,33 @@ package de.jeff_media.BestTool;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import de.jeff_media.BestTool.BestToolPlugin.Tool;
+import de.jeff_media.BestTool.BestToolHandler.Tool;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class BestToolUtils {
 
-    BestToolPlugin plugin;
+    BestToolHandler handler;
+    Main main;
 
-    public BestToolUtils(BestToolPlugin plugin) {
-        this.plugin = plugin;
+    public BestToolUtils(@NotNull Main main) {
+
+        this.main = Objects.requireNonNull(main,"Main must not be null");
+        this.handler = Objects.requireNonNull(main.toolHandler,"BestToolHandler must not be null");
     }
 
-    private void tagToMap(Tag<Material> tag, Tool tool) {
-        /*for(Material mat : tag.getValues() ) {
-            addToMap(mat,tool);
-        }*/
-        tagToMap(tag,tool,null);
+    private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool) {
+        tagToMap(Objects.requireNonNull(tag,"Tag must not be null"),
+                Objects.requireNonNull(tool,"Tool must not be null"),
+                null);
     }
 
-    private void tagToMap(Tag<Material> tag, Tool tool, @Nullable String match) {
+    private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool, @Nullable String match) {
+        Objects.requireNonNull(tag,"Tag must not be null");
+        Objects.requireNonNull(tool,"Tool must not be null");
         for(Material mat : tag.getValues()) {
             if(match==null) {
                 addToMap(mat,tool);
@@ -39,8 +45,9 @@ public class BestToolUtils {
         toolMap.forEach((mat, tool) -> System.out.println(String.format("%0$30s -> %s", mat.name(), tool.name())));
     }
 
-    private void addToMap(Material mat, Tool tool) {
-        plugin.toolMap.put(mat, tool);
+    private void addToMap(@NotNull Material mat, @NotNull Tool tool) {
+        handler.toolMap.put(Objects.requireNonNull(mat,"Material must not be null"),
+                Objects.requireNonNull(tool,"Tool must not be null"));
     }
 
     public void initMap() {
@@ -287,8 +294,8 @@ public class BestToolUtils {
 
         long endTime = System.nanoTime();
         //printMap();
-        if(plugin.verbose) {
-            plugin.getLogger().info(String.format("Building the <Block,Tool> map took %d ms",(endTime-startTime)/1000000));
+        if(main.verbose) {
+            main.getLogger().info(String.format("Building the <Block,Tool> map took %d ms",(endTime-startTime)/1000000));
         }
     }
 

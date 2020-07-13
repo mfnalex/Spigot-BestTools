@@ -1,0 +1,14 @@
+# When false, players have to run /besttool or /bt once to enable BestTool
+enabled-by-default: false
+
+# Only use items from the hotbar
+hotbar-only: true
+
+# Don't use items if they are going to break with this usage
+prevent-item-break: true
+
+# Whether to use gold tools
+use-gold-tools: false
+
+# Show some infos on startup
+verbose: true

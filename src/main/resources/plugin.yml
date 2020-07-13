@@ -1,4 +1,4 @@
-main: de.jeff_media.BestTool.BestToolPlugin
+main: de.jeff_media.BestTool.Main
 name: BestTool
 version: 1.0.0-SNAPSHOT
 api-version: "1.13"

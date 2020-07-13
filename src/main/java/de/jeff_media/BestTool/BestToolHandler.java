@@ -18,13 +18,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * This will probably be a separate plugin called BestTool or something
  */
-public class BestToolPlugin extends JavaPlugin implements Listener {
+public class BestToolHandler {
 
+    Main main;
     BestToolUtils bestToolUtils;
     boolean debug = false;
     boolean verbose = true;
@@ -66,12 +66,13 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
             Material.STONE_HOE,
             Material.WOODEN_HOE};
 
-    BestToolPlugin(BestToolPlugin plugin) {
-        bestToolUtils = new BestToolUtils(this);
+    BestToolHandler(Main main) {
+        this.main=Objects.requireNonNull(main,"Main must not be null");
+        bestToolUtils = new BestToolUtils(main);
         bestToolUtils.initMap();
     }
 
-    public enum Tool {
+    enum Tool {
         PICKAXE,
         SHOVEL,
         SHEARS,
@@ -85,7 +86,7 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @param item
      * @return Durability left, or -1 if not damageable
      */
-    private int getDurability(ItemStack item) {
+    private int getDurability(@Nullable ItemStack item) {
         if(item==null) return -1;
         if(!(item.getItemMeta() instanceof Damageable)) {
             return -1;
@@ -94,18 +95,14 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
         return item.getType().getMaxDurability() - damageable.getDamage();
     }
 
-
-
-
-
     /**
      * Gets the best tool type for a material
      * @param mat The block's material
      * @return Best tool type for that material
      */
     @NotNull
-    Tool getBestToolType(Material mat) {
-        Tool bestTool = toolMap.get(mat);
+    Tool getBestToolType(@NotNull Material mat) {
+        Tool bestTool = toolMap.get(Objects.requireNonNull(mat,"Material must not be null"));
         if(bestTool == null) bestTool = Tool.NONE;
         //System.out.println("Best ToolType for "+mat+" is "+bestTool.name());
         return bestTool;
@@ -118,10 +115,10 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @return Matching ItemStack
      */
     @Nullable
-    ItemStack getItemStackFromArray(Material mat, ItemStack[] items) {
-        for(ItemStack item : items) {
+    ItemStack getItemStackFromArray(@NotNull Material mat, @NotNull ItemStack[] items) {
+        for(ItemStack item : Objects.requireNonNull(items,"Items must not be null")) {
             if(item==null) continue;
-            if(item.getType()==mat) {
+            if(item.getType()==Objects.requireNonNull(mat,"Material must not be null")) {
                 if(getDurability(item)!=1) {
                     return item;
                 }
@@ -139,9 +136,7 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
     @Nullable
     ItemStack typeToItem(Tool type, ItemStack[] items) {
 
-        Objects.requireNonNull(type,"type cannot be null.");
-
-        switch(type) {
+        switch(Objects.requireNonNull(type,"Tool must not be null")) {
 
             case PICKAXE:
                 for(Material pickaxe : pickaxes) {
@@ -187,42 +182,16 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @return
      */
     @Nullable
-    ItemStack getBestToolFromInventory(Material mat, PlayerInventory inv) {
+    ItemStack getBestToolFromInventory(@NotNull Material mat, @NotNull PlayerInventory inv) {
         ItemStack[] hotbar = new ItemStack[(hotbarOnly ? hotbarSize : inventorySize)];
-        Tool bestType = getBestToolType(mat);
+        Tool bestType = getBestToolType(Objects.requireNonNull(mat,"Material must not be null"));
         for(int i = 0; i < (hotbarOnly ? hotbarSize : inventorySize); i++) {
-            hotbar[i] = inv.getItem(i);
+            hotbar[i] = Objects.requireNonNull(inv,"Inventory must not be null").getItem(i);
         }
-        ItemStack debug = typeToItem(bestType,hotbar);
+        return typeToItem(Objects.requireNonNull(bestType,"Tool must not be null"),hotbar);
         //if(debug == null) System.out.println("debug == null");
-        return debug;
     }
 
-
-
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
-        /*if (event.getHand() != EquipmentSlot.HAND)
-            return;*/
-
-        PlayerInventory inv = event.getPlayer().getInventory();
-        Block block = event.getClickedBlock();
-        if (block == null) return;
-
-        ItemStack bestTool = getBestToolFromInventory(block.getType(), inv);
-        if(bestTool == null) {
-            freeSlot(favoriteSlot,inv);
-            //System.out.println("Could not find any appropiate tool");
-            return;
-        }
-        int positionInInventory = getPositionInInventory(bestTool,inv) ;
-        if(positionInInventory != 0) {
-            moveToolToSlot(positionInInventory,favoriteSlot,inv);
-        } else {
-            freeSlot(favoriteSlot,inv);
-        }
-    }
 
     /**
      * Gets the slot number of a given ItemStack
@@ -230,11 +199,12 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @param inv Player's inventory
      * @return
      */
-    int getPositionInInventory(ItemStack item, PlayerInventory inv) {
-        for(int i = 0; i < inv.getSize(); i++) {
+    @NotNull
+    int getPositionInInventory(@NotNull ItemStack item, @NotNull PlayerInventory inv) {
+        for(int i = 0; i < Objects.requireNonNull(inv,"Inventory must not be null").getSize(); i++) {
             ItemStack currentItem = inv.getItem(i);
             if(currentItem==null) continue;
-            if(currentItem.equals(item)) {
+            if(currentItem.equals(Objects.requireNonNull(item,"Item must not be null"))) {
                 //System.out.println(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
                 return i;
             }
@@ -248,10 +218,11 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @param dest Slot where the tool should be
      * @param inv Player's inventory
      */
-    private void moveToolToSlot(int source, int dest, PlayerInventory inv) {
+    void moveToolToSlot(@NotNull int source, @NotNull int dest, @NotNull PlayerInventory inv) {
         //System.out.println(String.format("Moving item from slot %d to %d",source,dest));
-        inv.setHeldItemSlot(dest);
-        if(source==dest) return;
+        Objects.requireNonNull(inv,"Inventory must not be null")
+                .setHeldItemSlot(Objects.requireNonNull(dest,"Destination must not be null"));
+        if(Objects.requireNonNull(source,"Source must not be null")==dest) return;
         ItemStack sourceItem = inv.getItem(source);
         ItemStack destItem = inv.getItem(dest);
         if(source < hotbarSize) {
@@ -272,9 +243,10 @@ public class BestToolPlugin extends JavaPlugin implements Listener {
      * @param source Slot to free
      * @param inv Player's inventory
      */
-    private void freeSlot(int source, PlayerInventory inv) {
+    void freeSlot(@NotNull int source, @NotNull PlayerInventory inv) {
         //System.out.println(String.format("Trying to free slot %d",source));
-        ItemStack item = inv.getItem(source);
+        ItemStack item = Objects.requireNonNull(inv,"Inventory must not be null")
+                .getItem(Objects.requireNonNull(source,"Source must not be null"));
 
         // If current slot is empty, we don't have to change it
         if(item == null) return;
