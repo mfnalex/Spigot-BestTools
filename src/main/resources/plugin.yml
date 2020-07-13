@@ -1,0 +1,21 @@
+main: de.jeff_media.BestTool.BestToolPlugin
+name: BestTool
+version: 1.0.0-SNAPSHOT
+api-version: "1.13"
+description: Automatically chooses the best tool when breaking blocks
+author: mfnalex
+#website: https://www.chestsort.de
+prefix: BestTool
+database: false
+commands:
+  besttool:
+    description: Toggle BestTool
+    usage: |
+      /<command> -- Toggle automatically using the best tool
+    aliases: bt
+    permission: besttool.use
+permissions:
+  besttool.use:
+    description: Allows using BestTool
+  besttool.reload:
+    description: Allows to reload the config via /besttool reload
