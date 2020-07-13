@@ -41,11 +41,11 @@ public class CommandBestTool implements CommandExecutor {
 
         // Toggle BestToolEnabled //
         if(main.getPlayerSetting(p).toggleBestToolEnabled()) {
-            // Enabled
+            p.sendMessage(main.messages.MSG_BESTTOOL_ENABLED);
         } else {
-            // Disabled
+            p.sendMessage(main.messages.MSG_BESTTOOL_DISABLED);
         }
 
-        return false;
+        return true;
     }
 }

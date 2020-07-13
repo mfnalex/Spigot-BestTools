@@ -25,7 +25,6 @@ import java.util.Objects;
 public class BestToolHandler {
 
     Main main;
-    BestToolUtils bestToolUtils;
     boolean debug = false;
     boolean verbose = true;
 
@@ -68,8 +67,6 @@ public class BestToolHandler {
 
     BestToolHandler(Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
-        bestToolUtils = new BestToolUtils(main);
-        bestToolUtils.initMap();
     }
 
     enum Tool {
@@ -104,7 +101,7 @@ public class BestToolHandler {
     Tool getBestToolType(@NotNull Material mat) {
         Tool bestTool = toolMap.get(Objects.requireNonNull(mat,"Material must not be null"));
         if(bestTool == null) bestTool = Tool.NONE;
-        //System.out.println("Best ToolType for "+mat+" is "+bestTool.name());
+        main.debug("Best ToolType for "+mat+" is "+bestTool.name());
         return bestTool;
     }
 
@@ -157,7 +154,7 @@ public class BestToolHandler {
                     ItemStack itemStack = getItemStackFromArray(shovel, items);
                     if(itemStack != null) return itemStack;
                 }
-                //System.out.println("typeToItem -> shovel -> null");
+                main.debug("typeToItem -> shovel -> null");
                 return null;
 
             case HOE:
@@ -189,7 +186,6 @@ public class BestToolHandler {
             hotbar[i] = Objects.requireNonNull(inv,"Inventory must not be null").getItem(i);
         }
         return typeToItem(Objects.requireNonNull(bestType,"Tool must not be null"),hotbar);
-        //if(debug == null) System.out.println("debug == null");
     }
 
 
@@ -197,7 +193,7 @@ public class BestToolHandler {
      * Gets the slot number of a given ItemStack
      * @param item ItemStack that we need the slot number of
      * @param inv Player's inventory
-     * @return
+     * @return slot number or -1 if not found
      */
     @NotNull
     int getPositionInInventory(@NotNull ItemStack item, @NotNull PlayerInventory inv) {
@@ -205,11 +201,11 @@ public class BestToolHandler {
             ItemStack currentItem = inv.getItem(i);
             if(currentItem==null) continue;
             if(currentItem.equals(Objects.requireNonNull(item,"Item must not be null"))) {
-                //System.out.println(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
+                main.debug(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -219,7 +215,7 @@ public class BestToolHandler {
      * @param inv Player's inventory
      */
     void moveToolToSlot(@NotNull int source, @NotNull int dest, @NotNull PlayerInventory inv) {
-        //System.out.println(String.format("Moving item from slot %d to %d",source,dest));
+        main.debug(String.format("Moving item from slot %d to %d",source,dest));
         Objects.requireNonNull(inv,"Inventory must not be null")
                 .setHeldItemSlot(Objects.requireNonNull(dest,"Destination must not be null"));
         if(Objects.requireNonNull(source,"Source must not be null")==dest) return;
@@ -238,13 +234,24 @@ public class BestToolHandler {
         }
     }
 
+    boolean isDamageable(ItemStack item) {
+        if(item==null) return false;
+        if(!item.hasItemMeta()) return false;
+        ItemMeta meta = item.getItemMeta();
+        return meta instanceof Damageable;
+    }
+
     /**
      * Tries to free the slot if it is occupied with a damageable item
      * @param source Slot to free
      * @param inv Player's inventory
      */
     void freeSlot(@NotNull int source, @NotNull PlayerInventory inv) {
-        //System.out.println(String.format("Trying to free slot %d",source));
+
+        if(inv.getItemInMainHand()==null) return;
+
+        if(!isDamageable(inv.getItemInMainHand())) return;
+
         ItemStack item = Objects.requireNonNull(inv,"Inventory must not be null")
                 .getItem(Objects.requireNonNull(source,"Source must not be null"));
 
@@ -252,23 +259,39 @@ public class BestToolHandler {
         if(item == null) return;
 
         // If the item is not damageable, we don't have to move it
-        ItemMeta meta = item.getItemMeta();
-        if(!(meta instanceof Damageable)) return;
+        if(!isDamageable(item)) return;
+
+        main.debug(String.format("Trying to free slot %d",source));
 
         // Try to combine the item with existing stacks
         inv.setItem(source, null);
         inv.addItem(item);
 
         // If the item was moved to the same slot, we have to move it somewhere else
-        if(inv.getItem(source)==null) return;
+        if(inv.getItem(source)==null) {
+            main.debug("Freed slot");
+            inv.setHeldItemSlot(source);
+            return;
+        }
+        main.debug("Could not free slot yet...");
         for(int i = source; i < inventorySize; i++) {
             if(inv.getItem(i)==null) {
                 inv.setItem(i,item);
                 inv.setItem(source,null);
+                inv.setHeldItemSlot(source);
+                main.debug("Freed slot on second try");
                 return;
             }
         }
-        // TODO: If all of that didn't work, change to some block that is not damageable
+
+        main.debug("WARNING: COULD NOT FREE SLOT AT ALL");
+
+        for(int i = 0; i < hotbarSize ; i++) {
+            if(inv.getItem(i) == null || !isDamageable(inv.getItem(i))) {
+                main.debug("Found not damageable item at slot "+i);
+                inv.setHeldItemSlot(i);
+            }
+        }
     }
 
 }

@@ -1,3 +1,10 @@
+#
+# THIS IS A SNAPSHOT VERSION
+# OF BestTool! THIS IS NOT
+# THE FINISHED PLUGIN
+#
+
+
 # When false, players have to run /besttool or /bt once to enable BestTool
 enabled-by-default: false
 
@@ -8,7 +15,11 @@ hotbar-only: true
 prevent-item-break: true
 
 # Whether to use gold tools
-use-gold-tools: false
+# NOT IMPLEMENTED YET
+#use-gold-tools: false
 
 # Show some infos on startup
 verbose: true
+
+# You probably don't want this
+debug: true

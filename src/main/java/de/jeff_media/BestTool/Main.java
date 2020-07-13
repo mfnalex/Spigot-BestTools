@@ -1,10 +1,13 @@
 package de.jeff_media.BestTool;
 
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,6 +17,8 @@ public class Main extends JavaPlugin {
     BestToolHandler toolHandler;
     BestToolUtils toolUtils;
     PlayerInteractListener playerInteractListener;
+    PlayerListener playerListener;
+    CommandBestTool commandBestTool;
     Messages messages;
 
     HashMap<UUID,PlayerSetting> playerSettings;
@@ -24,22 +29,55 @@ public class Main extends JavaPlugin {
         load(false);
     }
 
-    PlayerSetting getPlayerSetting(Player player) {
+    @Override
+    public void onDisable() {
+        saveAllPlayerSettings();
+    }
 
-        System.out.println("Getting player setting");
+    void debug(String text) {
+        if(getConfig().getBoolean("debug")) getLogger().info("[Debug] "+text);
+    }
+
+    PlayerSetting getPlayerSetting(Player player) {
 
         if(Objects.requireNonNull(playerSettings,"PlayerSettings must not be null").containsKey(player.getUniqueId())) {
             return playerSettings.get(player.getUniqueId());
         }
 
-        // TODO: Load PlayerSetting from file
+        PlayerSetting setting;
 
-        PlayerSetting setting = new PlayerSetting(getConfig().getBoolean("enabled-by-default"),false);
+        // TODO: Load PlayerSetting from file
+        File file = getPlayerDataFile(player.getUniqueId());
+        if(file.exists()) {
+            debug("Loading player setting for "+player.getName()+" from file");
+            setting = new PlayerSetting(file,this);
+        } else {
+            debug("Creating new player setting for "+player.getName());
+            setting = new PlayerSetting(getConfig().getBoolean("enabled-by-default"), false);
+        }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
     }
 
+    void saveAllPlayerSettings() {
+        for(Map.Entry<UUID,PlayerSetting> entry : playerSettings.entrySet()) {
+            if(entry.getValue().changed) {
+                entry.getValue().save(getPlayerDataFile(entry.getKey()),this);
+            }
+        }
+    }
+
+    File getPlayerDataFile(UUID uuid) {
+        return new File(getDataFolder()+File.separator+"playerdata"+File.separator+uuid.toString()+".yml");
+    }
+
     void load(boolean reload) {
+
+        getDataFolder().mkdir();
+        saveDefaultConfig();
+        File playerdataFolder = new File(getDataFolder()+ File.separator+"playerdata");
+        playerdataFolder.mkdir();
+
         if(reload) {
             if(updateChecker!=null) {
                 updateChecker.stop();
@@ -51,10 +89,18 @@ public class Main extends JavaPlugin {
 
         updateChecker = new PluginUpdateChecker(this,"","","","");
         toolHandler = new BestToolHandler(this);
+        toolUtils = new BestToolUtils(this);
         playerInteractListener  = new PlayerInteractListener(this);
+        playerListener = new PlayerListener(this);
+        commandBestTool = new CommandBestTool(this);
         messages = new Messages(this);
+        playerSettings = new HashMap<UUID,PlayerSetting>();
+
+        toolUtils.initMap();
 
         getServer().getPluginManager().registerEvents(playerInteractListener,this);
+        getServer().getPluginManager().registerEvents(playerListener, this);
+        getCommand("besttool").setExecutor(commandBestTool);
         // TODO: Start update Checker
 
 

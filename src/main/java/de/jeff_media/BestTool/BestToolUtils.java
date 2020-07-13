@@ -45,11 +45,13 @@ public class BestToolUtils {
     }
 
     private void addToMap(@NotNull Material mat, @NotNull Tool tool) {
-        main.toolHandler.toolMap.put(Objects.requireNonNull(mat,"Material must not be null"),
+        Objects.requireNonNull(Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null").
+                toolMap,"ToolMap must not be null")
+                .put(Objects.requireNonNull(mat,"Material must not be null"),
                 Objects.requireNonNull(tool,"Tool must not be null"));
     }
 
-    public void initMap() {
+    void initMap() {
         long startTime = System.nanoTime();
         tagToMap(Tag.ANVIL, Tool.PICKAXE);
         tagToMap(Tag.BAMBOO_PLANTABLE_ON, Tool.SHOVEL);
@@ -95,6 +97,8 @@ public class BestToolUtils {
         addToMap(Material.ACACIA_STAIRS, Tool.AXE);
         addToMap(Material.ANCIENT_DEBRIS, Tool.PICKAXE);
         addToMap(Material.ANDESITE, Tool.PICKAXE);
+        addToMap(Material.BAMBOO, Tool.AXE);
+        addToMap(Material.BAMBOO_SAPLING, Tool.AXE);
         addToMap(Material.BASALT, Tool.PICKAXE);
         addToMap(Material.BIRCH_BUTTON, Tool.AXE);
         addToMap(Material.BIRCH_FENCE, Tool.AXE);

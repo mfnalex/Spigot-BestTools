@@ -36,26 +36,31 @@ public class PlayerInteractListener implements Listener {
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (block == null) return;
 
+        main.debug("This player has enabled: "+playerSetting.bestToolEnabled);
+
         // TODO: Show message here
         if(!playerSetting.bestToolEnabled) {
             if(!playerSetting.hasSeenMessage) {
                 p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
                 playerSetting.setHasSeenMessage(true);
             }
+            main.debug("ABORTING");
             return;
         }
 
         ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), inv);
         if(bestTool == null) {
             handler.freeSlot(handler.favoriteSlot,inv);
-            //System.out.println("Could not find any appropiate tool");
+            main.debug("Could not find any appropiate tool");
             return;
         }
         int positionInInventory = handler.getPositionInInventory(bestTool,inv) ;
-        if(positionInInventory != 0) {
+        if(positionInInventory != -1) {
             handler.moveToolToSlot(positionInInventory,handler.favoriteSlot,inv);
+            main.debug("Found tool");
         } else {
             handler.freeSlot(handler.favoriteSlot,inv);
+            main.debug("Use no tool");
         }
     }
 
