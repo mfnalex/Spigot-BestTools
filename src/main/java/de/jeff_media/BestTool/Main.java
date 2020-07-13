@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,6 +19,7 @@ public class Main extends JavaPlugin {
     BestToolUtils toolUtils;
     PlayerInteractListener playerInteractListener;
     PlayerListener playerListener;
+    FileUtils fileUtils;
     CommandBestTool commandBestTool;
     Messages messages;
 
@@ -94,6 +96,7 @@ public class Main extends JavaPlugin {
         playerListener = new PlayerListener(this);
         commandBestTool = new CommandBestTool(this);
         messages = new Messages(this);
+        fileUtils = new FileUtils(this);
         playerSettings = new HashMap<UUID,PlayerSetting>();
 
         toolUtils.initMap();
@@ -103,6 +106,13 @@ public class Main extends JavaPlugin {
         getCommand("besttool").setExecutor(commandBestTool);
         // TODO: Start update Checker
 
+        if(getConfig().getBoolean("dump",false)) {
+            try {
+                fileUtils.dumpFile(new File(getDataFolder()+File.separator+"dump.csv"));
+            } catch (IOException e) {
+                getLogger().warning("Could not create dump.csv");
+            }
+        }
 
     }
 

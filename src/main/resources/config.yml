@@ -27,4 +27,7 @@ prevent-item-break: true
 verbose: true
 
 # You probably don't want this
-debug: true
+debug: false
+
+# You probably don't want this - creates a .csv file containing a mapping between all Materials and their best tool
+dump: false

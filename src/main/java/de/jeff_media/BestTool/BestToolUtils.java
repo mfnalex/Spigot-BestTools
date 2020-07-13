@@ -88,13 +88,12 @@ public class BestToolUtils {
 
         tagToMap(Tag.SLABS,Tool.PICKAXE);
         tagToMap(Tag.WOODEN_SLABS,Tool.AXE);
+
         // WATCH OUT FOR ORDER - END //
 
         tagToMap(Tag.SAND, Tool.SHOVEL);
         tagToMap(Tag.SHULKER_BOXES, Tool.PICKAXE);
         tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
-
-
 
         // Some of the following definitions are redundant because of the tags above
         // However I don't want to miss something, so they are still defined here
@@ -107,6 +106,29 @@ public class BestToolUtils {
         addToMap(Material.GLOWSTONE,Tool.PICKAXE); // TODO: Prefer SilkTouch
         addToMap(Material.NETHER_GOLD_ORE,Tool.PICKAXE);
         // Issue #1 End
+
+        // Issue #2
+        tagToMap(Tag.NYLIUM,Tool.PICKAXE);
+        tagToMap(Tag.STAIRS,Tool.PICKAXE);
+        tagToMap(Tag.WOODEN_STAIRS,Tool.PICKAXE);
+        addToMap(Material.SPONGE,Tool.HOE);
+        addToMap(Material.WET_SPONGE,Tool.HOE);
+        addToMap(Material.PISTON,Tool.PICKAXE);
+        addToMap(Material.STICKY_PISTON,Tool.PICKAXE);
+        addToMap(Material.PISTON_HEAD,Tool.PICKAXE);
+        addToMap(Material.MOVING_PISTON,Tool.PICKAXE);
+        addToMap(Material.CHORUS_PLANT,Tool.AXE);
+        addToMap(Material.CHORUS_FLOWER,Tool.AXE);
+        addToMap(Material.CARVED_PUMPKIN,Tool.AXE);
+        addToMap(Material.HAY_BLOCK,Tool.HOE);
+        addToMap(Material.OBSERVER,Tool.PICKAXE);
+        addToMap(Material.NETHER_WART_BLOCK,Tool.HOE);
+        addToMap(Material.WARPED_WART_BLOCK,Tool.HOE);
+        addToMap(Material.MAGMA_BLOCK,Tool.PICKAXE);
+        // Issue #2 End
+
+
+
         addToMap(Material.ACACIA_BUTTON, Tool.AXE);
         addToMap(Material.ACACIA_FENCE, Tool.AXE);
         addToMap(Material.ACACIA_FENCE_GATE, Tool.AXE);
@@ -324,6 +346,11 @@ public class BestToolUtils {
     private void initFallbackMaterials() {
 
         for(Material mat : Material.values()) {
+
+            if(!mat.isBlock()) {
+                continue;
+            }
+
             String n = mat.name();
 
             // Issue #1
@@ -336,6 +363,36 @@ public class BestToolUtils {
                 continue;
             }
             // Issue #1 End
+
+            // Issue #2
+            if(n.contains("TERRACOTTA")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("PURPUR")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("INFESTED")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("ENDSTONE_BRICK")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("QUARTZ")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("CORAL_BLOCK")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("PRISMARINE")) {
+                addToMap(mat,Tool.PICKAXE);
+            }
+            // Issue #2 End
 
         }
 
