@@ -14,8 +14,16 @@ commands:
       /<command> -- Toggle automatically using the best tool
     aliases: bt
     permission: besttool.use
+  refill:
+    description: Toggle Refill
+    usage: |
+      /<command> -- Toggle automatically refilling your hotbar
+    aliases: rf
+    permission: besttool.refill
 permissions:
   besttool.use:
-    description: Allows using BestTool
+    description: Allows using /besttool
+  besttool.refill:
+    description: Allows using /refill
   besttool.reload:
     description: Allows to reload the config via /besttool reload

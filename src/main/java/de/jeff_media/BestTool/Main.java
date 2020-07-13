@@ -17,10 +17,13 @@ public class Main extends JavaPlugin {
     PluginUpdateChecker updateChecker;
     BestToolHandler toolHandler;
     BestToolUtils toolUtils;
+    BlockPlaceListener blockPlaceListener;
     PlayerInteractListener playerInteractListener;
     PlayerListener playerListener;
     FileUtils fileUtils;
+    RefillUtils refillUtils;
     CommandBestTool commandBestTool;
+    CommandRefill commandRefill;
     Messages messages;
 
     HashMap<UUID,PlayerSetting> playerSettings;
@@ -55,7 +58,10 @@ public class Main extends JavaPlugin {
             setting = new PlayerSetting(file,this);
         } else {
             debug("Creating new player setting for "+player.getName());
-            setting = new PlayerSetting(getConfig().getBoolean("enabled-by-default"), false);
+            setting = new PlayerSetting(
+                    getConfig().getBoolean("besttool-enabled-by-default"),
+                    getConfig().getBoolean("refill-enabled-by-default"),
+                    false);
         }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
@@ -92,18 +98,23 @@ public class Main extends JavaPlugin {
         updateChecker = new PluginUpdateChecker(this,"","","","");
         toolHandler = new BestToolHandler(this);
         toolUtils = new BestToolUtils(this);
+        blockPlaceListener = new BlockPlaceListener(this);
         playerInteractListener  = new PlayerInteractListener(this);
         playerListener = new PlayerListener(this);
         commandBestTool = new CommandBestTool(this);
+        commandRefill = new CommandRefill(this);
+        refillUtils = new RefillUtils((this));
         messages = new Messages(this);
         fileUtils = new FileUtils(this);
         playerSettings = new HashMap<UUID,PlayerSetting>();
 
         toolUtils.initMap();
 
+        getServer().getPluginManager().registerEvents(blockPlaceListener,this);
         getServer().getPluginManager().registerEvents(playerInteractListener,this);
         getServer().getPluginManager().registerEvents(playerListener, this);
         getCommand("besttool").setExecutor(commandBestTool);
+        getCommand("refill").setExecutor(commandRefill);
         // TODO: Start update Checker
 
         if(getConfig().getBoolean("dump",false)) {
@@ -118,7 +129,8 @@ public class Main extends JavaPlugin {
 
     private void loadDefaultValues() {
         getConfig().addDefault("use-gold-tools",false);
-        getConfig().addDefault("enabled-by-default",false);
+        getConfig().addDefault("besttool-enabled-by-default",false);
+        getConfig().addDefault("refill-enabled-by-default",false);
         getConfig().addDefault("hotbar-only", true);
         getConfig().addDefault("prevent-item-break",true);
 

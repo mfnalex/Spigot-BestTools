@@ -7,11 +7,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CommandBestTool implements CommandExecutor {
+public class CommandRefill implements CommandExecutor {
 
     Main main;
 
-    CommandBestTool(Main main) {
+    CommandRefill(Main main) {
         this.main=main;
     }
 
@@ -32,11 +32,11 @@ public class CommandBestTool implements CommandExecutor {
 
         p = (Player) sender;
 
-        // Toggle BestToolEnabled //
-        if(main.getPlayerSetting(p).toggleBestToolEnabled()) {
-            p.sendMessage(main.messages.MSG_BESTTOOL_ENABLED);
+        // Toggle AutoRefill //
+        if(main.getPlayerSetting(p).toggleRefillEnabled()) {
+            p.sendMessage(main.messages.MSG_REFILL_ENABLED);
         } else {
-            p.sendMessage(main.messages.MSG_BESTTOOL_DISABLED);
+            p.sendMessage(main.messages.MSG_REFILL_DISABLED);
         }
 
         return true;

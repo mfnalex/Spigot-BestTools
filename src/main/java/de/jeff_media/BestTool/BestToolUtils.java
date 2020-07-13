@@ -2,6 +2,7 @@ package de.jeff_media.BestTool;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.bukkit.entity.AbstractArrow;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import de.jeff_media.BestTool.BestToolHandler.Tool;
@@ -9,7 +10,12 @@ import de.jeff_media.BestTool.BestToolHandler.Tool;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Please don't cry because I use Strings instead of Material. It's for backward compatability and the map only gets built once on startup, so don't worry
+ */
 public class BestToolUtils {
+
+    final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
 
     Main main;
 
@@ -65,44 +71,92 @@ public class BestToolUtils {
 
         initFallbackMaterials();
 
-        tagToMap(Tag.ANVIL, Tool.PICKAXE);
-        tagToMap(Tag.BAMBOO_PLANTABLE_ON, Tool.SHOVEL);
-        tagToMap(Tag.BEEHIVES, Tool.AXE);
-        tagToMap(Tag.CRIMSON_STEMS, Tool.AXE);
-        tagToMap(Tag.CROPS, Tool.NONE);
-        tagToMap(Tag.FENCES, Tool.AXE);
-        tagToMap(Tag.FENCE_GATES, Tool.AXE);
-        tagToMap(Tag.FLOWERS, Tool.NONE);
-        tagToMap(Tag.ICE, Tool.PICKAXE);
-        tagToMap(Tag.LEAVES, Tool.SHEARS);
-        tagToMap(Tag.LOGS, Tool.AXE);
-        tagToMap(Tag.PLANKS, Tool.AXE);
-        tagToMap(Tag.RAILS, Tool.PICKAXE);
-        tagToMap(Tag.SIGNS, Tool.AXE);
-        tagToMap(Tag.WALLS, Tool.PICKAXE);
-        tagToMap(Tag.WOOL, Tool.SHEARS);
 
-        // WATCH OUT FOR ORDER - START //
-        tagToMap(Tag.BUTTONS, Tool.AXE);
-        tagToMap(Tag.BUTTONS, Tool.PICKAXE,"STONE");
 
-        tagToMap(Tag.DOORS, Tool.AXE);
-        tagToMap(Tag.DOORS, Tool.PICKAXE,"IRON");
 
-        tagToMap(Tag.PRESSURE_PLATES, Tool.PICKAXE);
-        tagToMap(Tag.WOODEN_PRESSURE_PLATES, Tool.AXE);
+        // Versions before 1.13 do not support Tags at all
+        try {
+            tagToMap(Tag.ANVIL, Tool.PICKAXE);
 
-        tagToMap(Tag.TRAPDOORS, Tool.AXE);
-        tagToMap(Tag.TRAPDOORS, Tool.PICKAXE,"IRON");
+            tagToMap(Tag.ICE, Tool.PICKAXE);
+            tagToMap(Tag.LEAVES, Tool.SHEARS);
+            tagToMap(Tag.LOGS, Tool.AXE);
+            tagToMap(Tag.PLANKS, Tool.AXE);
+            tagToMap(Tag.RAILS, Tool.PICKAXE);
+            tagToMap(Tag.WOOL, Tool.SHEARS);
 
-        tagToMap(Tag.SLABS,Tool.PICKAXE);
-        tagToMap(Tag.WOODEN_SLABS,Tool.AXE);
+            // WATCH OUT FOR ORDER - START //
+            tagToMap(Tag.BUTTONS, Tool.AXE);
+            tagToMap(Tag.BUTTONS, Tool.PICKAXE,"STONE");
 
-        // WATCH OUT FOR ORDER - END //
+            tagToMap(Tag.DOORS, Tool.AXE);
+            tagToMap(Tag.DOORS, Tool.PICKAXE,"IRON");
 
-        tagToMap(Tag.SAND, Tool.SHOVEL);
-        tagToMap(Tag.SHULKER_BOXES, Tool.PICKAXE);
-        tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
+            tagToMap(Tag.TRAPDOORS, Tool.AXE);
+            tagToMap(Tag.TRAPDOORS, Tool.PICKAXE,"IRON");
+
+            tagToMap(Tag.SLABS,Tool.PICKAXE);
+            tagToMap(Tag.WOODEN_SLABS,Tool.AXE);
+
+            tagToMap(Tag.STAIRS,Tool.PICKAXE);
+            tagToMap(Tag.WOODEN_STAIRS,Tool.PICKAXE);
+
+            // WATCH OUT FOR ORDER - END //
+
+            tagToMap(Tag.SAND, Tool.SHOVEL);
+            tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
+
+
+
+        } catch (NoClassDefFoundError ignored) {
+            // GRASS_BLOCK prior to 1.13 is called GRASS
+            addToMap("GRASS",Tool.SHOVEL);
+        }
+
+        // Tags for 1.14+
+        try {
+            tagToMap(Tag.BAMBOO_PLANTABLE_ON, Tool.SHOVEL);
+            tagToMap(Tag.SIGNS, Tool.AXE);
+            tagToMap(Tag.WALLS, Tool.PICKAXE);
+
+            // Order important START
+            tagToMap(Tag.FENCES, Tool.AXE);
+            tagToMap(Tag.FENCES, Tool.PICKAXE,"NETHER");
+            tagToMap(Tag.FENCES, Tool.PICKAXE,"BRICK");
+            // Order important END
+        } catch(NoSuchFieldError | NoClassDefFoundError ignored) {
+            String[] bamboo_plantable_on = { "GRASS_BLOCK", "DIRT","COARSE_DIRT","GRAVEL","MYCELIUM","PODZOL","SAND","RED_SAND"};
+            for(String s : bamboo_plantable_on) {
+                addToMap(s,Tool.SHOVEL);
+            }
+        }
+
+        // Tags for 1.15+
+        try {
+            tagToMap(Tag.BEEHIVES, Tool.AXE);
+            tagToMap(Tag.SHULKER_BOXES, Tool.PICKAXE);
+
+            // The following kind of unneccessary anyway
+            tagToMap(Tag.CROPS, Tool.NONE);
+            tagToMap(Tag.FLOWERS, Tool.NONE);
+
+        } catch(NoSuchFieldError | NoClassDefFoundError ignored) { }
+
+        // Tags for 1.16+
+        try {
+            tagToMap(Tag.CRIMSON_STEMS, Tool.AXE);
+            tagToMap(Tag.FENCE_GATES, Tool.AXE);
+            tagToMap(Tag.NYLIUM,Tool.PICKAXE);
+            // Important order START //
+            tagToMap(Tag.PRESSURE_PLATES, Tool.PICKAXE);
+            tagToMap(Tag.WOODEN_PRESSURE_PLATES, Tool.AXE);
+            // Important order STOP //
+        } catch(NoSuchFieldError | NoClassDefFoundError ignored) { }
+
+
+
+
+
 
         // Some of the following definitions are redundant because of the tags above
         // However I don't want to miss something, so they are still defined here
@@ -117,9 +171,6 @@ public class BestToolUtils {
         // Issue #1 End
 
         // Issue #2
-        tagToMap(Tag.NYLIUM,Tool.PICKAXE);
-        tagToMap(Tag.STAIRS,Tool.PICKAXE);
-        tagToMap(Tag.WOODEN_STAIRS,Tool.PICKAXE);
         addToMap("SPONGE",Tool.HOE);
         addToMap("WET_SPONGE",Tool.HOE);
         addToMap("PISTON",Tool.PICKAXE);
@@ -327,7 +378,6 @@ public class BestToolUtils {
         addToMap("SANDSTONE", Tool.PICKAXE);
         addToMap("SANDSTONE_SLAB", Tool.PICKAXE);
         addToMap("SANDSTONE_STAIRS", Tool.PICKAXE);
-        addToMap("SHULKER_BOX", Tool.PICKAXE);
         addToMap("SMOOTH_QUARTZ", Tool.PICKAXE);
         addToMap("SMOOTH_RED_SANDSTONE", Tool.PICKAXE);
         addToMap("SMOOTH_SANDSTONE", Tool.PICKAXE);
@@ -368,6 +418,7 @@ public class BestToolUtils {
         }
     }
 
+    // F****** Spigot API is not "forward compatible" with new Material enums
     private void initFallbackMaterials() {
 
         for(Material mat : Material.values()) {
@@ -377,6 +428,23 @@ public class BestToolUtils {
             }
 
             String n = mat.name();
+
+            // Fallback for all wooden things
+            for(String woodType : wood) {
+                if(n.contains(woodType)) {
+                    if(n.contains("STAIRS") || n.contains("LOG") || n.contains("PLANK")) {
+                        addToMap(mat, Tool.AXE);
+                        continue;
+                    }
+                }
+            }
+
+            // Fallback for Tag.WALLS
+            if(n.contains("STONE") || n.contains("BRICK")) {
+                addToMap(mat, Tool.PICKAXE);
+                continue;
+            }
+            // End Tag.WALLS
 
             // Issue #1
             if(n.contains("BLACKSTONE")) {
@@ -419,6 +487,53 @@ public class BestToolUtils {
                 continue;
             }
             // Issue #2 End
+
+            // Tags only in 1.16+ START
+            if(n.contains("FENCE_GATE")) {
+                addToMap(mat, Tool.AXE);
+                continue;
+            }
+            if(n.contains("PRESSURE_PLATE")) {
+                if(n.contains("STONE") || n.contains("IRON") || n.contains("GOLD")) {
+                    addToMap(mat,Tool.PICKAXE);
+                    continue;
+                }
+                addToMap(mat,Tool.AXE);
+                continue;
+            }
+            // Tags only in 1.16+ END
+
+            // Tags only in 1.15+ START
+            if(n.contains("SHULKER_BOX")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            // Tags only in 1.15+ END
+
+            // Tags only in 1.14+ START
+            if(n.contains("FENCE")) {
+                if(n.contains("NETHER") || n.contains("BRICK")) {
+                    addToMap(mat,Tool.PICKAXE);
+                    continue;
+                }
+                addToMap(mat,Tool.AXE);
+                continue;
+            }
+            if(n.contains("SIGN")) {
+                addToMap(mat,Tool.AXE);
+                continue;
+            }
+            // Tags only in 1.14+ END
+
+            // Different item names < 1.13
+            if(n.equals("LEAVES") || n.equals("WOOL")) {
+                addToMap(mat,Tool.SHEARS);
+                continue;
+            }
+            if(n.equals("WORKBENCH")) {
+                addToMap(mat,Tool.AXE);
+                continue;
+            }
 
         }
 

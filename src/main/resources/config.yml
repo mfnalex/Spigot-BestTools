@@ -5,8 +5,11 @@
 #
 
 
-# When false, players have to run /besttool or /bt once to enable BestTool
-enabled-by-default: false
+# When false, new players have to run /besttool or /bt once to enable BestTool
+besttool-enabled-by-default: false
+
+# When false, new players have to run /refill or /rf once to enable hotbar refill
+refill-enabled-by-default: false
 
 # Only use items from the hotbar
 hotbar-only: true

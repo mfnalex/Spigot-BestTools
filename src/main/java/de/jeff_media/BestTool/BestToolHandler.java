@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -39,34 +40,60 @@ public class BestToolHandler {
 
     public HashMap<Material,Tool> toolMap = new HashMap<>();
     ArrayList<Tag> usedTags = new ArrayList<>();
-    final Material[] pickaxes = {
-            Material.NETHERITE_PICKAXE,
-            Material.DIAMOND_PICKAXE,
-            Material.IRON_PICKAXE,
-            Material.STONE_PICKAXE,
-            Material.WOODEN_PICKAXE};
-    final Material[] axes = {
-            Material.NETHERITE_AXE,
-            Material.DIAMOND_AXE,
-            Material.IRON_AXE,
-            Material.STONE_AXE,
-            Material.WOODEN_AXE};
-    final Material[] shovels = {
-            Material.NETHERITE_SHOVEL,
-            Material.DIAMOND_SHOVEL,
-            Material.IRON_SHOVEL,
-            Material.STONE_SHOVEL,
-            Material.WOODEN_SHOVEL};
+    final String[] pickaxeNames = {
+            "NETHERITE_PICKAXE",
+            "DIAMOND_PICKAXE",
+            "IRON_PICKAXE",
+            "STONE_PICKAXE",
+            "WOODEN_PICKAXE"};
+    final String[] axeNames = {
+            "NETHERITE_AXE",
+            "DIAMOND_AXE",
+            "IRON_AXE",
+            "STONE_AXE",
+            "WOODEN_AXE"};
+    final String[] shovelNames = {
+            "NETHERITE_SHOVEL",
+            "DIAMOND_SHOVEL",
+            "IRON_SHOVEL",
+            "STONE_SHOVEL",
+            "WOODEN_SHOVEL"};
 
-    final Material[] hoes = {
-            Material.NETHERITE_HOE,
-            Material.DIAMOND_HOE,
-            Material.IRON_HOE,
-            Material.STONE_HOE,
-            Material.WOODEN_HOE};
+    final String[] hoeNames = {
+            "NETHERITE_HOE",
+            "DIAMOND_HOE",
+            "IRON_HOE",
+            "STONE_HOE",
+            "Material.WOODEN_HOE"};
+
+    final LinkedList<Material> pickaxes = new LinkedList<>();
+    final LinkedList<Material> axes = new LinkedList<>();
+    final LinkedList<Material> hoes = new LinkedList<>();
+    final LinkedList<Material> shovels = new LinkedList<>();
 
     BestToolHandler(Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
+
+        for(String s : pickaxeNames) {
+            if(Material.getMaterial(s)!=null) {
+                pickaxes.add(Material.getMaterial(s));
+            }
+        }
+        for(String s : axeNames) {
+            if(Material.getMaterial(s)!=null) {
+                axes.add(Material.getMaterial(s));
+            }
+        }
+        for(String s : shovelNames) {
+            if(Material.getMaterial(s)!=null) {
+                shovels.add(Material.getMaterial(s));
+            }
+        }
+        for(String s : hoeNames) {
+            if(Material.getMaterial(s)!=null) {
+                hoes.add(Material.getMaterial(s));
+            }
+        }
     }
 
     enum Tool {

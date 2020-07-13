@@ -19,10 +19,13 @@ public class FileUtils {
     void dumpFile(File file) throws IOException {
         FileWriter fileWriter = new FileWriter(file);
         PrintWriter printWriter = new PrintWriter(fileWriter);
-
+        boolean debug = main.getConfig().getBoolean("debug");
+        main.getConfig().set("debug",false);
         for(Material mat: Material.values()) {
-            printWriter.printf("%s,%s",mat.name(),main.toolHandler.getBestToolType(mat).name());
+            if(!mat.isBlock()) continue;
+            printWriter.printf("%s,%s\n",mat.name(),main.toolHandler.getBestToolType(mat).name());
         }
+        main.getConfig().set("debug",debug);
 
         printWriter.close();
     }
