@@ -53,6 +53,9 @@ public class BestToolUtils {
 
     void initMap() {
         long startTime = System.nanoTime();
+
+        initFallbackMaterials();
+
         tagToMap(Tag.ANVIL, Tool.PICKAXE);
         tagToMap(Tag.BAMBOO_PLANTABLE_ON, Tool.SHOVEL);
         tagToMap(Tag.BEEHIVES, Tool.AXE);
@@ -82,12 +85,28 @@ public class BestToolUtils {
 
         tagToMap(Tag.TRAPDOORS, Tool.AXE);
         tagToMap(Tag.TRAPDOORS, Tool.PICKAXE,"IRON");
+
+        tagToMap(Tag.SLABS,Tool.PICKAXE);
+        tagToMap(Tag.WOODEN_SLABS,Tool.AXE);
         // WATCH OUT FOR ORDER - END //
 
         tagToMap(Tag.SAND, Tool.SHOVEL);
         tagToMap(Tag.SHULKER_BOXES, Tool.PICKAXE);
         tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
 
+
+
+        // Some of the following definitions are redundant because of the tags above
+        // However I don't want to miss something, so they are still defined here
+        // Shouldn't harm because building the map takes only take 2 ms when the
+        // plugin is enabled
+
+        // Issue #1
+        addToMap(Material.BASALT,Tool.PICKAXE);
+        addToMap(Material.POLISHED_BASALT,Tool.PICKAXE);
+        addToMap(Material.GLOWSTONE,Tool.PICKAXE); // TODO: Prefer SilkTouch
+        addToMap(Material.NETHER_GOLD_ORE,Tool.PICKAXE);
+        // Issue #1 End
         addToMap(Material.ACACIA_BUTTON, Tool.AXE);
         addToMap(Material.ACACIA_FENCE, Tool.AXE);
         addToMap(Material.ACACIA_FENCE_GATE, Tool.AXE);
@@ -300,6 +319,26 @@ public class BestToolUtils {
         if(main.verbose) {
             main.getLogger().info(String.format("Building the <Block,Tool> map took %d ms",(endTime-startTime)/1000000));
         }
+    }
+
+    private void initFallbackMaterials() {
+
+        for(Material mat : Material.values()) {
+            String n = mat.name();
+
+            // Issue #1
+            if(n.contains("BLACKSTONE")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            if(n.contains("NETHER_BRICK")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+            // Issue #1 End
+
+        }
+
     }
 
 }

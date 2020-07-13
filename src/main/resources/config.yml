@@ -14,6 +14,11 @@ hotbar-only: true
 # Don't use items if they are going to break with this usage
 prevent-item-break: true
 
+# The preferred slot where BestTool should move the tool if it's not in the hotbar.
+# Must be a number between 0 (leftmost hotbar slot) and 8 (rightmost hotbar slot)
+# NOT IMPLEMENTED YET
+#favorite-slot: 8
+
 # Whether to use gold tools
 # NOT IMPLEMENTED YET
 #use-gold-tools: false
