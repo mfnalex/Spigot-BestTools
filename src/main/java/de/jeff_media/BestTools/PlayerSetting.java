@@ -19,25 +19,27 @@ public class PlayerSetting {
 
         Inventory guiInventory = null;
 
-        // Did we already show the message how to activate sorting?
-        boolean hasSeenMessage = false;
+        boolean hasSeenBestToolsMessage = false;
+        boolean hasSeenRefillMessage = false;
 
         // Do we have to save these settings?
         boolean changed = false;
 
         PlayerSetting(File file,Main main) {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-                this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled");
-                this.hasSeenMessage = yaml.getBoolean("hasSeenMessage");
+                this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled",false);
+                this.hasSeenBestToolsMessage = yaml.getBoolean("hasSeenBestToolsMessage",false);
+                this.hasSeenRefillMessage = yaml.getBoolean("hasSeenRefillMessage",false);
                 this.refillEnabled = yaml.getBoolean("refillEnabled",false);
                 this.hotbarOnly = yaml.getBoolean("hotbarOnly",true);
                 main.debug("Loaded player setting from file "+file.getPath());
         }
 
-        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hasSeenMessage, boolean hotbarOnly) {
+        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly) {
                 this.bestToolsEnabled = bestToolsEnabled;
                 this.refillEnabled = refillEnabled;
-                this.hasSeenMessage = hasSeenMessage;
+                this.hasSeenBestToolsMessage = false;
+                this.hasSeenRefillMessage = false;
                 this.hotbarOnly = hotbarOnly;
                 this.changed = true;
         }
@@ -60,8 +62,15 @@ public class PlayerSetting {
                 return hotbarOnly;
         }
 
-        void setHasSeenMessage(boolean seen) {
-                hasSeenMessage = seen;
+        void setHasSeenBestToolsMessage(boolean seen) {
+                if(seen== hasSeenBestToolsMessage) return;
+                hasSeenBestToolsMessage = seen;
+                changed = true;
+        }
+
+        void setHasSeenRefillMessage(boolean seen) {
+                if(seen== hasSeenRefillMessage) return;
+                hasSeenRefillMessage = seen;
                 changed = true;
         }
 
@@ -71,7 +80,8 @@ public class PlayerSetting {
                 yaml.set("bestToolsEnabled", bestToolsEnabled);
                 yaml.set("hotbarOnly",hotbarOnly);
                 yaml.set("refillEnabled",refillEnabled);
-                yaml.set("hasSeenMessage",hasSeenMessage);
+                yaml.set("hasSeenBestToolsMessage", hasSeenBestToolsMessage);
+                yaml.set("hasSeenRefillMessage", hasSeenRefillMessage);
                 try {
                         yaml.save(file);
                 } catch (IOException e) {

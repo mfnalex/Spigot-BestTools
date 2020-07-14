@@ -21,13 +21,21 @@ public class BlockPlaceListener implements Listener {
         main.debug("BlockPlace");
         Player p = event.getPlayer();
         PlayerInventory inv = p.getInventory();
-        PlayerSetting setting = main.getPlayerSetting(p);
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
         ItemStack item = inv.getItemInMainHand();
         Material mat = item.getType();
         int currentSlot = inv.getHeldItemSlot();
 
         if(!p.hasPermission("besttool.refill")) return;
-        if(!setting.refillEnabled) return;
+        if(!playerSetting.refillEnabled) {
+            if(!playerSetting.hasSeenRefillMessage) {
+                p.sendMessage(main.messages.MSG_REFILL_USAGE);
+                playerSetting.setHasSeenRefillMessage(true);
+            }
+            main.debug("ABORTING");
+            return;
+        }
+
         if(item.getAmount() != 1) return;
 
         int refillSlot = RefillUtils.getMatchingStackPosition(inv,mat,inv.getHeldItemSlot());

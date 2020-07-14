@@ -66,7 +66,6 @@ public class Main extends JavaPlugin {
             setting = new PlayerSetting(
                     getConfig().getBoolean("besttools-enabled-by-default"),
                     getConfig().getBoolean("refill-enabled-by-default"),
-                    false,
                     getConfig().getBoolean("hotbar-only"));
         }
         playerSettings.put(player.getUniqueId(),setting);
@@ -109,7 +108,7 @@ public class Main extends JavaPlugin {
 
         loadDefaultValues();
 
-        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt","","","");
+        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt",null,null,null);
         toolHandler = new BestToolsHandler(this);
         toolUtils = new BestToolsUtils(this);
         blockPlaceListener = new BlockPlaceListener(this);

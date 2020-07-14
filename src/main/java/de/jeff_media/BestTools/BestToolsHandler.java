@@ -26,7 +26,7 @@ public class BestToolsHandler {
 
     // Configurable Start //
     boolean preventItemBreak = false; // Will not use Items that would break on this use
-    static int favoriteSlot = hotbarSize-1;
+    int favoriteSlot;
     // Configurable End //
 
     public HashMap<Material,Tool> toolMap = new HashMap<>();
@@ -38,7 +38,9 @@ public class BestToolsHandler {
     final LinkedList<Material> shovels = new LinkedList<>();
 
     BestToolsHandler(Main main) {
+
         this.main=Objects.requireNonNull(main,"Main must not be null");
+        this.favoriteSlot=main.getConfig().getInt("favorite-slot");
     }
 
     enum Tool {

@@ -51,11 +51,10 @@ public class PlayerInteractListener implements Listener {
 
         main.debug("This player has enabled: "+playerSetting.bestToolsEnabled);
 
-        // TODO: Show message here
         if(!playerSetting.bestToolsEnabled) {
-            if(!playerSetting.hasSeenMessage) {
+            if(!playerSetting.hasSeenBestToolsMessage) {
                 p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
-                playerSetting.setHasSeenMessage(true);
+                playerSetting.setHasSeenBestToolsMessage(true);
             }
             main.debug("ABORTING");
             return;

@@ -33,6 +33,8 @@ public class CommandBestTools implements CommandExecutor {
         p = (Player) sender;
         setting = main.getPlayerSetting(p);
 
+        setting.setHasSeenBestToolsMessage(true);
+
         // Toggle hotbarOnly
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("hotbaronly")

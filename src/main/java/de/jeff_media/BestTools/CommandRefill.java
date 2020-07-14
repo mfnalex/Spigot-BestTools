@@ -38,9 +38,12 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
         }
 
         p = (Player) sender;
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
+
+        playerSetting.setHasSeenRefillMessage(true);
 
         // Toggle AutoRefill //
-        if(main.getPlayerSetting(p).toggleRefillEnabled()) {
+        if(playerSetting.toggleRefillEnabled()) {
             p.sendMessage(main.messages.MSG_REFILL_ENABLED);
         } else {
             p.sendMessage(main.messages.MSG_REFILL_DISABLED);
@@ -51,7 +54,7 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,  @NotNull String[] str) {
-        final String[] args = {"toggle","on","off","preventItemBreak"};
+        final String[] args = {"toggle","on","off","preventItemBreak","hotbar","hotbarOnly"};
         final String[] trueFalse = {"true","false"};
 
 
