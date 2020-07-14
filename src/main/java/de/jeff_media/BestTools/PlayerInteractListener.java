@@ -1,4 +1,4 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class PlayerInteractListener implements Listener {
 
-    BestToolHandler handler;
+    BestToolsHandler handler;
     Main main;
 
     PlayerInteractListener(@NotNull Main main) {
@@ -23,8 +23,21 @@ public class PlayerInteractListener implements Listener {
         handler=Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null");
     }
 
+    /*@EventHandler
+    public void onPlayerInteractWithMob(PlayerInteractEvent event) {
+        Player p = event.getPlayer();
+        PlayerInventory inv = p.getInventory();
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
+
+        // TODO: Separate permission for this?
+        if(!p.hasPermission("besttool.use")) return;
+
+        if(event.getAction() != Action.LEFT_CLICK_AIR)
+
+    }*/
+
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         PlayerInventory inv = p.getInventory();
         Block block = event.getClickedBlock();
@@ -36,10 +49,10 @@ public class PlayerInteractListener implements Listener {
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (block == null) return;
 
-        main.debug("This player has enabled: "+playerSetting.bestToolEnabled);
+        main.debug("This player has enabled: "+playerSetting.bestToolsEnabled);
 
         // TODO: Show message here
-        if(!playerSetting.bestToolEnabled) {
+        if(!playerSetting.bestToolsEnabled) {
             if(!playerSetting.hasSeenMessage) {
                 p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
                 playerSetting.setHasSeenMessage(true);
@@ -48,7 +61,21 @@ public class PlayerInteractListener implements Listener {
             return;
         }
 
-        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), inv);
+        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p);
+        if(bestTool == null) {
+            ItemStack currentItem = inv.getItemInMainHand();
+
+            if(currentItem==null) return;
+
+            int emptyHotbarSlot = BestToolsHandler.getEmptyHotbarSlot(inv);
+            if(emptyHotbarSlot!=-1) {
+                inv.setHeldItemSlot(emptyHotbarSlot);
+                return;
+            }
+
+            if(!main.toolHandler.isDamageable(currentItem)) return;
+            bestTool = handler.getNonToolItemFromArray(handler.inventoryToArray(p));
+        }
         if(bestTool == null) {
             handler.freeSlot(handler.favoriteSlot,inv);
             main.debug("Could not find any appropiate tool");

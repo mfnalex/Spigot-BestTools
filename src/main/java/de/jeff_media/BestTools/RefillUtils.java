@@ -1,4 +1,4 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;

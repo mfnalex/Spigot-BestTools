@@ -1,13 +1,16 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class CommandRefill implements CommandExecutor {
+import java.util.List;
+
+public class CommandRefill implements CommandExecutor, TabCompleter {
 
     Main main;
 
@@ -21,6 +24,10 @@ public class CommandRefill implements CommandExecutor {
         Player p;
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+            if(!sender.hasPermission("besttool.reload")) {
+                sender.sendMessage(command.getPermissionMessage());
+                return true;
+            }
             CommandReload.reload(sender,command,main);
             return true;
         }
@@ -40,5 +47,14 @@ public class CommandRefill implements CommandExecutor {
         }
 
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,  @NotNull String[] str) {
+        final String[] args = {"toggle","on","off","preventItemBreak"};
+        final String[] trueFalse = {"true","false"};
+
+
+        return null;
     }
 }

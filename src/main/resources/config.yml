@@ -1,30 +1,97 @@
-#
-# THIS IS A SNAPSHOT VERSION
-# OF BestTool! THIS IS NOT
-# THE FINISHED PLUGIN
-#
+###############################
+#######    BestTools    #######
+###############################
 
+# BestTools lets you automatically use the best tool you have in your inventory
+# when breaking blocks or attacking mobs. It also features automatic hotbar
+# refill when you run out of blocks.
 
-# When false, new players have to run /besttool or /bt once to enable BestTool
-besttool-enabled-by-default: false
+# Commands
+#
+# /besttools (or /bt:)  Toggle BestTools per player
+# /refill (or /rf:)     Toggle automatic hotbar refill per player
+# /besttools reload:    Reloads the config file
+
+# Permissions
+#
+# besttools.use:        Allows to use the /besttools (or /bt) command
+# besttools.refill:     Allows to use the /refill (or /rf) command
+# besttools.reload:     Allows to use the /besttools reload command
+
+#########################
+# General configuration #
+#########################
+
+# When false, new players have to run /besttools or /bt once to enable BestTools
+besttools-enabled-by-default: false
 
 # When false, new players have to run /refill or /rf once to enable hotbar refill
 refill-enabled-by-default: false
 
-# Only use items from the hotbar
+# Only use tools from the hotbar? Can be changed per player using /besttools hotbar
 hotbar-only: true
 
+# The preferred slot where BestTools should move the tool if it's not in the hotbar
+# and hotbar-only is set to false. Must be a number between 0 (leftmost hotbar slot)
+# and 8 (rightmost hotbar slot)
+favorite-slot: 8
+
 # Don't use items if they are going to break with this usage
-prevent-item-break: true
-
-# The preferred slot where BestTool should move the tool if it's not in the hotbar.
-# Must be a number between 0 (leftmost hotbar slot) and 8 (rightmost hotbar slot)
 # NOT IMPLEMENTED YET
-#favorite-slot: 8
+#prevent-item-break: true
 
-# Whether to use gold tools
+# Allow /besttools to switch to your sword when attacking mobs?
 # NOT IMPLEMENTED YET
-#use-gold-tools: false
+#use-sword-on-hostile-mobs: false
+#use-sword-on-friendly-mobs: false
+#use-sword-on-players: false
+
+##########################
+##### Update Checker #####
+##########################
+
+# Checks for updates (asynchronously).
+# When enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they join the server
+# When set to true, check for updates on startup and every X hours (see "check-interval" below)
+# When set to on-startup, only check on server startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+# When you set "check-for-updates" to true, you can define the amount
+# of hours inbetween each update check.
+check-interval: 4
+
+#########################
+##### Localization ######
+#########################
+
+# Available color codes:
+# &0 Black        &6 Gold       &c Red
+# &1 Dark Blue    &7 Gray       &d Light Purple
+# &2 Dark Green   &8 Dark Gray  &e Yellow
+# &3 Dark Aqua    &9 Blue       &f White
+# &4 Dark Red     &a Green
+# &5 Dark Purple  &b Aqua
+
+# Available formatting codes:
+# &k Obfuscated   &m Strikethrough
+# &l Bold         &o Italic
+# &n Underline    &r Reset
+
+##### English
+message-besttools-enabled: "&7BestTools has been &aenabled&7."
+message-besttools-disabled: "&7BestTools has been &cdisabled&7."
+message-refill-enabled: "&7Refill has been &aenabled&7."
+message-refill-disabled: "&7Refill has been &cdisabled&7."
+message-besttools-usage: "&7Hint: Type &6/besttools&7 or &6/bt&7 to automatically use the best tool when breaking blocks."
+message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically refill empty items from your inventory."
+message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
+message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
+
+############################
+##### Technical stuff! #####
+############################
 
 # Show some infos on startup
 verbose: true
@@ -34,3 +101,6 @@ debug: false
 
 # You probably don't want this - creates a .csv file containing a mapping between all Materials and their best tool
 dump: false
+
+# Do not change the following line!
+config-version: 1

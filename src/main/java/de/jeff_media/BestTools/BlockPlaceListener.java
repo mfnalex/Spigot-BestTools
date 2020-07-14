@@ -1,4 +1,4 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

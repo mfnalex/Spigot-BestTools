@@ -1,4 +1,4 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,7 +9,7 @@ public class CommandReload {
     static void reload(CommandSender sender, Command command, Main main) {
 
 
-            if (!sender.hasPermission("besttool.reload")) {
+            if (!sender.hasPermission("besttools.reload")) {
                 sender.sendMessage(command.getPermissionMessage());
                 return;
             }

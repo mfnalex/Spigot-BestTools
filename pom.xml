@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.jeff_media</groupId>
-    <artifactId>BestTool</artifactId>
-    <name>BestTool</name>
+    <artifactId>BestTools</artifactId>
+    <name>BestTools</name>
     <!--<url>https://www.chestsort.de</url>-->
     <description>Automatically sorts your chests!</description>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -34,7 +34,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finalName>BestTool</finalName>
+                    <finalName>BestTools</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -45,11 +45,11 @@
                     <relocations>
                         <relocation>
                             <pattern>de.jeff_media.PluginUpdateChecker</pattern>
-                            <shadedPattern>de.jeff_media.BestTool</shadedPattern>
+                            <shadedPattern>de.jeff_media.BestTools</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>de.jeff_media.BestTool</shadedPattern>
+                            <shadedPattern>de.jeff_media.BestTools</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>

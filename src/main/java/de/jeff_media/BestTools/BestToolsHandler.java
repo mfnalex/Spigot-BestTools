@@ -1,29 +1,21 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.block.Block;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This will probably be a separate plugin called BestTool or something
  */
-public class BestToolHandler {
+public class BestToolsHandler {
 
     Main main;
     boolean debug = false;
@@ -33,67 +25,20 @@ public class BestToolHandler {
     static int inventorySize = 36;
 
     // Configurable Start //
-    boolean hotbarOnly = false;
     boolean preventItemBreak = false; // Will not use Items that would break on this use
     static int favoriteSlot = hotbarSize-1;
     // Configurable End //
 
     public HashMap<Material,Tool> toolMap = new HashMap<>();
-    ArrayList<Tag> usedTags = new ArrayList<>();
-    final String[] pickaxeNames = {
-            "NETHERITE_PICKAXE",
-            "DIAMOND_PICKAXE",
-            "IRON_PICKAXE",
-            "STONE_PICKAXE",
-            "WOODEN_PICKAXE"};
-    final String[] axeNames = {
-            "NETHERITE_AXE",
-            "DIAMOND_AXE",
-            "IRON_AXE",
-            "STONE_AXE",
-            "WOODEN_AXE"};
-    final String[] shovelNames = {
-            "NETHERITE_SHOVEL",
-            "DIAMOND_SHOVEL",
-            "IRON_SHOVEL",
-            "STONE_SHOVEL",
-            "WOODEN_SHOVEL"};
-
-    final String[] hoeNames = {
-            "NETHERITE_HOE",
-            "DIAMOND_HOE",
-            "IRON_HOE",
-            "STONE_HOE",
-            "Material.WOODEN_HOE"};
+    ArrayList<Tag<Material>> usedTags = new ArrayList<>();
 
     final LinkedList<Material> pickaxes = new LinkedList<>();
     final LinkedList<Material> axes = new LinkedList<>();
     final LinkedList<Material> hoes = new LinkedList<>();
     final LinkedList<Material> shovels = new LinkedList<>();
 
-    BestToolHandler(Main main) {
+    BestToolsHandler(Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
-
-        for(String s : pickaxeNames) {
-            if(Material.getMaterial(s)!=null) {
-                pickaxes.add(Material.getMaterial(s));
-            }
-        }
-        for(String s : axeNames) {
-            if(Material.getMaterial(s)!=null) {
-                axes.add(Material.getMaterial(s));
-            }
-        }
-        for(String s : shovelNames) {
-            if(Material.getMaterial(s)!=null) {
-                shovels.add(Material.getMaterial(s));
-            }
-        }
-        for(String s : hoeNames) {
-            if(Material.getMaterial(s)!=null) {
-                hoes.add(Material.getMaterial(s));
-            }
-        }
     }
 
     enum Tool {
@@ -102,6 +47,7 @@ public class BestToolHandler {
         SHEARS,
         AXE,
         HOE,
+        SWORD,
         NONE
     }
 
@@ -132,87 +78,94 @@ public class BestToolHandler {
         return bestTool;
     }
 
-    /**
-     * Searches through and array and returns the ItemStack that matches this material
-     * @param mat Material to look for
-     * @param items Player's items (whole inventory or hotbar)
-     * @return Matching ItemStack
-     */
+
+    // TODO: Optimize all of this by caching valid Materials instead of doing String checks everytime
+
+
+
+
+
+
+
+
+
+    boolean isTool(Tool tool, ItemStack item) {
+        String n = item.getType().name();
+        switch(tool) {
+            case PICKAXE:
+                return n.endsWith("_PICKAXE");
+            case AXE:
+                return n.endsWith("_AXE");
+            case SHOVEL:
+                return n.endsWith("_SHOVEL");
+            case HOE:
+                return n.endsWith("_HOE");
+            case SHEARS:
+                return item.getType() == Material.SHEARS;
+            default:
+                // TODO: This might confuse the logic for NONE
+                return false;
+        }
+
+    }
+
+    static int getEmptyHotbarSlot(PlayerInventory inv) {
+        for(int i = 0; i<hotbarSize;i++) {
+            if(inv.getItem(i)==null) return i;
+        }
+        return -1;
+    }
+
     @Nullable
-    ItemStack getItemStackFromArray(@NotNull Material mat, @NotNull ItemStack[] items) {
-        for(ItemStack item : Objects.requireNonNull(items,"Items must not be null")) {
-            if(item==null) continue;
-            if(item.getType()==Objects.requireNonNull(mat,"Material must not be null")) {
-                if(getDurability(item)!=1) {
-                    return item;
-                }
-            }
+    ItemStack getNonToolItemFromArray(@NotNull ItemStack[] items) {
+        for(ItemStack item: items) {
+            if(!isDamageable(item)) return item;
         }
         return null;
     }
 
-    /**
-     * Searches the player's inventory for the best matching tool and returns its ItemStack
-     * @param type Tool type
-     * @param items Player's items (whole inventory or hotbar)
-     * @return
-     */
     @Nullable
-    ItemStack typeToItem(Tool type, ItemStack[] items) {
+    ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items) {
 
-        switch(Objects.requireNonNull(type,"Tool must not be null")) {
-
-            case PICKAXE:
-                for(Material pickaxe : pickaxes) {
-                    ItemStack itemStack = getItemStackFromArray(pickaxe, items);
-                    if(itemStack != null) return itemStack;
-                }
-                return null;
-
-            case AXE:
-                for(Material axe : axes) {
-                    ItemStack itemStack = getItemStackFromArray(axe, items);
-                    if(itemStack != null) return itemStack;
-                }
-                return null;
-
-            case SHOVEL:
-                for(Material shovel : shovels) {
-                    ItemStack itemStack = getItemStackFromArray(shovel, items);
-                    if(itemStack != null) return itemStack;
-                }
-                main.debug("typeToItem -> shovel -> null");
-                return null;
-
-            case HOE:
-                for(Material hoe : hoes) {
-                    ItemStack itemStack = getItemStackFromArray(hoe, items);
-                    if(itemStack != null) return itemStack;
-                }
-                return null;
-
-            case SHEARS:
-                return getItemStackFromArray(Material.SHEARS, items);
-
-            default:
-                return null;
+        if(tool == Tool.NONE) {
+            return getNonToolItemFromArray(items);
         }
+
+        ArrayList<ItemStack> list = new ArrayList<>();
+        for(ItemStack item : Objects.requireNonNull(items,"Items must not be null")) {
+            if(item==null) continue;
+            // TODO: Check if durability is 1
+            if(isTool(tool,item)) list.add(item);
+        }
+        if(list.size()==0) return null;
+        list.sort(Comparator.comparingInt(EnchantmentUtils::getMultiplier).reversed());
+        return list.get(0);
+    }
+
+
+    ItemStack[] inventoryToArray(Player p) {
+        PlayerInventory inv = p.getInventory();
+        boolean hotbarOnly = main.getPlayerSetting(p).hotbarOnly;
+        ItemStack[] items = new ItemStack[(hotbarOnly ? hotbarSize : inventorySize)];
+        for(int i = 0; i < (hotbarOnly ? hotbarSize : inventorySize); i++) {
+            items[i] = Objects.requireNonNull(inv,"Inventory must not be null").getItem(i);
+        }
+        return items;
     }
 
     /**
      * Tries to get the ItemStack that is the best for this block
      * @param mat The block's material
-     * @param inv Player's inventory
+     * @param p Player
      * @return
      */
     @Nullable
-    ItemStack getBestToolFromInventory(@NotNull Material mat, @NotNull PlayerInventory inv) {
-        ItemStack[] hotbar = new ItemStack[(hotbarOnly ? hotbarSize : inventorySize)];
+    ItemStack getBestToolFromInventory(@NotNull Material mat, Player p) {
+        PlayerInventory inv = p.getInventory();
+        ItemStack[] items = inventoryToArray(p);
+        //return typeToItem(Objects.requireNonNull(bestType,"Tool must not be null"),items);
         Tool bestType = getBestToolType(Objects.requireNonNull(mat,"Material must not be null"));
-        for(int i = 0; i < (hotbarOnly ? hotbarSize : inventorySize); i++) {
-            hotbar[i] = Objects.requireNonNull(inv,"Inventory must not be null").getItem(i);
-        }
-        return typeToItem(Objects.requireNonNull(bestType,"Tool must not be null"),hotbar);
+        return getBestItemStackFromArray(bestType,items);
     }
 
 
@@ -263,7 +216,7 @@ public class BestToolHandler {
 
     boolean isDamageable(ItemStack item) {
         if(item==null) return false;
-        if(!item.hasItemMeta()) return false;
+        //if(!item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
         return meta instanceof Damageable;
     }

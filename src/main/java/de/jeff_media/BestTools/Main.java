@@ -1,7 +1,7 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
-import org.bukkit.command.Command;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,17 +14,21 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
+    final int configVersion = 1;
+
     PluginUpdateChecker updateChecker;
-    BestToolHandler toolHandler;
-    BestToolUtils toolUtils;
+    BestToolsHandler toolHandler;
+    BestToolsUtils toolUtils;
     BlockPlaceListener blockPlaceListener;
     PlayerInteractListener playerInteractListener;
     PlayerListener playerListener;
     FileUtils fileUtils;
     RefillUtils refillUtils;
-    CommandBestTool commandBestTool;
+    CommandBestTools commandBestTools;
     CommandRefill commandRefill;
     Messages messages;
+
+    boolean debug=false;
 
     HashMap<UUID,PlayerSetting> playerSettings;
     boolean verbose = true;
@@ -51,7 +55,6 @@ public class Main extends JavaPlugin {
 
         PlayerSetting setting;
 
-        // TODO: Load PlayerSetting from file
         File file = getPlayerDataFile(player.getUniqueId());
         if(file.exists()) {
             debug("Loading player setting for "+player.getName()+" from file");
@@ -59,9 +62,10 @@ public class Main extends JavaPlugin {
         } else {
             debug("Creating new player setting for "+player.getName());
             setting = new PlayerSetting(
-                    getConfig().getBoolean("besttool-enabled-by-default"),
+                    getConfig().getBoolean("besttools-enabled-by-default"),
                     getConfig().getBoolean("refill-enabled-by-default"),
-                    false);
+                    false,
+                    getConfig().getBoolean("hotbar-only"));
         }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
@@ -93,29 +97,34 @@ public class Main extends JavaPlugin {
             reloadConfig();
         }
 
+        if (getConfig().getInt("config-version", 0) != configVersion) {
+            showOldConfigWarning();
+            ConfigUpdater configUpdater = new ConfigUpdater(this);
+            configUpdater.updateConfig();
+        }
+
         loadDefaultValues();
 
-        updateChecker = new PluginUpdateChecker(this,"","","","");
-        toolHandler = new BestToolHandler(this);
-        toolUtils = new BestToolUtils(this);
+        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt","","","");
+        toolHandler = new BestToolsHandler(this);
+        toolUtils = new BestToolsUtils(this);
         blockPlaceListener = new BlockPlaceListener(this);
         playerInteractListener  = new PlayerInteractListener(this);
         playerListener = new PlayerListener(this);
-        commandBestTool = new CommandBestTool(this);
+        commandBestTools = new CommandBestTools(this);
         commandRefill = new CommandRefill(this);
         refillUtils = new RefillUtils((this));
         messages = new Messages(this);
         fileUtils = new FileUtils(this);
-        playerSettings = new HashMap<UUID,PlayerSetting>();
+        playerSettings = new HashMap<>();
 
         toolUtils.initMap();
 
         getServer().getPluginManager().registerEvents(blockPlaceListener,this);
         getServer().getPluginManager().registerEvents(playerInteractListener,this);
         getServer().getPluginManager().registerEvents(playerListener, this);
-        getCommand("besttool").setExecutor(commandBestTool);
+        getCommand("besttools").setExecutor(commandBestTools);
         getCommand("refill").setExecutor(commandRefill);
-        // TODO: Start update Checker
 
         if(getConfig().getBoolean("dump",false)) {
             try {
@@ -125,16 +134,44 @@ public class Main extends JavaPlugin {
             }
         }
 
+        registerMetrics();
+
+        if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
+            updateChecker.check(getConfig().getInt("check-interval")*60*60);
+        } // When set to on-startup, we check right now (delay 0)
+        else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
+            updateChecker.check();
+        }
+
+    }
+
+    private void registerMetrics() {
+        Metrics metrics = new Metrics(this,8187);
     }
 
     private void loadDefaultValues() {
-        getConfig().addDefault("use-gold-tools",false);
-        getConfig().addDefault("besttool-enabled-by-default",false);
+        getConfig().addDefault("besttools-enabled-by-default",false);
         getConfig().addDefault("refill-enabled-by-default",false);
         getConfig().addDefault("hotbar-only", true);
-        getConfig().addDefault("prevent-item-break",true);
+        getConfig().addDefault("favorite-slot",8);
+        getConfig().addDefault("check-interval",4);
+        getConfig().addDefault("check-for-updates","true");
 
         verbose = getConfig().getBoolean("verbose",true);
+        debug = getConfig().getBoolean("debug",false);
 
+        if(getConfig().getInt("favorite-slot")>8) {
+            getLogger().warning(String.format("favorite-slot was set to %d, but it must not be higher than 8. Using default value 8",getConfig().getInt("favorite-slot")));
+            getConfig().set("favorite-slot",8);
+        }
+
+    }
+
+    private void showOldConfigWarning() {
+        getLogger().warning("==============================================");
+        getLogger().warning("You were using an old config file. BestTools");
+        getLogger().warning("has updated the file to the newest version.");
+        getLogger().warning("Your changes have been kept.");
+        getLogger().warning("==============================================");
     }
 }

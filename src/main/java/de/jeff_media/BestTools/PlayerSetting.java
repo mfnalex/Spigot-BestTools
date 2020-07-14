@@ -1,4 +1,4 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -9,10 +9,13 @@ import java.io.IOException;
 public class PlayerSetting {
 
          // BestTool enabled for this player?
-        boolean bestToolEnabled;
+        boolean bestToolsEnabled;
 
         // Automatic refill enabled for this player?
         boolean refillEnabled;
+
+        // Use only tools from the hotbar?
+        boolean hotbarOnly;
 
         Inventory guiInventory = null;
 
@@ -24,29 +27,37 @@ public class PlayerSetting {
 
         PlayerSetting(File file,Main main) {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-                this.bestToolEnabled = yaml.getBoolean("bestToolEnabled");
+                this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled");
                 this.hasSeenMessage = yaml.getBoolean("hasSeenMessage");
                 this.refillEnabled = yaml.getBoolean("refillEnabled",false);
+                this.hotbarOnly = yaml.getBoolean("hotbarOnly",true);
                 main.debug("Loaded player setting from file "+file.getPath());
         }
 
-        PlayerSetting(boolean bestToolEnabled, boolean refillEnabled, boolean hasSeenMessage) {
-                this.bestToolEnabled = bestToolEnabled;
+        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hasSeenMessage, boolean hotbarOnly) {
+                this.bestToolsEnabled = bestToolsEnabled;
                 this.refillEnabled = refillEnabled;
                 this.hasSeenMessage = hasSeenMessage;
+                this.hotbarOnly = hotbarOnly;
                 this.changed = true;
         }
 
-        boolean toggleBestToolEnabled() {
-                bestToolEnabled=!bestToolEnabled;
+        boolean toggleBestToolsEnabled() {
+                bestToolsEnabled =!bestToolsEnabled;
                 changed = true;
-                return bestToolEnabled;
+                return bestToolsEnabled;
         }
 
         boolean toggleRefillEnabled() {
                 refillEnabled=!refillEnabled;
                 changed = true;
                 return refillEnabled;
+        }
+
+        boolean toggleHotbarOnly() {
+                hotbarOnly=!hotbarOnly;
+                changed = true;
+                return hotbarOnly;
         }
 
         void setHasSeenMessage(boolean seen) {
@@ -57,7 +68,8 @@ public class PlayerSetting {
         void save(File file,Main main) {
                 main.debug("Saving player setting to file "+file.getPath());
                 YamlConfiguration yaml = new YamlConfiguration();
-                yaml.set("bestToolEnabled",bestToolEnabled);
+                yaml.set("bestToolsEnabled", bestToolsEnabled);
+                yaml.set("hotbarOnly",hotbarOnly);
                 yaml.set("refillEnabled",refillEnabled);
                 yaml.set("hasSeenMessage",hasSeenMessage);
                 try {

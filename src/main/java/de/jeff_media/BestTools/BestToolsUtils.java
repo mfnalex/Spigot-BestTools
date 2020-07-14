@@ -1,11 +1,10 @@
-package de.jeff_media.BestTool;
+package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.entity.AbstractArrow;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import de.jeff_media.BestTool.BestToolHandler.Tool;
+import de.jeff_media.BestTools.BestToolsHandler.Tool;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -13,16 +12,16 @@ import java.util.Objects;
 /**
  * Please don't cry because I use Strings instead of Material. It's for backward compatability and the map only gets built once on startup, so don't worry
  */
-public class BestToolUtils {
+public class BestToolsUtils {
 
     final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
 
     Main main;
 
-    public BestToolUtils(@NotNull Main main) {
+    public BestToolsUtils(@NotNull Main main) {
 
         this.main = Objects.requireNonNull(main,"Main must not be null");
-        //this.handler = Objects.requireNonNull(main.toolHandler,"BestToolHandler must not be null");
+        //this.handler = Objects.requireNonNull(main.toolHandler,"BestToolsHandler must not be null");
     }
 
     private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool) {
