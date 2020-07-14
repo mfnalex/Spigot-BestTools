@@ -25,6 +25,7 @@ public class RefillUtils {
 
     void refillStack(Inventory inv, int source, int dest, ItemStack stack) {
         Bukkit.getScheduler().runTask(main, () -> {
+            if(inv.getItem(source)==null) return;
             if(!inv.getItem(source).equals(stack)) {
                 main.getLogger().warning("Refill failed, because source ItemStack has changed. Aborting Refill to prevent item loss.");
                 return;

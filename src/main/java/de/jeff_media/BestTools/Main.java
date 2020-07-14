@@ -3,6 +3,8 @@ package de.jeff_media.BestTools;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -94,7 +96,9 @@ public class Main extends JavaPlugin {
             if(updateChecker!=null) {
                 updateChecker.stop();
             }
+            HandlerList.unregisterAll(this);
             reloadConfig();
+
         }
 
         if (getConfig().getInt("config-version", 0) != configVersion) {

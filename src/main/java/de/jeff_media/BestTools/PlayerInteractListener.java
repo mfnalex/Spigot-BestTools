@@ -43,7 +43,7 @@ public class PlayerInteractListener implements Listener {
         Block block = event.getClickedBlock();
         PlayerSetting playerSetting = main.getPlayerSetting(p);
 
-        if(!p.hasPermission("besttool.use")) return;
+        if(!p.hasPermission("besttools.use")) return;
 
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
