@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.1.2
-- Fixed console warning when using auto refill after using /bt reload
+## 1.0.1
+- Added Spanish translation
+- Added download link to Update checker
 
-## 0.1.1
-- Fixed typo in permission node
+# Todo
+- Auto refill edibles

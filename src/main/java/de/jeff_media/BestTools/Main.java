@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 1;
+    final int configVersion = 2;
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
@@ -108,7 +108,7 @@ public class Main extends JavaPlugin {
 
         loadDefaultValues();
 
-        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt",null,null,null);
+        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt","https://www.spigotmc.org/resources/1-13-1-16-besttools.81490/","https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md","https://www.chestsort.de/donate");
         toolHandler = new BestToolsHandler(this);
         toolUtils = new BestToolsUtils(this);
         blockPlaceListener = new BlockPlaceListener(this);

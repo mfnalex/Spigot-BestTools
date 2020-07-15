@@ -26,6 +26,8 @@ public class BlockPlaceListener implements Listener {
         Material mat = item.getType();
         int currentSlot = inv.getHeldItemSlot();
 
+        if(item.getAmount() != 1) return;
+
         if(!p.hasPermission("besttool.refill")) return;
         if(!playerSetting.refillEnabled) {
             if(!playerSetting.hasSeenRefillMessage) {
@@ -35,8 +37,6 @@ public class BlockPlaceListener implements Listener {
             main.debug("ABORTING");
             return;
         }
-
-        if(item.getAmount() != 1) return;
 
         int refillSlot = RefillUtils.getMatchingStackPosition(inv,mat,inv.getHeldItemSlot());
         if(refillSlot != -1) {

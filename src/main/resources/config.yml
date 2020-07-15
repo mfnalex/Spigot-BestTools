@@ -6,21 +6,30 @@
 # when breaking blocks or attacking mobs. It also features automatic hotbar
 # refill when you run out of blocks.
 
-# Commands
-#
+
+###############################
+#######    Commands     #######
+###############################
+
 # /besttools (or /bt:)  Toggle BestTools per player
-# /refill (or /rf:)     Toggle automatic hotbar refill per player
+# /besttools hotbar:    Toggles whether BestTools only uses tools from your hotbar
 # /besttools reload:    Reloads the config file
 
-# Permissions
-#
+# /refill (or /rf:)     Toggle automatic hotbar refill per player
+
+
+###############################
+#######   Permissions   #######
+###############################
+
 # besttools.use:        Allows to use the /besttools (or /bt) command
 # besttools.refill:     Allows to use the /refill (or /rf) command
 # besttools.reload:     Allows to use the /besttools reload command
 
-#########################
-# General configuration #
-#########################
+
+###############################
+####### General config  #######
+###############################
 
 # When false, new players have to run /besttools or /bt once to enable BestTools
 besttools-enabled-by-default: false
@@ -46,9 +55,9 @@ favorite-slot: 8
 #use-sword-on-friendly-mobs: false
 #use-sword-on-players: false
 
-##########################
-##### Update Checker #####
-##########################
+###############################
+####### Update checker  #######
+###############################
 
 # Checks for updates (asynchronously).
 # When enabled, a message is printed in the console if a new
@@ -62,9 +71,9 @@ check-for-updates: true
 # of hours inbetween each update check.
 check-interval: 4
 
-#########################
-##### Localization ######
-#########################
+###############################
+#######  Localization   #######
+###############################
 
 # Available color codes:
 # &0 Black        &6 Gold       &c Red
@@ -89,6 +98,16 @@ message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically ref
 message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
 
+##### Spanish
+#message-besttools-enabled: "&7BestTools ha sido &ahabilitado&7."
+#message-besttools-disabled: "&7BestTools ha sido &cdeshabilitado&7."
+#message-refill-enabled: "&7El relleno ha sido &ahabilitado&7."
+#message-refill-disabled: "&7El relleno ha sido &cdeshabilitado&7."
+#message-besttools-usage: "&7Uso: Ejecuta &6/besttools&7 o &6/bt&7 para usar la mejor herramienta automaticamente al romper bloques."
+#message-refill-usage": "&7Uso: Ejecuta &6/refill&7 o &6/rf&7 para rellenar automaticamente los espacios vacios en tu inventario."
+#message-hotbar-only-enabled: "&7BestTools solamente usara herramientas de tu hotbar."
+#message-hotbar-only-disabled: "&7BestTools solamente usara todos las herramientas de tu inventario."
+
 ############################
 ##### Technical stuff! #####
 ############################
@@ -98,9 +117,8 @@ verbose: true
 
 # You probably don't want this
 debug: false
-
-# You probably don't want this - creates a .csv file containing a mapping between all Materials and their best tool
 dump: false
 
-# Do not change the following line!
-config-version: 1
+# Do not change the following line! It is used to automatically update
+# your config to the latest version. Your changes will be kept.
+config-version: 2
