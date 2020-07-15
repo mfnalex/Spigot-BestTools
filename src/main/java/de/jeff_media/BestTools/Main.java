@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 2;
+    final int configVersion = 3;
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;

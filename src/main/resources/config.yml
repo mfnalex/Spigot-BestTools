@@ -121,4 +121,4 @@ dump: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 2
+config-version: 3
