@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -13,31 +14,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class PlayerInteractListener implements Listener {
+public class BestToolsListener implements Listener {
 
     BestToolsHandler handler;
     Main main;
 
-    PlayerInteractListener(@NotNull Main main) {
+    BestToolsListener(@NotNull Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
         handler=Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null");
     }
 
-    /*@EventHandler
-    public void onPlayerInteractWithMob(PlayerInteractEvent event) {
-        Player p = event.getPlayer();
-        PlayerInventory inv = p.getInventory();
-        PlayerSetting playerSetting = main.getPlayerSetting(p);
-
-        // TODO: Separate permission for this?
-        if(!p.hasPermission("besttool.use")) return;
-
-        if(event.getAction() != Action.LEFT_CLICK_AIR)
-
-    }*/
-
     @EventHandler
-    public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
+    public void onBlockClick(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         PlayerInventory inv = p.getInventory();
         Block block = event.getClickedBlock();
