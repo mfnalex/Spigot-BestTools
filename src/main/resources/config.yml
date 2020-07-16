@@ -49,6 +49,10 @@ favorite-slot: 8
 # When set to true, it works in survival and adventure game mode
 allow-in-adventure-mode: false
 
+# When enabled, BestTools will not attempt to switch any tools when the player is
+# holding a sword, crossbow, bow or trident
+dont-switch-during-battle: true
+
 # Don't use items if they are going to break with this usage
 # NOT IMPLEMENTED YET
 #prevent-item-break: true
@@ -165,4 +169,4 @@ dump: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 3
+config-version: 4

@@ -1,6 +1,7 @@
 # Changelog
 
-## 1.2.2-SNAPSHOT
+## 1.3.0
+- Added config option "dont-switch-during-battle" (default: true) that prevents BestTools from switching to a tool if the player currently holds a weapon (Sword, Crossbow, Bow or Trident)
 - Added Chinese and Chinese (Traditional) translations
 
 ## 1.2.1

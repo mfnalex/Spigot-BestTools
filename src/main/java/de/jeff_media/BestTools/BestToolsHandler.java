@@ -34,15 +34,26 @@ public class BestToolsHandler {
     public HashMap<Material,Tool> toolMap = new HashMap<>();
     ArrayList<Tag<Material>> usedTags = new ArrayList<>();
 
+    // TODO: Cache valid tool materials here
     final LinkedList<Material> pickaxes = new LinkedList<>();
     final LinkedList<Material> axes = new LinkedList<>();
     final LinkedList<Material> hoes = new LinkedList<>();
     final LinkedList<Material> shovels = new LinkedList<>();
 
+
+    final LinkedList<Material> weapons = new LinkedList<>();
+
     BestToolsHandler(Main main) {
 
         this.main=Objects.requireNonNull(main,"Main must not be null");
         this.favoriteSlot=main.getConfig().getInt("favorite-slot");
+    }
+
+    boolean isWeapon(ItemStack itemInMainHand) {
+        for(Material mat : weapons) {
+            if(itemInMainHand.getType()==mat) return true;
+        }
+        return false;
     }
 
     enum Tool {
@@ -61,6 +72,7 @@ public class BestToolsHandler {
      * @return Durability left, or -1 if not damageable
      */
     private int getDurability(@Nullable ItemStack item) {
+        // TODO: Delete? Its unused
         if(item==null) return -1;
         if(!(item.getItemMeta() instanceof Damageable)) {
             return -1;

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 3;
+    final int configVersion = 4;
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
@@ -159,6 +159,7 @@ public class Main extends JavaPlugin {
         getConfig().addDefault("check-interval",4);
         getConfig().addDefault("check-for-updates","true");
         getConfig().addDefault("allow-in-adventure-mode",false);
+        getConfig().addDefault("dont-switch-during-battle",true);
 
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);

@@ -34,6 +34,12 @@ public class BestToolsListener implements Listener {
             return;
         }
         PlayerInventory inv = p.getInventory();
+
+        if(main.getConfig().getBoolean("dont-switch-during-battle") && handler.isWeapon(inv.getItemInMainHand())) {
+            main.debug("Return: It's a gun^^");
+            return;
+        }
+
         Block block = event.getClickedBlock();
         PlayerSetting playerSetting = main.getPlayerSetting(p);
 

@@ -15,12 +15,23 @@ import java.util.Objects;
 public class BestToolsUtils {
 
     final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
+    final String[] weapons = {"BOW","CROSSBOW","TRIDENT","NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
 
     Main main;
 
+    // This is called AFTER BestToolsHandler, so the Utils can affect the Handler
     public BestToolsUtils(@NotNull Main main) {
 
         this.main = Objects.requireNonNull(main,"Main must not be null");
+        
+        
+        // Register valid weapons
+        for(String weapon : weapons) {
+            if(Material.getMaterial(weapon) != null) {
+                main.toolHandler.weapons.add(Material.getMaterial(weapon));
+            }
+        }
+        
         //this.handler = Objects.requireNonNull(main.toolHandler,"BestToolsHandler must not be null");
     }
 
