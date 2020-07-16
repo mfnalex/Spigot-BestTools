@@ -4,7 +4,6 @@ import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,13 +15,13 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 2;
+    final int configVersion = 3;
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
     BestToolsUtils toolUtils;
-    BlockPlaceListener blockPlaceListener;
-    PlayerInteractListener playerInteractListener;
+    RefillListener refillListener;
+    BestToolsListener bestToolsListener;
     PlayerListener playerListener;
     FileUtils fileUtils;
     RefillUtils refillUtils;
@@ -111,8 +110,8 @@ public class Main extends JavaPlugin {
         updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt","https://www.spigotmc.org/resources/1-13-1-16-besttools.81490/","https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md","https://www.chestsort.de/donate");
         toolHandler = new BestToolsHandler(this);
         toolUtils = new BestToolsUtils(this);
-        blockPlaceListener = new BlockPlaceListener(this);
-        playerInteractListener  = new PlayerInteractListener(this);
+        refillListener = new RefillListener(this);
+        bestToolsListener = new BestToolsListener(this);
         playerListener = new PlayerListener(this);
         commandBestTools = new CommandBestTools(this);
         commandRefill = new CommandRefill(this);
@@ -123,8 +122,8 @@ public class Main extends JavaPlugin {
 
         toolUtils.initMap();
 
-        getServer().getPluginManager().registerEvents(blockPlaceListener,this);
-        getServer().getPluginManager().registerEvents(playerInteractListener,this);
+        getServer().getPluginManager().registerEvents(refillListener,this);
+        getServer().getPluginManager().registerEvents(bestToolsListener,this);
         getServer().getPluginManager().registerEvents(playerListener, this);
         getCommand("besttools").setExecutor(commandBestTools);
         getCommand("refill").setExecutor(commandRefill);
@@ -159,6 +158,7 @@ public class Main extends JavaPlugin {
         getConfig().addDefault("favorite-slot",8);
         getConfig().addDefault("check-interval",4);
         getConfig().addDefault("check-for-updates","true");
+        getConfig().addDefault("allow-in-adventure-mode",false);
 
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);

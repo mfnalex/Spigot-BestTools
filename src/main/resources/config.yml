@@ -45,6 +45,10 @@ hotbar-only: true
 # and 8 (rightmost hotbar slot)
 favorite-slot: 8
 
+# When set to false, /besttools and /refill will only work in survival game mode
+# When set to true, it works in survival and adventure game mode
+allow-in-adventure-mode: false
+
 # Don't use items if they are going to break with this usage
 # NOT IMPLEMENTED YET
 #prevent-item-break: true
@@ -88,7 +92,7 @@ check-interval: 4
 # &l Bold         &o Italic
 # &n Underline    &r Reset
 
-##### English
+##### You can edit these messages yourself or uncomment the existing translations (see below)
 message-besttools-enabled: "&7BestTools has been &aenabled&7."
 message-besttools-disabled: "&7BestTools has been &cdisabled&7."
 message-refill-enabled: "&7Refill has been &aenabled&7."
@@ -97,6 +101,26 @@ message-besttools-usage: "&7Hint: Type &6/besttools&7 or &6/bt&7 to automaticall
 message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically refill empty items from your inventory."
 message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
+
+##### English
+#message-besttools-enabled: "&7BestTools has been &aenabled&7."
+#message-besttools-disabled: "&7BestTools has been &cdisabled&7."
+#message-refill-enabled: "&7Refill has been &aenabled&7."
+#message-refill-disabled: "&7Refill has been &cdisabled&7."
+#message-besttools-usage: "&7Hint: Type &6/besttools&7 or &6/bt&7 to automatically use the best tool when breaking blocks."
+#message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically refill empty items from your inventory."
+#message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
+#message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
+
+##### German
+#message-besttools-enabled: "&7BestTools wurde &aaktiviert&7."
+#message-besttools-disabled: "&7BestTools wurde &cdeaktiviert&7."
+#message-refill-enabled: "&7Refill wurde &aaktiviert&7."
+#message-refill-disabled: "&7Refill wurde &cdeaktiviert&7."
+#message-besttools-usage: "&Hinweis: Benutze &6/besttools&7 oder &6/bt&7 um die automatische Werkzeugauswahl zu aktivieren."
+#message-refill-usage": "&7Hinweis: Benutze &6/refill&7 oder &6/rf&7 um die automatische Itemauffüllung zu aktivieren."
+#message-hotbar-only-enabled: "&7BestTools wird nur Werkzeuge aus deiner Hotbar benutzen."
+#message-hotbar-only-disabled: "&7BestTools wird alle Werkzeuge aus deinem Inventar benutzen."
 
 ##### Spanish
 #message-besttools-enabled: "&7BestTools ha sido &ahabilitado&7."
@@ -121,4 +145,4 @@ dump: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 2
+config-version: 3

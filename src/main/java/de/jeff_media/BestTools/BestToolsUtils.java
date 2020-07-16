@@ -52,7 +52,7 @@ public class BestToolsUtils {
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
         if(mat == null) {
-            main.debug("Skipping unknown Material "+matName);
+            main.debug("Skipping unknown fallback Material "+matName);
             return;
         }
         addToMap(mat,tool);

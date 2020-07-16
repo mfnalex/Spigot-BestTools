@@ -13,32 +13,26 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class PlayerInteractListener implements Listener {
+public class BestToolsListener implements Listener {
 
     BestToolsHandler handler;
     Main main;
 
-    PlayerInteractListener(@NotNull Main main) {
+    BestToolsListener(@NotNull Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
         handler=Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null");
     }
 
-    /*@EventHandler
-    public void onPlayerInteractWithMob(PlayerInteractEvent event) {
-        Player p = event.getPlayer();
-        PlayerInventory inv = p.getInventory();
-        PlayerSetting playerSetting = main.getPlayerSetting(p);
 
-        // TODO: Separate permission for this?
-        if(!p.hasPermission("besttool.use")) return;
 
-        if(event.getAction() != Action.LEFT_CLICK_AIR)
 
-    }*/
 
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
         Player p = event.getPlayer();
+        if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
+            return;
+        }
         PlayerInventory inv = p.getInventory();
         Block block = event.getClickedBlock();
         PlayerSetting playerSetting = main.getPlayerSetting(p);
@@ -49,18 +43,16 @@ public class PlayerInteractListener implements Listener {
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (block == null) return;
 
-        main.debug("This player has enabled: "+playerSetting.bestToolsEnabled);
-
-        if(!playerSetting.bestToolsEnabled) {
-            if(!playerSetting.hasSeenBestToolsMessage) {
-                p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
-                playerSetting.setHasSeenBestToolsMessage(true);
-            }
-            main.debug("ABORTING");
-            return;
-        }
+        if(!hasBestToolsEnabled(p, playerSetting)) return;
 
         ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p);
+        switchToBestTool(p, bestTool);
+
+    }
+
+    private void switchToBestTool(Player p, ItemStack bestTool) {
+
+        PlayerInventory inv = p.getInventory();
         if(bestTool == null) {
             ItemStack currentItem = inv.getItemInMainHand();
 
@@ -88,6 +80,18 @@ public class PlayerInteractListener implements Listener {
             handler.freeSlot(handler.favoriteSlot,inv);
             main.debug("Use no tool");
         }
+
+    }
+
+    private boolean hasBestToolsEnabled(Player p, PlayerSetting playerSetting) {
+        if(!playerSetting.bestToolsEnabled) {
+            if (!playerSetting.hasSeenBestToolsMessage) {
+                p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
+                playerSetting.setHasSeenBestToolsMessage(true);
+            }
+            return false;
+        }
+        return true;
     }
 
 }

@@ -2,6 +2,7 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -74,21 +75,13 @@ public class BestToolsHandler {
      */
     @NotNull
     Tool getBestToolType(@NotNull Material mat) {
-        Tool bestTool = toolMap.get(Objects.requireNonNull(mat,"Material must not be null"));
+        Tool bestTool = toolMap.get(mat);
         if(bestTool == null) bestTool = Tool.NONE;
         main.debug("Best ToolType for "+mat+" is "+bestTool.name());
         return bestTool;
     }
 
-
     // TODO: Optimize all of this by caching valid Materials instead of doing String checks everytime
-
-
-
-
-
-
-
 
 
     boolean isTool(Tool tool, ItemStack item) {
@@ -121,14 +114,16 @@ public class BestToolsHandler {
     @Nullable
     ItemStack getNonToolItemFromArray(@NotNull ItemStack[] items) {
         for(ItemStack item: items) {
-            if(!isDamageable(item)) return item;
+            if(!isDamageable(item)) {
+                return item;
+            }
         }
         return null;
+
     }
 
     @Nullable
     ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items) {
-
         if(tool == Tool.NONE) {
             return getNonToolItemFromArray(items);
         }
@@ -150,7 +145,7 @@ public class BestToolsHandler {
         boolean hotbarOnly = main.getPlayerSetting(p).hotbarOnly;
         ItemStack[] items = new ItemStack[(hotbarOnly ? hotbarSize : inventorySize)];
         for(int i = 0; i < (hotbarOnly ? hotbarSize : inventorySize); i++) {
-            items[i] = Objects.requireNonNull(inv,"Inventory must not be null").getItem(i);
+            items[i] = inv.getItem(i);
         }
         return items;
     }
@@ -164,11 +159,19 @@ public class BestToolsHandler {
     @Nullable
     ItemStack getBestToolFromInventory(@NotNull Material mat, Player p) {
         PlayerInventory inv = p.getInventory();
+
         ItemStack[] items = inventoryToArray(p);
-        //return typeToItem(Objects.requireNonNull(bestType,"Tool must not be null"),items);
-        Tool bestType = getBestToolType(Objects.requireNonNull(mat,"Material must not be null"));
+
+        Tool bestType = getBestToolType(mat);
         return getBestItemStackFromArray(bestType,items);
+
     }
+
+    /*@Nullable
+    ItemStack getBestToomFromInventory(Entity e, Player p) {
+        PlayerInventory inv = p.getPositionInInventory();
+        ItemStack[] items = inventoryToArray(p);
+    }*/
 
 
     /**
@@ -198,9 +201,8 @@ public class BestToolsHandler {
      */
     void moveToolToSlot(@NotNull int source, @NotNull int dest, @NotNull PlayerInventory inv) {
         main.debug(String.format("Moving item from slot %d to %d",source,dest));
-        Objects.requireNonNull(inv,"Inventory must not be null")
-                .setHeldItemSlot(Objects.requireNonNull(dest,"Destination must not be null"));
-        if(Objects.requireNonNull(source,"Source must not be null")==dest) return;
+        inv.setHeldItemSlot(dest);
+        if(source==dest) return;
         ItemStack sourceItem = inv.getItem(source);
         ItemStack destItem = inv.getItem(dest);
         if(source < hotbarSize) {
@@ -234,8 +236,7 @@ public class BestToolsHandler {
 
         if(!isDamageable(inv.getItemInMainHand())) return;
 
-        ItemStack item = Objects.requireNonNull(inv,"Inventory must not be null")
-                .getItem(Objects.requireNonNull(source,"Source must not be null"));
+        ItemStack item =inv.getItem(source);
 
         // If current slot is empty, we don't have to change it
         if(item == null) return;
