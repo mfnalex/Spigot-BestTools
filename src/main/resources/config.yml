@@ -112,6 +112,26 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 #message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
 
+##### Chinese
+#message-besttools-enabled: "&7自动切换最佳工具 &a已启用&7."
+#message-besttools-disabled: "&7自动切换最佳工具 &c已禁用&7."
+#message-refill-enabled: "&7自动填充方块 &a已启用&7."
+#message-refill-disabled: "&7自动填充方块 &c已禁用&7."
+#message-besttools-usage: "&7提示: 输入指令 &6/besttools&7 或 &6/bt&7 可以在破坏任意方块时自动切换至最佳工具."
+#message-refill-usage: "&7提示: 输入指令 &6/refill&7 或 &6/rf&7 可以从背包里自动填充手中放置完的物品."
+#message-hotbar-only-enabled: "&7自动切换最佳工具 仅会根据快捷栏切换工具."
+#message-hotbar-only-disabled: "&7自动切换最佳工具 会根据背包内的所有物品切换工具."
+
+##### Chinese (Traditional)
+#message-besttools-enabled: "&7自動切換最佳工具 &a已啟用&7."
+#message-besttools-disabled: "&7自動切換最佳工具 &c已禁用&7."
+#message-refill-enabled: "&7自動填充方塊 &a已啟用&7."
+#message-refill-disabled: "&7自動填充方塊 &c已禁用&7."
+#message-besttools-usage: "&7提示: 輸入指令 &6/besttools&7 或 &6/bt&7 可以在破壞任意方塊時自動切換至最佳工具."
+#message-refill-usage: "&7提示: 輸入指令 &6/refill&7 或 &6/rf&7 可以從背包裡自動填充手中放置完的物品."
+#message-hotbar-only-enabled: "&7自動切換最佳工具 僅會根據快捷欄切換工具."
+#message-hotbar-only-disabled: "&7自動切換最佳工具 會根據背包內的所有物品切換工具."
+
 ##### German
 #message-besttools-enabled: "&7BestTools wurde &aaktiviert&7."
 #message-besttools-disabled: "&7BestTools wurde &cdeaktiviert&7."

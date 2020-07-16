@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2-SNAPSHOT
+- Added Chinese and Chinese (Traditional) translations
+
+## 1.2.1
+- Fixed misspelled permission (again)
+
 ## 1.2.0
 - BestTools now prefers items with silk touch when breaking glass, enderchests and glowstone
 
