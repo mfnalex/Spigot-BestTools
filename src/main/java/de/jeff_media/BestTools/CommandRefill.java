@@ -24,7 +24,7 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
         Player p;
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
-            if(!sender.hasPermission("besttool.reload")) {
+            if(!sender.hasPermission("besttools.reload")) {
                 sender.sendMessage(command.getPermissionMessage());
                 return true;
             }

@@ -41,7 +41,7 @@ public class RefillListener implements Listener {
 
         if (item.getAmount() != 1) return;
 
-        if (!p.hasPermission("besttool.refill")) return;
+        if (!p.hasPermission("besttools.refill")) return;
         if (!playerSetting.refillEnabled) {
             if (!playerSetting.hasSeenRefillMessage) {
                 p.sendMessage(main.messages.MSG_REFILL_USAGE);
