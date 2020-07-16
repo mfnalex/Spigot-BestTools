@@ -2,6 +2,7 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -83,6 +84,14 @@ public class BestToolsHandler {
 
     // TODO: Optimize all of this by caching valid Materials instead of doing String checks everytime
 
+    boolean profitsFromSilkTouch(Material mat) {
+        String name = mat.name();
+        if(mat==Material.GLOWSTONE) return true;
+        if(mat==Material.ENDER_CHEST) return true;
+        if(name.contains("GLASS")) return true;
+        return false;
+    }
+
 
     boolean isTool(Tool tool, ItemStack item) {
         String n = item.getType().name();
@@ -122,19 +131,41 @@ public class BestToolsHandler {
 
     }
 
+    boolean hasSilktouch(ItemStack item) {
+        if(item==null) return false;
+        if(!item.hasItemMeta()) return false;
+        return item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH);
+    }
+
     @Nullable
-    ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items) {
+    ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items, boolean trySilktouch) {
+
         if(tool == Tool.NONE) {
             return getNonToolItemFromArray(items);
         }
 
         ArrayList<ItemStack> list = new ArrayList<>();
-        for(ItemStack item : Objects.requireNonNull(items,"Items must not be null")) {
+        for(ItemStack item : items) {
             if(item==null) continue;
             // TODO: Check if durability is 1
-            if(isTool(tool,item)) list.add(item);
+
+            if(isTool(tool,item)) {
+                if(!trySilktouch) {
+                    list.add(item);
+                } else {
+                    if(hasSilktouch(item)) {
+                        list.add(item);
+                    }
+                }
+            }
         }
-        if(list.size()==0) return null;
+        if(list.size()==0) {
+            if(trySilktouch) {
+                return getBestItemStackFromArray(tool,items,false);
+            } else {
+                return null;
+            }
+        }
         list.sort(Comparator.comparingInt(EnchantmentUtils::getMultiplier).reversed());
         return list.get(0);
     }
@@ -163,7 +194,7 @@ public class BestToolsHandler {
         ItemStack[] items = inventoryToArray(p);
 
         Tool bestType = getBestToolType(mat);
-        return getBestItemStackFromArray(bestType,items);
+        return getBestItemStackFromArray(bestType,items,profitsFromSilkTouch(mat));
 
     }
 

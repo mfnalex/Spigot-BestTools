@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0
+- BestTools now prefers items with silk touch when breaking glass, enderchests and glowstone
+
 ## 1.1.0
 - Refill works on food, snacks, and anything else digestible
 - /besttools and /refill will only work in survival mode or, if enabled in the config, in adventure mode
