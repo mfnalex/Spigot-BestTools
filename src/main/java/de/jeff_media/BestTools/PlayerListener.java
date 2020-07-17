@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
 
-    Main main;
+    final Main main;
 
     PlayerListener(Main main) {
         this.main=main;

@@ -15,8 +15,8 @@ import java.util.Objects;
 
 public class BestToolsListener implements Listener {
 
-    BestToolsHandler handler;
-    Main main;
+    final BestToolsHandler handler;
+    final Main main;
 
     BestToolsListener(@NotNull Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
@@ -30,6 +30,15 @@ public class BestToolsListener implements Listener {
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
         Player p = event.getPlayer();
+        if(!p.hasPermission("besttools.use")) return;
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
+        Block block = event.getClickedBlock();
+        if (block == null) return;
+        if(playerSetting.btcache.valid && block.getType() == playerSetting.btcache.lastMat) {
+            main.debug("Cache valid!");
+            return;
+        }
+        main.debug("Cache invalid, doing onPlayerInteractWithBlock");
         if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
             return;
         }
@@ -40,19 +49,15 @@ public class BestToolsListener implements Listener {
             return;
         }
 
-        Block block = event.getClickedBlock();
-        PlayerSetting playerSetting = main.getPlayerSetting(p);
-
-        if(!p.hasPermission("besttools.use")) return;
-
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
-        if (block == null) return;
+
 
         if(!hasBestToolsEnabled(p, playerSetting)) return;
 
         ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p);
         switchToBestTool(p, bestTool);
+        playerSetting.btcache.validate(block.getType());
 
     }
 
@@ -62,7 +67,7 @@ public class BestToolsListener implements Listener {
         if(bestTool == null) {
             ItemStack currentItem = inv.getItemInMainHand();
 
-            if(currentItem==null) return;
+            //if(currentItem==null) return; // IntelliJ says this is always false
 
             int emptyHotbarSlot = BestToolsHandler.getEmptyHotbarSlot(inv);
             if(emptyHotbarSlot!=-1) {

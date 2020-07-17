@@ -19,19 +19,19 @@ import java.util.*;
  */
 public class BestToolsHandler {
 
-    Main main;
+    final Main main;
     boolean debug = false;
     boolean verbose = true;
 
-    static int hotbarSize = 9;
-    static int inventorySize = 36;
+    static final int hotbarSize = 9;
+    static final int inventorySize = 36;
 
     // Configurable Start //
     boolean preventItemBreak = false; // Will not use Items that would break on this use
     int favoriteSlot;
     // Configurable End //
 
-    public HashMap<Material,Tool> toolMap = new HashMap<>();
+    public final HashMap<Material,Tool> toolMap = new HashMap<>();
     ArrayList<Tag<Material>> usedTags = new ArrayList<>();
 
     // TODO: Cache valid tool materials here
@@ -40,6 +40,14 @@ public class BestToolsHandler {
     final LinkedList<Material> hoes = new LinkedList<>();
     final LinkedList<Material> shovels = new LinkedList<>();
 
+    final LinkedList<Material> allTools = new LinkedList<>();
+    final String[] netheriteTools = {
+            "NETHERITE_PICKAXE",
+            "NETHERITE_AXE",
+            "NETHERITE_HOE",
+            "NETHERITE_SHOVEL"
+    };
+
 
     final LinkedList<Material> weapons = new LinkedList<>();
 
@@ -47,6 +55,44 @@ public class BestToolsHandler {
 
         this.main=Objects.requireNonNull(main,"Main must not be null");
         this.favoriteSlot=main.getConfig().getInt("favorite-slot");
+
+        Material[] defaultMats = {
+                Material.DIAMOND_PICKAXE,
+                Material.DIAMOND_AXE,
+                Material.DIAMOND_HOE,
+                Material.DIAMOND_SHOVEL,
+
+                Material.GOLDEN_PICKAXE,
+                Material.GOLDEN_AXE,
+                Material.GOLDEN_HOE,
+                Material.GOLDEN_SHOVEL,
+
+                Material.IRON_PICKAXE,
+                Material.IRON_AXE,
+                Material.IRON_HOE,
+                Material.IRON_SHOVEL,
+
+                Material.STONE_PICKAXE,
+                Material.STONE_AXE,
+                Material.STONE_HOE,
+                Material.STONE_SHOVEL,
+
+                Material.WOODEN_PICKAXE,
+                Material.WOODEN_AXE,
+                Material.WOODEN_HOE,
+                Material.WOODEN_SHOVEL,
+
+                Material.SHEARS
+        };
+
+        allTools.addAll(Arrays.asList(defaultMats));
+        for(String s : netheriteTools) {
+            if(Material.getMaterial(s)!=null) {
+                allTools.add(Material.getMaterial(s));
+            }
+        }
+
+
     }
 
     boolean isWeapon(ItemStack itemInMainHand) {
@@ -54,6 +100,10 @@ public class BestToolsHandler {
             if(itemInMainHand.getType()==mat) return true;
         }
         return false;
+    }
+
+    boolean isTool(ItemStack i) {
+        return allTools.contains(i.getType());
     }
 
     enum Tool {
@@ -158,7 +208,7 @@ public class BestToolsHandler {
 
         ArrayList<ItemStack> list = new ArrayList<>();
         for(ItemStack item : items) {
-            if(item==null) continue;
+            // if(item==null) continue; // IntelliJ says this is always false
             // TODO: Check if durability is 1
 
             if(isTool(tool,item)) {
@@ -223,7 +273,6 @@ public class BestToolsHandler {
      * @param inv Player's inventory
      * @return slot number or -1 if not found
      */
-    @NotNull
     int getPositionInInventory(@NotNull ItemStack item, @NotNull PlayerInventory inv) {
         for(int i = 0; i < Objects.requireNonNull(inv,"Inventory must not be null").getSize(); i++) {
             ItemStack currentItem = inv.getItem(i);
@@ -242,7 +291,7 @@ public class BestToolsHandler {
      * @param dest Slot where the tool should be
      * @param inv Player's inventory
      */
-    void moveToolToSlot(@NotNull int source, @NotNull int dest, @NotNull PlayerInventory inv) {
+    void moveToolToSlot(int source, int dest, @NotNull PlayerInventory inv) {
         main.debug(String.format("Moving item from slot %d to %d",source,dest));
         inv.setHeldItemSlot(dest);
         if(source==dest) return;
@@ -273,9 +322,9 @@ public class BestToolsHandler {
      * @param source Slot to free
      * @param inv Player's inventory
      */
-    void freeSlot(@NotNull int source, @NotNull PlayerInventory inv) {
+    void freeSlot(int source, @NotNull PlayerInventory inv) {
 
-        if(inv.getItemInMainHand()==null) return;
+        //if(inv.getItemInMainHand()==null) return; // IntelliJ says this is always false
 
         if(!isDamageable(inv.getItemInMainHand())) return;
 

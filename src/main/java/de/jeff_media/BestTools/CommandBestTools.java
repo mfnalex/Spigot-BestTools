@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandBestTools implements CommandExecutor {
 
-    Main main;
+    final Main main;
 
     CommandBestTools(Main main) {
         this.main = main;

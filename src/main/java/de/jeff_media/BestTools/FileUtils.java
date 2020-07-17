@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class FileUtils {
-    Main main;
+    final Main main;
 
     FileUtils(Main main) {
         this.main=main;
@@ -31,6 +31,7 @@ public class FileUtils {
     public static void renameFileInPluginDir(Main plugin,String oldName, String newName) {
         File oldFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + oldName);
         File newFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + newName);
+        //noinspection ResultOfMethodCallIgnored
         oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile());
     }
 

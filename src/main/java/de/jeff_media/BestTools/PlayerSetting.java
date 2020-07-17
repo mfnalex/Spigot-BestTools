@@ -25,6 +25,10 @@ public class PlayerSetting {
         // Do we have to save these settings?
         boolean changed = false;
 
+        final BestToolsCache btcache = new BestToolsCache();
+
+        boolean invChanged = true;
+
         PlayerSetting(File file,Main main) {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
                 this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled",false);

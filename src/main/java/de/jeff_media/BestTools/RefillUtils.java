@@ -11,13 +11,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toMap;
-
 public class RefillUtils {
 
     final static int inventorySize = 36;
 
-    Main main;
+    final Main main;
 
     RefillUtils(Main main) {
         this.main=main;

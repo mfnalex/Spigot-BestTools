@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 
 public class Messages {
 
-    Main main;
+    final Main main;
 
     final String
             MSG_BESTTOOL_ENABLED,

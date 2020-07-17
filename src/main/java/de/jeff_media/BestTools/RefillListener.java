@@ -11,7 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class RefillListener implements Listener {
 
-    Main main;
+    final Main main;
 
     RefillListener(Main main) {
         this.main=main;

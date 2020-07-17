@@ -9,10 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CommandRefill implements CommandExecutor, TabCompleter {
 
-    Main main;
+    final Main main;
 
     CommandRefill(Main main) {
         this.main=main;
@@ -25,7 +26,7 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             if(!sender.hasPermission("besttools.reload")) {
-                sender.sendMessage(command.getPermissionMessage());
+                sender.sendMessage(Objects.requireNonNull(command.getPermissionMessage()));
                 return true;
             }
             CommandReload.reload(sender,command,main);

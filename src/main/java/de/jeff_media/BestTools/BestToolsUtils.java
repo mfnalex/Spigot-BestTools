@@ -17,7 +17,7 @@ public class BestToolsUtils {
     final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
     final String[] weapons = {"BOW","CROSSBOW","TRIDENT","NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
 
-    Main main;
+    final Main main;
 
     // This is called AFTER BestToolsHandler, so the Utils can affect the Handler
     public BestToolsUtils(@NotNull Main main) {
@@ -444,7 +444,6 @@ public class BestToolsUtils {
                 if(n.contains(woodType)) {
                     if(n.contains("STAIRS") || n.contains("LOG") || n.contains("PLANK")) {
                         addToMap(mat, Tool.AXE);
-                        continue;
                     }
                 }
             }

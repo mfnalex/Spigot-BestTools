@@ -23,6 +23,7 @@ public class Main extends JavaPlugin {
     RefillListener refillListener;
     BestToolsListener bestToolsListener;
     PlayerListener playerListener;
+    BestToolsCacheListener bestToolsCacheListener;
     FileUtils fileUtils;
     RefillUtils refillUtils;
     CommandBestTools commandBestTools;
@@ -113,6 +114,7 @@ public class Main extends JavaPlugin {
         refillListener = new RefillListener(this);
         bestToolsListener = new BestToolsListener(this);
         playerListener = new PlayerListener(this);
+        bestToolsCacheListener = new BestToolsCacheListener((this));
         commandBestTools = new CommandBestTools(this);
         commandRefill = new CommandRefill(this);
         refillUtils = new RefillUtils((this));
@@ -125,8 +127,9 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(refillListener,this);
         getServer().getPluginManager().registerEvents(bestToolsListener,this);
         getServer().getPluginManager().registerEvents(playerListener, this);
-        getCommand("besttools").setExecutor(commandBestTools);
-        getCommand("refill").setExecutor(commandRefill);
+        getServer().getPluginManager().registerEvents(bestToolsCacheListener,this);
+        Objects.requireNonNull(getCommand("besttools")).setExecutor(commandBestTools);
+        Objects.requireNonNull(getCommand("refill")).setExecutor(commandRefill);
 
         if(getConfig().getBoolean("dump",false)) {
             try {
