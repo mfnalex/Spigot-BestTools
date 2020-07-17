@@ -1,6 +1,6 @@
 main: de.jeff_media.BestTools.Main
 name: BestTools
-version: 1.5.0-SNAPSHOT
+version: 1.5.0
 api-version: "1.13"
 description: Automatically chooses the best tool when breaking blocks
 author: mfnalex
@@ -12,6 +12,10 @@ commands:
     description: Toggle BestTools
     usage: |
       /<command> -- Toggle automatically using the best tool
+      /<command> hotbar -- Toggle whether to only use tools from your hotbar
+      /<command> reload -- Reloads the config file
+      /<command> debug -- Toggle debug mode
+      /<command> performance -- Toggle performance test
     aliases: [bt,besttool]
     permission: besttools.use
   refill:
@@ -27,3 +31,5 @@ permissions:
     description: Allows using /refill
   besttools.reload:
     description: Allows to reload the config via /besttools reload
+  besttools.debug:
+    description: Allows to enable the debug mode via /besttools debug and the performance test via /besttools performance

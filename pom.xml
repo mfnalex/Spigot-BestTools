@@ -8,8 +8,8 @@
     <artifactId>BestTools</artifactId>
     <name>BestTools</name>
     <!--<url>https://www.chestsort.de</url>-->
-    <description>Automatically sorts your chests!</description>
-    <version>1.5.0-SNAPSHOT</version>
+    <description>Automatically switches to the best tools. Most efficient Auto-Tool plugin!</description>
+    <version>1.5.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -32,7 +32,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <configuration>
                     <finalName>BestTools</finalName>
                 </configuration>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.4</version>
                 <configuration>
                     <relocations>
                         <relocation>

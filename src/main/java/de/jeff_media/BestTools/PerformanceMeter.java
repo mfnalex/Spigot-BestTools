@@ -1,5 +1,8 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
 import java.util.Locale;
 
 public class PerformanceMeter {
@@ -39,23 +42,43 @@ public class PerformanceMeter {
         double calcTime = puffer/(double)nanoPerMilli;
         double calcTimePercent = (calcTime /  (secondsBetween*1000)) * 100;
 
-        String out = String.format(Locale.US,
-                //"Took %5.2f ms on avg. ~%2.4f %%/default tick duration.",avgms,percentOnTick
-                "%6.2f %s elapsed, of which BestTools took %2.2f ms or %1.3f %% - "
-                + "%d %% of queries served by cache",
 
-                        //%d %% of queries served from cache",
-                /*secondsBetween > 1 ? secondsBetween : secondsBetween*1000,
-                secondsBetween > 1 ? "s" : "ms",*/
-                secondsBetween*1000,"ms",
+        main.getLogger().warning(String.format(Locale.US,
+                //"Took %5.2f ms on avg. ~%2.4f %%/default tick duration.",avgms,percentOnTick
+                "%10.2f ms elapsed, of which BestTools took %5.2f ms or %5.3f %% - %2d / %2d "
+                + " queries served by cache (%3d %%)",
+
+                secondsBetween*1000,
                 calcTime,
                 calcTimePercent,
+                cached,
+                cached+uncached,
                 (int) Math.ceil(cached / (double) (cached+uncached) * 100)
-                //(int) Math.ceil((cached / (double) ((cached+uncached)*100)))
-        );
+        ));
 
-        //main.getLogger().warning(out);
-        main.getServer().broadcastMessage(out);
+        ChatColor color = ChatColor.GREEN;
+        if(calcTimePercent>=1) color = ChatColor.YELLOW;
+        if(calcTimePercent>=2) color = ChatColor.RED;
+
+        ChatColor color2 = ChatColor.GREEN;
+        if(calcTimePercent<=20) color2 = ChatColor.YELLOW;
+        if(calcTimePercent==0) color2 = ChatColor.RED;
+
+        for(Player p : main.getServer().getOnlinePlayers()) {
+            if(p.hasPermission("besttools.debug"))
+            p.sendMessage(String.format(
+                    "Elapsed: %.2f ms, BestTools: %3.2f ms or %s%2.3f %%§r\n"
+                    +"%d / %d queries served by cache %s(%3d %%)\n",
+                    secondsBetween*1000,
+                    calcTime,
+                    color,
+                    calcTimePercent,
+                    cached,
+                    cached+uncached,
+                    color2,
+                    (int) Math.ceil(cached / (double) (cached+uncached) * 100)
+            ));
+        }
 
         i=0;puffer=0;start=0;
     }

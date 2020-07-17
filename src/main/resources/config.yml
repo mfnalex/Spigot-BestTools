@@ -166,6 +166,7 @@ verbose: true
 # You can enable debug mode using /bt debug (permission: besttools.debug)
 debug: false
 
+# Prints the Material<>Tool map to a csv file
 dump: false
 
 # You can enable performance test using /bt performance (permission: besttools.debug)
@@ -173,4 +174,4 @@ measure-performance: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 6
+config-version: 7

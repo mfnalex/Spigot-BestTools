@@ -2,9 +2,12 @@
 
 ## 1.5.0
 - Instant breakable blocks like torches, grass, flowers etc. are no broken with the current item if it's not a hoe (because the hoe would take damage)
+- Does not empty a slot into the inventory to use the empty hand to break a block when another undamagable item or block from the hotbar can be used instead
 - Further performance optimization
   - replaced LinkedLists with ArrayLists
   - pregenerates tools material list instead of comparing strings (which was done to avoid problems with versions before netherite tools)1
+  - checks player cache before checking everything else like permissions to further speed things up
+- Added performance test mode (/besttools performance, needs permission besttools.debug)
 
 
 ## 1.4.1
