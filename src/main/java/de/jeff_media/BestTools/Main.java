@@ -1,7 +1,9 @@
 package de.jeff_media.BestTools;
 
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,10 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
     final int configVersion = 6;
+
+    final int mcVersion = getMcVersion();
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
@@ -33,6 +39,7 @@ public class Main extends JavaPlugin {
     boolean debug=false;
     boolean wtfdebug=false;
     boolean measurePerformance=false;
+    PerformanceMeter meter;
 
     HashMap<UUID,PlayerSetting> playerSettings;
     boolean verbose = true;
@@ -128,6 +135,8 @@ public class Main extends JavaPlugin {
         fileUtils = new FileUtils(this);
         playerSettings = new HashMap<>();
 
+        meter = new PerformanceMeter(this);
+
         toolUtils.initMap();
 
         getServer().getPluginManager().registerEvents(refillListener,this);
@@ -188,5 +197,17 @@ public class Main extends JavaPlugin {
         getLogger().warning("has updated the file to the newest version.");
         getLogger().warning("Your changes have been kept.");
         getLogger().warning("==============================================");
+    }
+
+    // Returns 16 for 1.16, etc.
+    static int getMcVersion() {
+        Pattern p = Pattern.compile("^1\\.(\\d*)\\.");
+        Matcher m = p.matcher((Bukkit.getBukkitVersion()));
+        int version = -1;
+        while(m.find()) {
+            if(NumberUtils.isNumber(m.group(1)))
+                version = Integer.parseInt(m.group(1));
+        }
+        return version;
     }
 }

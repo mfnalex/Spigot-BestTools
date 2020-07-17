@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,26 +30,39 @@ public class BestToolsListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
-        long startTime=0;
-        if(main.measurePerformance) { startTime = System.nanoTime(); }
-        Player p = event.getPlayer();
-        if(!p.hasPermission("besttools.use")) return;
-        PlayerSetting playerSetting = main.getPlayerSetting(p);
-        Block block = event.getClickedBlock();
-        if (block == null) return;
-        if(playerSetting.btcache.valid && block.getType() == playerSetting.btcache.lastMat) {
-            if(main.measurePerformance) measurePerformance(startTime);
-            main.wtfdebug("Cache valid!");
+        long st= main.measurePerformance ? System.nanoTime() : 0;
+
+        // Check the cache as soon as possible
+        PlayerSetting playerSetting = main.getPlayerSetting(event.getPlayer());
+        if(playerSetting.btcache.valid
+                && event.getClickedBlock()!=null
+                && event.getClickedBlock().getType() == playerSetting.btcache.lastMat) {
+            main.meter.add(st,true);
+            //main.wtfdebug("Cache valid!");
             return;
         }
-        main.wtfdebug("Cache invalid, doing onPlayerInteractWithBlock");
+        Player p = event.getPlayer();
+        if(!p.hasPermission("besttools.use")) {
+            //main.meter.add(st);
+            return;
+        }
+        if(!hasBestToolsEnabled(p, playerSetting)) {
+            //main.meter.add(st);
+            return;
+        }
+        Block block = event.getClickedBlock();
+        if (block == null) {
+            //main.meter.add(st);
+            return;
+        }
+       //main.wtfdebug("Cache invalid, doing onPlayerInteractWithBlock");
         if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
             return;
         }
         PlayerInventory inv = p.getInventory();
 
         if(main.getConfig().getBoolean("dont-switch-during-battle") && handler.isWeapon(inv.getItemInMainHand())) {
-            main.debug("Return: It's a gun^^");
+            //main.debug("Return: It's a gun^^");
             return;
         }
 
@@ -56,21 +70,21 @@ public class BestToolsListener implements Listener {
         if (event.getHand() != EquipmentSlot.HAND) return;
 
 
-        if(!hasBestToolsEnabled(p, playerSetting)) return;
 
-        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p);
-        switchToBestTool(p, bestTool);
+
+        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p,playerSetting.hotbarOnly,inv.getItemInMainHand());
+
+        if(bestTool==null || bestTool.equals(inv.getItemInMainHand())) {
+            main.meter.add(st,false);
+            playerSetting.btcache.validate(block.getType());
+            return;
+        }
+        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType());
         playerSetting.btcache.validate(block.getType());
-        if(main.measurePerformance) measurePerformance(startTime);
+        main.meter.add(st,false);
     }
 
-    private void measurePerformance(long startTime) {
-            long ns = System.nanoTime()-startTime;
-            long players = (50000000/ns);
-            main.getLogger().warning(String.format("%6d ns. That means %4d players could stripmine at the same time. And it will be even faster in the next version.",ns,players));
-    }
-
-    private void switchToBestTool(Player p, ItemStack bestTool) {
+    private void switchToBestTool(Player p, ItemStack bestTool, boolean hotbarOnly, Material target) {
 
         PlayerInventory inv = p.getInventory();
         if(bestTool == null) {
@@ -85,20 +99,20 @@ public class BestToolsListener implements Listener {
             }
 
             if(!main.toolHandler.isDamageable(currentItem)) return;
-            bestTool = handler.getNonToolItemFromArray(handler.inventoryToArray(p));
+            bestTool = handler.getNonToolItemFromArray(handler.inventoryToArray(p,hotbarOnly),currentItem,target);
         }
         if(bestTool == null) {
             handler.freeSlot(handler.favoriteSlot,inv);
-            main.debug("Could not find any appropiate tool");
+            //main.debug("Could not find any appropiate tool");
             return;
         }
         int positionInInventory = handler.getPositionInInventory(bestTool,inv) ;
         if(positionInInventory != -1) {
             handler.moveToolToSlot(positionInInventory,handler.favoriteSlot,inv);
-            main.debug("Found tool");
+            //main.debug("Found tool");
         } else {
             handler.freeSlot(handler.favoriteSlot,inv);
-            main.debug("Use no tool");
+            //main.debug("Use no tool");
         }
 
     }

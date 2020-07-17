@@ -39,11 +39,11 @@ public class BestToolsCacheListener implements @NotNull Listener {
     }
 
     void cacheInvalidated(Player p) {
-        main.wtfdebug(p.getName()+" has invalidated their best tool cache");
+        //main.wtfdebug(p.getName()+" has invalidated their best tool cache");
         main.getPlayerSetting(p).btcache.invalidated();
     }
     void cacheInvalidated(Player p,String reason) {
-        main.wtfdebug(p.getName()+" has invalidated their best tool cache because "+reason);
+        //main.wtfdebug(p.getName()+" has invalidated their best tool cache because "+reason);
         main.getPlayerSetting(p).btcache.invalidated();
     }
 }

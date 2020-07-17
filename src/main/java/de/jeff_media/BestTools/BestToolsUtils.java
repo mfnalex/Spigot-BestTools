@@ -6,8 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import de.jeff_media.BestTools.BestToolsHandler.Tool;
 
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Please don't cry because I use Strings instead of Material. It's for backward compatability and the map only gets built once on startup, so don't worry
@@ -16,14 +15,65 @@ public class BestToolsUtils {
 
     final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
     final String[] weapons = {"BOW","CROSSBOW","TRIDENT","NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
+    final String[] instaBreakableByHand = {"COMPARATOR","REPEATER","REDSTONE_WIRE","REDSTONE_TORCH","REDSTONE_WALL_TORCH","TORCH","SOUL_TORCH","WALL_TORCH","SOUL_WALL_TORCH",
+            "SCAFFOLDING","SLIME_BLOCK","HONEY_BLOCK","TNT","TRIPWIRE","TRIPWIRE_HOOK","GRASS","SUGAR_CANE","LILY_PAD",
+            "OAK_SAPLING","SPRUCE_SAPLING","BIRCH_SAPLING","JUNGLE_SAPLING","ACACIA_SAPLING","DARK_OAK_SAPLING",
+            "BROWN_MUSHROOM","RED_MUSHROOM","CRIMSON_FUNGUS","WARPED_FUNGUS","CRIMSON_ROOTS","WARPED_ROOTS","WEEPING VINES","TWISTING_VINES",
+            "DEAD_BUSH","WHEAT","CARROTS","POTATOES","BEETROOTS","PUMPKIN_STEM","MELON_STEM","NETHER_WART","FLOWER_POT",
+            "DANDELION","POPPY","BLUE_ORCHID","ALLIUM","AZURE_BLUET","RED_TULIP","ORANGE_TULIP","WHITE_TULIP","PINK_TULIP","OXEYE_DAISY","CORNFLOWER","LILY_OF_THE_VALLEY","WITHER_ROSE","SUNFLOWER","LILAC","ROSE_BUSH","PEONY",
+            "POTTED_DANDELION","POTTED_POPPY","POTTED_BLUE_ORCHID","POTTED_ALLIUM","POTTED_AZURE_BLUET","POTTED_RED_TULIP","POTTED_ORANGE_TULIP","POTTED_WHITE_TULIP","POTTED_PINK_TULIP","POTTED_OXEYE_DAISY","POTTED_CORNFLOWER","POTTED_LILY_OF_THE_VALLEY","POTTED_WITHER_ROSE","POTTED_SUNFLOWER","POTTED_LILAC","POTTED_ROSE_BUSH","POTTED_PEONY",
+            "TUBE_CORAL","BRAIN_CORAL","BUBBLE_CORAL","FIRE_CORAL","HORN_CORAL","DEAD_TUBE_CORAL","DEAD_BRAIN_CORAL","DEAD_BUBBLE_CORAL","DEAD_FIRE_CORAL","DEAD_HORN_CORAL"};
+            // TODO: Add grass only in 1.13+ instead of always
+    final String[] hoes = {"NETHERITE_HOE","DIAMOND_HOE","GOLDEN_HOE","IRON_HOE","STONE_HOE","WOODEN_HOE"};
+    final String[] pickaxes = {"NETHERITE_PICKAXE","DIAMOND_PICKAXE","GOLDEN_PICKAXE","IRON_PICKAXE","STONE_PICKAXE","WOODEN_PICKAXE"};
+    final String[] axes = {"NETHERITE_AXE","DIAMOND_AXE","GOLDEN_AXE","IRON_AXE","STONE_AXE","WOODEN_AXE"};
+    final String[] shovels = {"NETHERITE_SHOVEL","DIAMOND_SHOVEL","GOLDEN_SHOVEL","IRON_SHOVEL","STONE_SHOVEL","WOODEN_SHOVEL"};
+    final String[] swords = {"NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
+    final Material[] defaultMats = {
+            Material.DIAMOND_PICKAXE,
+            Material.DIAMOND_AXE,
+            Material.DIAMOND_HOE,
+            Material.DIAMOND_SHOVEL,
+
+            Material.GOLDEN_PICKAXE,
+            Material.GOLDEN_AXE,
+            Material.GOLDEN_HOE,
+            Material.GOLDEN_SHOVEL,
+
+            Material.IRON_PICKAXE,
+            Material.IRON_AXE,
+            Material.IRON_HOE,
+            Material.IRON_SHOVEL,
+
+            Material.STONE_PICKAXE,
+            Material.STONE_AXE,
+            Material.STONE_HOE,
+            Material.STONE_SHOVEL,
+
+            Material.WOODEN_PICKAXE,
+            Material.WOODEN_AXE,
+            Material.WOODEN_HOE,
+            Material.WOODEN_SHOVEL,
+
+            Material.SHEARS
+    };
+    final String[] netheriteTools = {
+            "NETHERITE_PICKAXE",
+            "NETHERITE_AXE",
+            "NETHERITE_HOE",
+            "NETHERITE_SHOVEL"
+    };
 
     final Main main;
+    //final Map<Material,Tool> uToolMap;
+
+
 
     // This is called AFTER BestToolsHandler, so the Utils can affect the Handler
     public BestToolsUtils(@NotNull Main main) {
 
         this.main = Objects.requireNonNull(main,"Main must not be null");
-        
+        Objects.requireNonNull(main.toolHandler,"BestToolsHandler must be instantiated before BestToolUtils!");
         
         // Register valid weapons
         for(String weapon : weapons) {
@@ -31,8 +81,55 @@ public class BestToolsUtils {
                 main.toolHandler.weapons.add(Material.getMaterial(weapon));
             }
         }
-        
-        //this.handler = Objects.requireNonNull(main.toolHandler,"BestToolsHandler must not be null");
+
+        // Register all InstaBreaksByHand
+        for(String s : instaBreakableByHand) {
+            addToMap(s,main.toolHandler.instaBreakableByHand);
+        }
+
+        // Hoes
+        for(String s : hoes) {
+            addToMap(s,main.toolHandler.hoes);
+        }
+
+        // Pickaxes
+        for(String s : pickaxes) {
+            addToMap(s,main.toolHandler.pickaxes);
+        }
+
+        // Axes
+        for(String s : axes) {
+            addToMap(s,main.toolHandler.axes);
+        }
+
+        // Shovels
+        for(String s : shovels) {
+            addToMap(s,main.toolHandler.shovels);
+        }
+
+        // Swords
+        for(String s : swords) {
+            addToMap(s,main.toolHandler.swords);
+        }
+
+
+        main.toolHandler.allTools.addAll(Arrays.asList(defaultMats));
+        for(String s : netheriteTools) {
+            if(Material.getMaterial(s)!=null) {
+                main.toolHandler.allTools.add(Material.getMaterial(s));
+            }
+        }
+
+        //uToolMap = Map.copyOf(main.toolHandler.toolMap); // Java 10+ only
+    }
+
+    private void addToMap(String name, ArrayList<Material> list) {
+        Material mat = Material.getMaterial(name);
+        if(mat != null) {
+            list.add(mat);
+        } else {
+            //main.debug("Skipping unknown Material "+name);
+        }
     }
 
     private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool) {
@@ -63,7 +160,7 @@ public class BestToolsUtils {
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
         if(mat == null) {
-            main.debug("Skipping unknown fallback Material "+matName);
+            //main.debug("Skipping unknown fallback Material "+matName);
             return;
         }
         addToMap(mat,tool);

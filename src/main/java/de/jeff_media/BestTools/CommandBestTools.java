@@ -25,6 +25,12 @@ public class CommandBestTools implements CommandExecutor {
             return true;
         }
 
+        if(args.length > 0 && (args[0].equalsIgnoreCase("debug")
+                || args[0].equalsIgnoreCase("performance"))) {
+            CommandDebug.debug(sender,command,main,args[0]);
+            return true;
+        }
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("You must be a player to run this command.");
             return true;

@@ -163,12 +163,12 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 # Show some infos on startup
 verbose: true
 
-# You probably don't want this
+# You can enable debug mode using /bt debug (permission: besttools.debug)
 debug: false
+
 dump: false
 
-# You really don't want this
-wtf-debug: false
+# You can enable performance test using /bt performance (permission: besttools.debug)
 measure-performance: false
 
 # Do not change the following line! It is used to automatically update

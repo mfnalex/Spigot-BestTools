@@ -31,66 +31,29 @@ public class BestToolsHandler {
     int favoriteSlot;
     // Configurable End //
 
-    public final HashMap<Material,Tool> toolMap = new HashMap<>();
+    final HashMap<Material,Tool> toolMap = new HashMap<>();
+
     ArrayList<Tag<Material>> usedTags = new ArrayList<>();
 
     // TODO: Cache valid tool materials here
-    final LinkedList<Material> pickaxes = new LinkedList<>();
-    final LinkedList<Material> axes = new LinkedList<>();
-    final LinkedList<Material> hoes = new LinkedList<>();
-    final LinkedList<Material> shovels = new LinkedList<>();
+    final ArrayList<Material> pickaxes = new ArrayList<>();
+    final ArrayList<Material> axes = new ArrayList<>();
+    final ArrayList<Material> hoes = new ArrayList<>();
+    final ArrayList<Material> shovels = new ArrayList<>();
+    final ArrayList<Material> swords = new ArrayList<>();
 
-    final LinkedList<Material> allTools = new LinkedList<>();
-    final String[] netheriteTools = {
-            "NETHERITE_PICKAXE",
-            "NETHERITE_AXE",
-            "NETHERITE_HOE",
-            "NETHERITE_SHOVEL"
-    };
+    final ArrayList<Material> allTools = new ArrayList<>();
+    final ArrayList<Material> instaBreakableByHand = new ArrayList<>();
 
 
-    final LinkedList<Material> weapons = new LinkedList<>();
+    final ArrayList<Material> weapons = new ArrayList<>();
 
     BestToolsHandler(Main main) {
 
         this.main=Objects.requireNonNull(main,"Main must not be null");
         this.favoriteSlot=main.getConfig().getInt("favorite-slot");
 
-        Material[] defaultMats = {
-                Material.DIAMOND_PICKAXE,
-                Material.DIAMOND_AXE,
-                Material.DIAMOND_HOE,
-                Material.DIAMOND_SHOVEL,
 
-                Material.GOLDEN_PICKAXE,
-                Material.GOLDEN_AXE,
-                Material.GOLDEN_HOE,
-                Material.GOLDEN_SHOVEL,
-
-                Material.IRON_PICKAXE,
-                Material.IRON_AXE,
-                Material.IRON_HOE,
-                Material.IRON_SHOVEL,
-
-                Material.STONE_PICKAXE,
-                Material.STONE_AXE,
-                Material.STONE_HOE,
-                Material.STONE_SHOVEL,
-
-                Material.WOODEN_PICKAXE,
-                Material.WOODEN_AXE,
-                Material.WOODEN_HOE,
-                Material.WOODEN_SHOVEL,
-
-                Material.SHEARS
-        };
-
-        allTools.addAll(Arrays.asList(defaultMats));
-        for(String s : netheriteTools) {
-            if(Material.getMaterial(s)!=null) {
-                allTools.add(Material.getMaterial(s));
-            }
-        }
 
 
     }
@@ -140,7 +103,7 @@ public class BestToolsHandler {
     Tool getBestToolType(@NotNull Material mat) {
         Tool bestTool = toolMap.get(mat);
         if(bestTool == null) bestTool = Tool.NONE;
-        main.debug("Best ToolType for "+mat+" is "+bestTool.name());
+        //main.debug("Best ToolType for "+mat+" is "+bestTool.name());
         return bestTool;
     }
 
@@ -156,18 +119,22 @@ public class BestToolsHandler {
 
 
     boolean isTool(Tool tool, ItemStack item) {
-        String n = item.getType().name();
+        Material m = item.getType();
         switch(tool) {
             case PICKAXE:
-                return n.endsWith("_PICKAXE");
+                return pickaxes.contains(m);
             case AXE:
-                return n.endsWith("_AXE");
+                return axes.contains(m);
             case SHOVEL:
-                return n.endsWith("_SHOVEL");
+                return shovels.contains(m);
             case HOE:
-                return n.endsWith("_HOE");
+                return hoes.contains(m);
             case SHEARS:
                 return item.getType() == Material.SHEARS;
+            case NONE:
+                return !isDamageable(item);
+            case SWORD:
+                return swords.contains(m);
             default:
                 // TODO: This might confuse the logic for NONE
                 return false;
@@ -183,9 +150,17 @@ public class BestToolsHandler {
     }
 
     @Nullable
-    ItemStack getNonToolItemFromArray(@NotNull ItemStack[] items) {
+    ItemStack getNonToolItemFromArray(@NotNull ItemStack[] items,ItemStack currentItem, Material target) {
+
+        // Note: InstaBreaks dont cause damage except on hoes
+        // TODO: Take this into account: https://minecraft.gamepedia.com/Item_durability
+        // TODO: itemMeta instanceof Damageable may also mean the tool is unused!
+        if(instaBreakableByHand.contains(target) && !hoes.contains(currentItem.getType()) ||
+            !isTool(currentItem))
+            return currentItem;
+
         for(ItemStack item: items) {
-            if(!isDamageable(item)) {
+            if(item==null || !isDamageable(item)) {
                 return item;
             }
         }
@@ -200,10 +175,11 @@ public class BestToolsHandler {
     }
 
     @Nullable
-    ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items, boolean trySilktouch) {
+    ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items, boolean trySilktouch, ItemStack currentItem, Material target) {
 
         if(tool == Tool.NONE) {
-            return getNonToolItemFromArray(items);
+            //main.debug("getNonToolItemFromArray");
+            return getNonToolItemFromArray(items,currentItem,target);
         }
 
         ArrayList<ItemStack> list = new ArrayList<>();
@@ -223,7 +199,7 @@ public class BestToolsHandler {
         }
         if(list.size()==0) {
             if(trySilktouch) {
-                return getBestItemStackFromArray(tool,items,false);
+                return getBestItemStackFromArray(tool,items,false,currentItem,target);
             } else {
                 return null;
             }
@@ -233,9 +209,8 @@ public class BestToolsHandler {
     }
 
 
-    ItemStack[] inventoryToArray(Player p) {
+    ItemStack[] inventoryToArray(Player p,boolean hotbarOnly) {
         PlayerInventory inv = p.getInventory();
-        boolean hotbarOnly = main.getPlayerSetting(p).hotbarOnly;
         ItemStack[] items = new ItemStack[(hotbarOnly ? hotbarSize : inventorySize)];
         for(int i = 0; i < (hotbarOnly ? hotbarSize : inventorySize); i++) {
             items[i] = inv.getItem(i);
@@ -250,13 +225,17 @@ public class BestToolsHandler {
      * @return
      */
     @Nullable
-    ItemStack getBestToolFromInventory(@NotNull Material mat, Player p) {
+    ItemStack getBestToolFromInventory(@NotNull Material mat, Player p, boolean hotbarOnly,ItemStack currentItem) {
         PlayerInventory inv = p.getInventory();
 
-        ItemStack[] items = inventoryToArray(p);
+        ItemStack[] items = inventoryToArray(p,hotbarOnly);
 
         Tool bestType = getBestToolType(mat);
-        return getBestItemStackFromArray(bestType,items,profitsFromSilkTouch(mat));
+        ItemStack bestStack = getBestItemStackFromArray(bestType,items,profitsFromSilkTouch(mat),currentItem,mat);
+        if(bestStack==null) {
+            bestStack = getNonToolItemFromArray(items,currentItem,mat);
+        }
+        return bestStack;
 
     }
 
@@ -278,7 +257,7 @@ public class BestToolsHandler {
             ItemStack currentItem = inv.getItem(i);
             if(currentItem==null) continue;
             if(currentItem.equals(Objects.requireNonNull(item,"Item must not be null"))) {
-                main.debug(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
+                //main.debug(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
                 return i;
             }
         }
@@ -292,7 +271,7 @@ public class BestToolsHandler {
      * @param inv Player's inventory
      */
     void moveToolToSlot(int source, int dest, @NotNull PlayerInventory inv) {
-        main.debug(String.format("Moving item from slot %d to %d",source,dest));
+        //main.debug(String.format("Moving item from slot %d to %d",source,dest));
         inv.setHeldItemSlot(dest);
         if(source==dest) return;
         ItemStack sourceItem = inv.getItem(source);
@@ -312,7 +291,7 @@ public class BestToolsHandler {
 
     boolean isDamageable(ItemStack item) {
         if(item==null) return false;
-        //if(!item.hasItemMeta()) return false;
+        if(!item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
         return meta instanceof Damageable;
     }
@@ -336,7 +315,7 @@ public class BestToolsHandler {
         // If the item is not damageable, we don't have to move it
         if(!isDamageable(item)) return;
 
-        main.debug(String.format("Trying to free slot %d",source));
+        //main.debug(String.format("Trying to free slot %d",source));
 
         // Try to combine the item with existing stacks
         inv.setItem(source, null);
@@ -344,26 +323,26 @@ public class BestToolsHandler {
 
         // If the item was moved to the same slot, we have to move it somewhere else
         if(inv.getItem(source)==null) {
-            main.debug("Freed slot");
+            //main.debug("Freed slot");
             inv.setHeldItemSlot(source);
             return;
         }
-        main.debug("Could not free slot yet...");
+        //main.debug("Could not free slot yet...");
         for(int i = source; i < inventorySize; i++) {
             if(inv.getItem(i)==null) {
                 inv.setItem(i,item);
                 inv.setItem(source,null);
                 inv.setHeldItemSlot(source);
-                main.debug("Freed slot on second try");
+                //main.debug("Freed slot on second try");
                 return;
             }
         }
 
-        main.debug("WARNING: COULD NOT FREE SLOT AT ALL");
+        //main.debug("WARNING: COULD NOT FREE SLOT AT ALL");
 
         for(int i = 0; i < hotbarSize ; i++) {
             if(inv.getItem(i) == null || !isDamageable(inv.getItem(i))) {
-                main.debug("Found not damageable item at slot "+i);
+                //main.debug("Found not damageable item at slot "+i);
                 inv.setHeldItemSlot(i);
             }
         }

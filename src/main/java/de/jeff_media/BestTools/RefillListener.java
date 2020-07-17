@@ -47,7 +47,7 @@ public class RefillListener implements Listener {
                 p.sendMessage(main.messages.MSG_REFILL_USAGE);
                 playerSetting.setHasSeenRefillMessage(true);
             }
-            main.debug("ABORTING");
+            //main.debug("ABORTING");
             return;
         }
 

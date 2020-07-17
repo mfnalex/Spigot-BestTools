@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0
+- Instant breakable blocks like torches, grass, flowers etc. are no broken with the current item if it's not a hoe (because the hoe would take damage)
+- Further performance optimization
+  - replaced LinkedLists with ArrayLists
+  - pregenerates tools material list instead of comparing strings (which was done to avoid problems with versions before netherite tools)1
+
+
 ## 1.4.1
 - Added measure-performance option to demonstrate how fast BestTools is
 
