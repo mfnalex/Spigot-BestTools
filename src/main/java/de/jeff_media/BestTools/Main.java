@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 5;
+    final int configVersion = 6;
 
     PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
 
     boolean debug=false;
     boolean wtfdebug=false;
+    boolean measurePerformance=false;
 
     HashMap<UUID,PlayerSetting> playerSettings;
     boolean verbose = true;
@@ -172,6 +173,7 @@ public class Main extends JavaPlugin {
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);
         wtfdebug = getConfig().getBoolean("wtf-debug", false);
+        measurePerformance = getConfig().getBoolean("measure-performance",false);
 
         if(getConfig().getInt("favorite-slot")>8) {
             getLogger().warning(String.format("favorite-slot was set to %d, but it must not be higher than 8. Using default value 8",getConfig().getInt("favorite-slot")));

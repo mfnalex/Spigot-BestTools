@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.1
+- Added measure-performance option to demonstrate how fast BestTools is
+
 ## 1.4.0
 ##### Huuuuuge performance boost by caching two simple values
 

@@ -29,12 +29,15 @@ public class BestToolsListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
+        long startTime=0;
+        if(main.measurePerformance) { startTime = System.nanoTime(); }
         Player p = event.getPlayer();
         if(!p.hasPermission("besttools.use")) return;
         PlayerSetting playerSetting = main.getPlayerSetting(p);
         Block block = event.getClickedBlock();
         if (block == null) return;
         if(playerSetting.btcache.valid && block.getType() == playerSetting.btcache.lastMat) {
+            if(main.measurePerformance) measurePerformance(startTime);
             main.wtfdebug("Cache valid!");
             return;
         }
@@ -58,7 +61,13 @@ public class BestToolsListener implements Listener {
         ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p);
         switchToBestTool(p, bestTool);
         playerSetting.btcache.validate(block.getType());
+        if(main.measurePerformance) measurePerformance(startTime);
+    }
 
+    private void measurePerformance(long startTime) {
+            long ns = System.nanoTime()-startTime;
+            long players = (50000000/ns);
+            main.getLogger().warning(String.format("%6d ns. That means %4d players could stripmine at the same time. And it will be even faster in the next version.",ns,players));
     }
 
     private void switchToBestTool(Player p, ItemStack bestTool) {
