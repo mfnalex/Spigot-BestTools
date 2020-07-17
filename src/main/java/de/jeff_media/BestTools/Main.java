@@ -48,10 +48,10 @@ public class Main extends JavaPlugin {
     }
 
     void debug(String text) {
-        if(getConfig().getBoolean("debug")) getLogger().info("[Debug] "+text);
+        if(debug) getLogger().info("[Debug] "+text);
     }
     void wtfdebug(String text) {
-        if(getConfig().getBoolean("debug")) getLogger().info("[D3BUG] "+text);
+        if(wtfdebug) getLogger().info("[D3BUG] "+text);
     }
 
     PlayerSetting getPlayerSetting(Player player) {
