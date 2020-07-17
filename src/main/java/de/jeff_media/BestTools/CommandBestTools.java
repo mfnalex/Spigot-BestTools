@@ -32,6 +32,7 @@ public class CommandBestTools implements CommandExecutor {
 
         p = (Player) sender;
         setting = main.getPlayerSetting(p);
+        setting.btcache.invalidated();
 
         setting.setHasSeenBestToolsMessage(true);
 

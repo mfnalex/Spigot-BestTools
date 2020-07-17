@@ -208,7 +208,7 @@ public class BestToolsHandler {
 
         ArrayList<ItemStack> list = new ArrayList<>();
         for(ItemStack item : items) {
-            // if(item==null) continue; // IntelliJ says this is always false
+             if(item==null) continue; // IntelliJ says this is always false
             // TODO: Check if durability is 1
 
             if(isTool(tool,item)) {
@@ -324,7 +324,7 @@ public class BestToolsHandler {
      */
     void freeSlot(int source, @NotNull PlayerInventory inv) {
 
-        //if(inv.getItemInMainHand()==null) return; // IntelliJ says this is always false
+        if(inv.getItemInMainHand()==null) return; // IntelliJ says this is always false
 
         if(!isDamageable(inv.getItemInMainHand())) return;
 

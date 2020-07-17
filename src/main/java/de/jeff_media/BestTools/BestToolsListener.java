@@ -35,10 +35,10 @@ public class BestToolsListener implements Listener {
         Block block = event.getClickedBlock();
         if (block == null) return;
         if(playerSetting.btcache.valid && block.getType() == playerSetting.btcache.lastMat) {
-            main.debug("Cache valid!");
+            main.wtfdebug("Cache valid!");
             return;
         }
-        main.debug("Cache invalid, doing onPlayerInteractWithBlock");
+        main.wtfdebug("Cache invalid, doing onPlayerInteractWithBlock");
         if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
             return;
         }
@@ -67,7 +67,7 @@ public class BestToolsListener implements Listener {
         if(bestTool == null) {
             ItemStack currentItem = inv.getItemInMainHand();
 
-            //if(currentItem==null) return; // IntelliJ says this is always false
+            if(currentItem==null) return; // IntelliJ says this is always false
 
             int emptyHotbarSlot = BestToolsHandler.getEmptyHotbarSlot(inv);
             if(emptyHotbarSlot!=-1) {
