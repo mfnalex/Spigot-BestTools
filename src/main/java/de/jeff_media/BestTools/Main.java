@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import de.jeff_media.BestTools.placeholders.BestToolsPlaceholders;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bstats.bukkit.Metrics;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 9;
+    final int configVersion = 10;
 
     final int mcVersion = getMcVersion();
 
@@ -50,6 +51,11 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         load(false);
+
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+            new BestToolsPlaceholders(this).register();
+        }
+
     }
 
     @Override
@@ -64,7 +70,7 @@ public class Main extends JavaPlugin {
         if(wtfdebug) getLogger().info("[D3BUG] "+text);
     }
 
-    PlayerSetting getPlayerSetting(Player player) {
+    public PlayerSetting getPlayerSetting(Player player) {
 
         if(Objects.requireNonNull(playerSettings,"PlayerSettings must not be null").containsKey(player.getUniqueId())) {
             return playerSettings.get(player.getUniqueId());

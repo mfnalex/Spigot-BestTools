@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+- Fixed broken config updater leading to corrupt config files and exceptions. If you get errors on start, please delete your config.yml once. In future versions, it gets updated automatically.
+- Added support for PlaceholderAPI (see new config.yml)
+
 ## 1.6.0
 - Added GUI (beta!) using /besttools gui
 - Added new blacklist command, so that BestTools will not change tools when trying to break those blocks.

@@ -62,18 +62,18 @@ public class Messages {
         GUI_FAVORITE_SLOT = getMsg("gui","favorite-slot","&7Set as favorite slot");
 
         GUI_FAVORITE_SLOT_LORE = getMsgs("gui", "favorite-slot-lore",
-                "&7If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+                "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
         );
 
         GUI_REFILL_LORE = getMsgs("gui","refill-lore",
-                "&7Automatically refills empty hotbar slots."
+                "Automatically refills empty hotbar slots."
         );
 
-        GUI_BESTTOOLS_LORE = getMsgs("gui","besttools-lose",
-                "&7Automatically chooses the best tools when breaking blocks.");
+        GUI_BESTTOOLS_LORE = getMsgs("gui","besttools-lore",
+                "Automatically chooses the best tools when breaking blocks.");
 
         GUI_HOTBAR_LORE = getMsgs("gui","hotbar-lore",
-                "&7When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+                "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
         );
 
         BL_EMPTY = getMsg("blacklist-empty","&7You blacklist is empty.");

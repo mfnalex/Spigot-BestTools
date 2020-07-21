@@ -69,12 +69,14 @@ public class ConfigUpdater {
         for (String line : linesInDefaultConfig) {
             String newline = line;
             if (line.startsWith("config-version:")) {
-                continue;
-            } else if (line.startsWith("-")) {
+
+            }
+
+            /*else if (line.startsWith("-")) {
                 continue;
             } else if (line.startsWith(" ")) {
                 continue;
-            }
+            }*/
 
             /*else if (line.startsWith("disabled-worlds:")) {
                 newline = null;

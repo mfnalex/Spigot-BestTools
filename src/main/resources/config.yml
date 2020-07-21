@@ -17,6 +17,17 @@
 
 # /refill (or /rf:)     Toggle automatic hotbar refill per player
 
+# /besttools bl                      Shows your blacklist
+# /besttools bl add                  Adds your current item to your blacklist
+# /besttools bl add <items...>       Adds all specified items to your blacklist
+# /besttools bl add inventory        Adds all items in your inventory to your blacklist
+# /besttools bl add hotbar           Adds all items in your hotbar to your blacklist
+# /besttools bl remove               Removes your current item from your blacklist
+# /besttools bl remove <items...>    Removes all specified items from your blacklist
+# /besttools bl remove inventory     Removes all items in your inventory from your blacklist
+# /besttools bl remove hotbar        Removes all items in your hotbar from your blacklist
+# /besttools bl reset                Removes all items from your blacklist
+
 
 ###############################
 #######   Permissions   #######
@@ -25,6 +36,18 @@
 # besttools.use:        Allows to use the /besttools (or /bt) command
 # besttools.refill:     Allows to use the /refill (or /rf) command
 # besttools.reload:     Allows to use the /besttools reload command
+
+
+###############################
+#######  Placeholders   #######
+###############################
+
+# When using PlaceholderAPI, you can use the following placeholders:
+
+# %besttools_btenabled%    - true if this player has BestTools enabled, otherwise false
+# %besttools_rfenabled%    - true if this player has Refill enabled, otherwise false
+# %besttools_hotbaronly%   - true if this player has set BestTools to hotbar-only
+# %besttools_favoriteslot% - the slot number this player chose as favorite slot
 
 
 ###############################
@@ -109,6 +132,7 @@ message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
 gui-favorite-slot: "Set as favorite slot"
 gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+gui-besttools-lore: "Automatically chooses the best tools when breaking blocks."
 gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 gui-refill-lore: "Automatically refills empty hotbar slots."
 
@@ -123,6 +147,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
 #gui-favorite-slot: "Set as favorite slot"
 #gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-besttools-lore: "Automatically chooses the best tools when breaking blocks."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
@@ -137,6 +162,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #message-hotbar-only-disabled: "&7自动切换最佳工具 会根据背包内的所有物品切换工具."
 #gui-favorite-slot: "Set as favorite slot"
 #gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-besttools-lore: "Automatically chooses the best tools when breaking blocks."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
@@ -151,6 +177,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #message-hotbar-only-disabled: "&7自動切換最佳工具 會根據背包內的所有物品切換工具."
 #gui-favorite-slot: "Set as favorite slot"
 #gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-besttools-lore: "Automatically chooses the best tools when breaking blocks."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
@@ -165,6 +192,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #message-hotbar-only-disabled: "&7BestTools wird alle Werkzeuge aus deinem Inventar benutzen."
 #gui-favorite-slot: "Als Lieblingsslot festlegen"
 #gui-favorite-slot-lore: "Wenn deine Hotbar voll ist und BestTools ein Werkzeug aus deinem Inventar nimmt, wird es in diesem Slot platziert."
+#gui-besttools-lore: "Benutzt automatisch das beste Werkzeuge beim Abbauen von Blöcken."
 #gui-hotbar-lore: "Wenn aktiviert wird BestTools nur Werkzeuge aus deiner Hotbar benutzen."
 #gui-refill-lore: "Füllt automatisch leere Hotbar-Slots auf."
 
@@ -179,6 +207,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #message-hotbar-only-disabled: "&7BestTools solamente usara todos las herramientas de tu inventario."
 #gui-favorite-slot: "Set as favorite slot"
 #gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-besttools-lore: "Automatically chooses the best tools when breaking blocks."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
@@ -203,4 +232,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 8
+config-version: 10

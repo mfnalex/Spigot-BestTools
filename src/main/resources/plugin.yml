@@ -1,6 +1,6 @@
 main: de.jeff_media.BestTools.Main
 name: BestTools
-version: 1.6.0
+version: 1.6.1
 api-version: "1.13"
 description: Automatically chooses the best tool when breaking blocks
 author: mfnalex
@@ -9,6 +9,7 @@ prefix: BestTools
 database: false
 softdepend:
   - ChestSort
+  - PlaceholderAPI
 commands:
   besttools:
     description: Toggle BestTools

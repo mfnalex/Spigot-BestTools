@@ -11,15 +11,15 @@ public class PlayerSetting {
         Blacklist blacklist;
 
          // BestTool enabled for this player?
-        boolean bestToolsEnabled;
+        public boolean bestToolsEnabled;
 
         // Automatic refill enabled for this player?
-        boolean refillEnabled;
+        public boolean refillEnabled;
 
         // Use only tools from the hotbar?
-        boolean hotbarOnly;
+        public boolean hotbarOnly;
 
-        int favoriteSlot = 0;
+        public int favoriteSlot = 0;
 
         boolean hasSeenBestToolsMessage = false;
         boolean hasSeenRefillMessage = false;
