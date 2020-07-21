@@ -69,7 +69,11 @@ public class ConfigUpdater {
         for (String line : linesInDefaultConfig) {
             String newline = line;
             if (line.startsWith("config-version:")) {
-                // dont replace config-version
+                continue;
+            } else if (line.startsWith("-")) {
+                continue;
+            } else if (line.startsWith(" ")) {
+                continue;
             }
 
             /*else if (line.startsWith("disabled-worlds:")) {
@@ -91,6 +95,9 @@ public class ConfigUpdater {
                         if (node.startsWith("message-")) // needs double quotes
                             quotes = "\"";
 
+                        if (node.startsWith("gui-"))
+                            quotes = "\"";
+
                         newline = node + ": " + quotes + oldValues.get(node).toString() + quotes;
                         if (main.debug)
                             main.getLogger().info("Updating config node " + newline);
@@ -98,8 +105,11 @@ public class ConfigUpdater {
                     }
                 }
             }
-            if (newline != null)
+            if (newline != null) {
                 newLines.add(newline);
+            } else {
+                main.getLogger().warning("newline == null");
+            }
         }
 
         BufferedWriter fw;

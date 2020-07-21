@@ -1,12 +1,14 @@
 main: de.jeff_media.BestTools.Main
 name: BestTools
-version: 1.5.0
+version: 1.6.0
 api-version: "1.13"
 description: Automatically chooses the best tool when breaking blocks
 author: mfnalex
 #website: https://www.chestsort.de
 prefix: BestTools
 database: false
+softdepend:
+  - ChestSort
 commands:
   besttools:
     description: Toggle BestTools
@@ -16,6 +18,17 @@ commands:
       /<command> reload -- Reloads the config file
       /<command> debug -- Toggle debug mode
       /<command> performance -- Toggle performance test
+
+      /<command> bl -- Show your blacklist
+      /<command> bl add -- Adds your currently held item to your blacklist
+      /<command> bl add inventory -- Adds all items from your inventory to your blacklist
+      /<command> bl add hotbar -- Adds all items from your hotbar to your blacklist
+      /<command> bl add <items...> -- Add specified items to your blacklist
+      /<command> bl remove -- Removes your currently held item from your blacklist
+      /<command> bl remove inventory -- Removes all items from your inventory from your blacklist
+      /<command> bl remove hotbar -- Removes all items from your hotbar from your blacklist
+      /<command> bl remove <items...> -- Remove items from your blacklist
+      /<command> bl reset -- Removes all items from your blacklist
     aliases: [bt,besttool]
     permission: besttools.use
   refill:

@@ -55,6 +55,11 @@ public class BestToolsListener implements Listener {
             //main.meter.add(st);
             return;
         }
+
+        // Blacklist
+        if(playerSetting.getBlacklist().contains(block.getType()))
+            return;
+
        //main.wtfdebug("Cache invalid, doing onPlayerInteractWithBlock");
         if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
             return;
@@ -79,12 +84,12 @@ public class BestToolsListener implements Listener {
             playerSetting.btcache.validate(block.getType());
             return;
         }
-        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType());
+        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType(),playerSetting.favoriteSlot);
         playerSetting.btcache.validate(block.getType());
         main.meter.add(st,false);
     }
 
-    private void switchToBestTool(Player p, ItemStack bestTool, boolean hotbarOnly, Material target) {
+    private void switchToBestTool(Player p, ItemStack bestTool, boolean hotbarOnly, Material target,int favoriteSlot) {
 
         PlayerInventory inv = p.getInventory();
         if(bestTool == null) {
@@ -102,16 +107,16 @@ public class BestToolsListener implements Listener {
             bestTool = handler.getNonToolItemFromArray(handler.inventoryToArray(p,hotbarOnly),currentItem,target);
         }
         if(bestTool == null) {
-            handler.freeSlot(handler.favoriteSlot,inv);
+            handler.freeSlot(favoriteSlot,inv);
             //main.debug("Could not find any appropiate tool");
             return;
         }
         int positionInInventory = handler.getPositionInInventory(bestTool,inv) ;
         if(positionInInventory != -1) {
-            handler.moveToolToSlot(positionInInventory,handler.favoriteSlot,inv);
+            handler.moveToolToSlot(positionInInventory,favoriteSlot,inv);
             //main.debug("Found tool");
         } else {
-            handler.freeSlot(handler.favoriteSlot,inv);
+            handler.freeSlot(favoriteSlot,inv);
             //main.debug("Use no tool");
         }
 

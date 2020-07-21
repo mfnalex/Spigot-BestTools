@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 7;
+    final int configVersion = 9;
 
     final int mcVersion = getMcVersion();
 
@@ -34,7 +34,9 @@ public class Main extends JavaPlugin {
     RefillUtils refillUtils;
     CommandBestTools commandBestTools;
     CommandRefill commandRefill;
+    CommandBlacklist commandBlacklist;
     Messages messages;
+    GUIHandler guiHandler;
 
     boolean debug=false;
     boolean wtfdebug=false;
@@ -70,6 +72,7 @@ public class Main extends JavaPlugin {
 
         PlayerSetting setting;
 
+
         File file = getPlayerDataFile(player.getUniqueId());
         if(file.exists()) {
             debug("Loading player setting for "+player.getName()+" from file");
@@ -79,7 +82,8 @@ public class Main extends JavaPlugin {
             setting = new PlayerSetting(
                     getConfig().getBoolean("besttools-enabled-by-default"),
                     getConfig().getBoolean("refill-enabled-by-default"),
-                    getConfig().getBoolean("hotbar-only"));
+                    getConfig().getBoolean("hotbar-only"),
+                    getConfig().getInt("favorite-slot"));
         }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
@@ -130,10 +134,12 @@ public class Main extends JavaPlugin {
         bestToolsCacheListener = new BestToolsCacheListener((this));
         commandBestTools = new CommandBestTools(this);
         commandRefill = new CommandRefill(this);
+        commandBlacklist = new CommandBlacklist(this);
         refillUtils = new RefillUtils((this));
         messages = new Messages(this);
         fileUtils = new FileUtils(this);
         playerSettings = new HashMap<>();
+        guiHandler = new GUIHandler(this);
 
         meter = new PerformanceMeter(this);
 
@@ -143,6 +149,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(bestToolsListener,this);
         getServer().getPluginManager().registerEvents(playerListener, this);
         getServer().getPluginManager().registerEvents(bestToolsCacheListener,this);
+        getServer().getPluginManager().registerEvents(guiHandler,this);
         Objects.requireNonNull(getCommand("besttools")).setExecutor(commandBestTools);
         Objects.requireNonNull(getCommand("refill")).setExecutor(commandRefill);
 
@@ -178,6 +185,7 @@ public class Main extends JavaPlugin {
         getConfig().addDefault("check-for-updates","true");
         getConfig().addDefault("allow-in-adventure-mode",false);
         getConfig().addDefault("dont-switch-during-battle",true);
+        getConfig().addDefault("puns",false);
 
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);

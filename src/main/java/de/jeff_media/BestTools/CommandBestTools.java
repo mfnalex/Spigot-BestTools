@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class CommandBestTools implements CommandExecutor {
 
     final Main main;
@@ -40,6 +42,12 @@ public class CommandBestTools implements CommandExecutor {
         setting = main.getPlayerSetting(p);
         setting.btcache.invalidated();
 
+        if(args.length>0 && (args[0].equalsIgnoreCase("blacklist") || args[0].equalsIgnoreCase("bl"))) {
+            String[] newArgs = Arrays.copyOfRange(args,1,args.length);
+            main.commandBlacklist.onCommand(sender,command,alias,newArgs);
+            return true;
+        }
+
         setting.setHasSeenBestToolsMessage(true);
 
         // Toggle hotbarOnly
@@ -54,6 +62,13 @@ public class CommandBestTools implements CommandExecutor {
                 }
                 return true;
             }
+
+            if(args[0].equalsIgnoreCase("settings")
+                    || args[0].equalsIgnoreCase("gui")) {
+                main.guiHandler.open(p);
+                return true;
+            }
+
         }
 
         // Toggle bestToolEnabled

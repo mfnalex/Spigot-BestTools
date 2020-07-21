@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.6.0
+- Added GUI (beta!) using /besttools gui
+- Added new blacklist command, so that BestTools will not change tools when trying to break those blocks.
+
+Usage:
+- /besttools bl -- Show your blacklist
+- /besttools bl add -- Adds your currently held item to your blacklist
+- /besttools bl add inventory -- Adds all items from your inventory to your blacklist
+- /besttools bl add hotbar -- Adds all items from your hotbar to your blacklist
+- /besttools bl add <items...> -- Add specified items to your blacklist
+- /besttools bl remove -- Removes your currently held item from your blacklist
+- /besttools bl remove inventory -- Removes all items from your inventory from your blacklist
+- /besttools bl remove hotbar -- Removes all items from your hotbar from your blacklist
+- /besttools bl remove <items...> -- Remove items from your blacklist
+- /besttools bl reset -- Removes all items from your blacklist
+
 ## 1.5.0
 - Instant breakable blocks like torches, grass, flowers etc. are no broken with the current item if it's not a hoe (because the hoe would take damage)
 - Does not empty a slot into the inventory to use the empty hand to break a block when another undamagable item or block from the hotbar can be used instead

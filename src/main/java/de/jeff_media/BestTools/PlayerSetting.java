@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class PlayerSetting {
 
+        Blacklist blacklist;
+
          // BestTool enabled for this player?
         boolean bestToolsEnabled;
 
@@ -17,7 +19,7 @@ public class PlayerSetting {
         // Use only tools from the hotbar?
         boolean hotbarOnly;
 
-        Inventory guiInventory = null;
+        int favoriteSlot = 0;
 
         boolean hasSeenBestToolsMessage = false;
         boolean hasSeenRefillMessage = false;
@@ -31,21 +33,29 @@ public class PlayerSetting {
 
         PlayerSetting(File file,Main main) {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+                blacklist = new Blacklist(yaml.getStringList("blacklist"));
                 this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled",false);
                 this.hasSeenBestToolsMessage = yaml.getBoolean("hasSeenBestToolsMessage",false);
                 this.hasSeenRefillMessage = yaml.getBoolean("hasSeenRefillMessage",false);
                 this.refillEnabled = yaml.getBoolean("refillEnabled",false);
                 this.hotbarOnly = yaml.getBoolean("hotbarOnly",true);
+                this.favoriteSlot = yaml.getInt("favoriteSlot",main.getConfig().getInt("favorite-slot"));
                 main.debug("Loaded player setting from file "+file.getPath());
         }
 
-        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly) {
+        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly, int favoriteSlot) {
+                this.blacklist = new Blacklist();
                 this.bestToolsEnabled = bestToolsEnabled;
                 this.refillEnabled = refillEnabled;
                 this.hasSeenBestToolsMessage = false;
                 this.hasSeenRefillMessage = false;
                 this.hotbarOnly = hotbarOnly;
                 this.changed = true;
+                this.favoriteSlot = favoriteSlot;
+        }
+
+        Blacklist getBlacklist() {
+                return blacklist;
         }
 
         boolean toggleBestToolsEnabled() {
@@ -78,6 +88,11 @@ public class PlayerSetting {
                 changed = true;
         }
 
+        void setFavoriteSlot(int favoriteSlot) {
+                this.favoriteSlot = favoriteSlot;
+                changed = true;
+        }
+
         void save(File file,Main main) {
                 main.debug("Saving player setting to file "+file.getPath());
                 YamlConfiguration yaml = new YamlConfiguration();
@@ -86,6 +101,8 @@ public class PlayerSetting {
                 yaml.set("refillEnabled",refillEnabled);
                 yaml.set("hasSeenBestToolsMessage", hasSeenBestToolsMessage);
                 yaml.set("hasSeenRefillMessage", hasSeenRefillMessage);
+                yaml.set("favoriteSlot",favoriteSlot);
+                yaml.set("blacklist",blacklist.toStringList());
                 try {
                         yaml.save(file);
                 } catch (IOException e) {

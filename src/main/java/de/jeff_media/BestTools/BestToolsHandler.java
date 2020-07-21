@@ -28,7 +28,7 @@ public class BestToolsHandler {
 
     // Configurable Start //
     boolean preventItemBreak = false; // Will not use Items that would break on this use
-    int favoriteSlot;
+    //int favoriteSlot;
     // Configurable End //
 
     final HashMap<Material,Tool> toolMap = new HashMap<>();
@@ -51,7 +51,7 @@ public class BestToolsHandler {
     BestToolsHandler(Main main) {
 
         this.main=Objects.requireNonNull(main,"Main must not be null");
-        this.favoriteSlot=main.getConfig().getInt("favorite-slot");
+        //this.favoriteSlot=main.getConfig().getInt("favorite-slot");
 
 
 

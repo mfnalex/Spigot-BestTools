@@ -96,6 +96,8 @@ check-interval: 4
 # &l Bold         &o Italic
 # &n Underline    &r Reset
 
+# Please note that using color codes in the GUI is not supported yet.
+
 ##### You can edit these messages yourself or uncomment the existing translations (see below)
 message-besttools-enabled: "&7BestTools has been &aenabled&7."
 message-besttools-disabled: "&7BestTools has been &cdisabled&7."
@@ -105,6 +107,10 @@ message-besttools-usage: "&7Hint: Type &6/besttools&7 or &6/bt&7 to automaticall
 message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically refill empty items from your inventory."
 message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
+gui-favorite-slot: "Set as favorite slot"
+gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+gui-refill-lore: "Automatically refills empty hotbar slots."
 
 ##### English
 #message-besttools-enabled: "&7BestTools has been &aenabled&7."
@@ -115,6 +121,10 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-refill-usage": "&7Hint: Type &6/refill&7 or &6/rf&7 to automatically refill empty items from your inventory."
 #message-hotbar-only-enabled: "&7BestTools will only use tools from your hotbar."
 #message-hotbar-only-disabled: "&7BestTools will use all tools from your inventory."
+#gui-favorite-slot: "Set as favorite slot"
+#gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+#gui-refill-lore: "Automatically refills empty hotbar slots."
 
 ##### Chinese
 #message-besttools-enabled: "&7自动切换最佳工具 &a已启用&7."
@@ -125,6 +135,10 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-refill-usage: "&7提示: 输入指令 &6/refill&7 或 &6/rf&7 可以从背包里自动填充手中放置完的物品."
 #message-hotbar-only-enabled: "&7自动切换最佳工具 仅会根据快捷栏切换工具."
 #message-hotbar-only-disabled: "&7自动切换最佳工具 会根据背包内的所有物品切换工具."
+#gui-favorite-slot: "Set as favorite slot"
+#gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+#gui-refill-lore: "Automatically refills empty hotbar slots."
 
 ##### Chinese (Traditional)
 #message-besttools-enabled: "&7自動切換最佳工具 &a已啟用&7."
@@ -135,6 +149,10 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-refill-usage: "&7提示: 輸入指令 &6/refill&7 或 &6/rf&7 可以從背包裡自動填充手中放置完的物品."
 #message-hotbar-only-enabled: "&7自動切換最佳工具 僅會根據快捷欄切換工具."
 #message-hotbar-only-disabled: "&7自動切換最佳工具 會根據背包內的所有物品切換工具."
+#gui-favorite-slot: "Set as favorite slot"
+#gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+#gui-refill-lore: "Automatically refills empty hotbar slots."
 
 ##### German
 #message-besttools-enabled: "&7BestTools wurde &aaktiviert&7."
@@ -145,6 +163,10 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-refill-usage": "&7Hinweis: Benutze &6/refill&7 oder &6/rf&7 um die automatische Itemauffüllung zu aktivieren."
 #message-hotbar-only-enabled: "&7BestTools wird nur Werkzeuge aus deiner Hotbar benutzen."
 #message-hotbar-only-disabled: "&7BestTools wird alle Werkzeuge aus deinem Inventar benutzen."
+#gui-favorite-slot: "Als Lieblingsslot festlegen"
+#gui-favorite-slot-lore: "Wenn deine Hotbar voll ist und BestTools ein Werkzeug aus deinem Inventar nimmt, wird es in diesem Slot platziert."
+#gui-hotbar-lore: "Wenn aktiviert wird BestTools nur Werkzeuge aus deiner Hotbar benutzen."
+#gui-refill-lore: "Füllt automatisch leere Hotbar-Slots auf."
 
 ##### Spanish
 #message-besttools-enabled: "&7BestTools ha sido &ahabilitado&7."
@@ -155,6 +177,10 @@ message-hotbar-only-disabled: "&7BestTools will use all tools from your inventor
 #message-refill-usage": "&7Uso: Ejecuta &6/refill&7 o &6/rf&7 para rellenar automaticamente los espacios vacios en tu inventario."
 #message-hotbar-only-enabled: "&7BestTools solamente usara herramientas de tu hotbar."
 #message-hotbar-only-disabled: "&7BestTools solamente usara todos las herramientas de tu inventario."
+#gui-favorite-slot: "Set as favorite slot"
+#gui-favorite-slot-lore: "If your hotbar is full and BestTools uses a tool from your inventory, it will be places in this slot."
+#gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
+#gui-refill-lore: "Automatically refills empty hotbar slots."
 
 ############################
 ##### Technical stuff! #####
@@ -172,6 +198,9 @@ dump: false
 # You can enable performance test using /bt performance (permission: besttools.debug)
 measure-performance: false
 
+# Do you like bad puns?
+puns: false
+
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 7
+config-version: 8
