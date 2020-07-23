@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.2
+- Nether gold ore, quartz and monster spawners will now be preferably mined with silk touch
+- Already prepared ability to use best swords/axes on mobs, according to the enchantments Sharpness, Smite and Ban of Anthropods
+
 ## 1.6.1
 - Fixed broken config updater leading to corrupt config files and exceptions. If you get errors on start, please delete your config.yml once. In future versions, it gets updated automatically.
 - Added support for PlaceholderAPI (see new config.yml)

@@ -89,7 +89,8 @@ public class Main extends JavaPlugin {
                     getConfig().getBoolean("besttools-enabled-by-default"),
                     getConfig().getBoolean("refill-enabled-by-default"),
                     getConfig().getBoolean("hotbar-only"),
-                    getConfig().getInt("favorite-slot"));
+                    getConfig().getInt("favorite-slot"),
+                    getConfig().getBoolean("use-sword-on-hostile-mobs"));
         }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
@@ -192,6 +193,7 @@ public class Main extends JavaPlugin {
         getConfig().addDefault("allow-in-adventure-mode",false);
         getConfig().addDefault("dont-switch-during-battle",true);
         getConfig().addDefault("puns",false);
+        getConfig().addDefault("use-sword-on-hostile-mobs",true);
 
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);

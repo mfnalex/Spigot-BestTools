@@ -21,6 +21,8 @@ public class PlayerSetting {
 
         public int favoriteSlot = 0;
 
+        boolean swordOnMobs;
+
         boolean hasSeenBestToolsMessage = false;
         boolean hasSeenRefillMessage = false;
 
@@ -39,17 +41,19 @@ public class PlayerSetting {
                 this.hasSeenRefillMessage = yaml.getBoolean("hasSeenRefillMessage",false);
                 this.refillEnabled = yaml.getBoolean("refillEnabled",false);
                 this.hotbarOnly = yaml.getBoolean("hotbarOnly",true);
+                this.swordOnMobs = yaml.getBoolean("swordOnMobs",true);
                 this.favoriteSlot = yaml.getInt("favoriteSlot",main.getConfig().getInt("favorite-slot"));
                 main.debug("Loaded player setting from file "+file.getPath());
         }
 
-        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly, int favoriteSlot) {
+        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly, int favoriteSlot, boolean swordOnMobs) {
                 this.blacklist = new Blacklist();
                 this.bestToolsEnabled = bestToolsEnabled;
                 this.refillEnabled = refillEnabled;
                 this.hasSeenBestToolsMessage = false;
                 this.hasSeenRefillMessage = false;
                 this.hotbarOnly = hotbarOnly;
+                this.swordOnMobs=swordOnMobs;
                 this.changed = true;
                 this.favoriteSlot = favoriteSlot;
         }
@@ -102,6 +106,7 @@ public class PlayerSetting {
                 yaml.set("hasSeenBestToolsMessage", hasSeenBestToolsMessage);
                 yaml.set("hasSeenRefillMessage", hasSeenRefillMessage);
                 yaml.set("favoriteSlot",favoriteSlot);
+                yaml.set("swordOnMobs",swordOnMobs);
                 yaml.set("blacklist",blacklist.toStringList());
                 try {
                         yaml.save(file);

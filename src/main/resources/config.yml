@@ -81,8 +81,8 @@ dont-switch-during-battle: true
 #prevent-item-break: true
 
 # Allow /besttools to switch to your sword when attacking mobs?
-# NOT IMPLEMENTED YET
-#use-sword-on-hostile-mobs: false
+# NOT IMPLEMENTED YET, comes with next update
+#use-sword-on-hostile-mobs: true
 #use-sword-on-friendly-mobs: false
 #use-sword-on-players: false
 

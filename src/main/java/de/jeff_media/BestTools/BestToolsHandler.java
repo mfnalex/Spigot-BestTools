@@ -111,8 +111,14 @@ public class BestToolsHandler {
 
     boolean profitsFromSilkTouch(Material mat) {
         String name = mat.name();
-        if(mat==Material.GLOWSTONE) return true;
-        if(mat==Material.ENDER_CHEST) return true;
+        switch(mat) {
+            case GLOWSTONE:
+            case ENDER_CHEST:
+            case QUARTZ:
+            case SPAWNER:
+                return true;
+        }
+        if(name.equals("NETHER_GOLD_ORE")) return true; // Fortune also improves this, but according to wiki even fortune 3 on avg only gives 8.8 nuggets which is less than 1 ingot
         if(name.contains("GLASS")) return true;
         return false;
     }

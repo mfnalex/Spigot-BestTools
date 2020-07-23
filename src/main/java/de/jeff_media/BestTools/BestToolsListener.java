@@ -2,10 +2,13 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +28,19 @@ public class BestToolsListener implements Listener {
     }
 
 
+    /*@EventHandler
+    public void onPlayerAttackEntity(EntityDamageByEntityEvent e) {
+        if (!(e.getDamager() instanceof Player)) return;
+        Player p = (Player) e.getDamager();
+        PlayerSetting playerSetting = main.getPlayerSetting(p);
+        Entity enemy = e.getEntity();
 
+        if (!
+                (enemy instanceof Monster && playerSetting.swordOnMobs)
+            // || (enemy instanceof Player && playerSetting.swordOnPlayers)
+        ) return;
+
+    }*/
 
 
     @EventHandler
