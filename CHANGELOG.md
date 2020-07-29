@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.3
+- Added possibility to disable hint messages (just set them to an empty string (""))
+- Added option to automatically switch to best sword/axe when attacking monsters
+
 ## 1.6.2
 - Nether gold ore, quartz and monster spawners will now be preferably mined with silk touch
 - Already prepared ability to use best swords/axes on mobs, according to the enchantments Sharpness, Smite and Ban of Anthropods

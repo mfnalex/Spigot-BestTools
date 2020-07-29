@@ -128,7 +128,7 @@ public class BestToolsUtils {
         if(mat != null) {
             list.add(mat);
         } else {
-            //main.debug("Skipping unknown Material "+name);
+            main.debug("Skipping unknown Material "+name);
         }
     }
 
@@ -160,7 +160,7 @@ public class BestToolsUtils {
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
         if(mat == null) {
-            //main.debug("Skipping unknown fallback Material "+matName);
+            main.debug("Skipping unknown fallback Material "+matName);
             return;
         }
         addToMap(mat,tool);

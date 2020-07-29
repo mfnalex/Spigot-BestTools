@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -68,6 +69,9 @@ public class BestToolsHandler {
     boolean isTool(ItemStack i) {
         return allTools.contains(i.getType());
     }
+    boolean isToolOrRoscoe(ItemStack i) {
+        return allTools.contains(i.getType()) || swords.contains(i.getType());
+    }
 
     enum Tool {
         PICKAXE,
@@ -103,7 +107,7 @@ public class BestToolsHandler {
     Tool getBestToolType(@NotNull Material mat) {
         Tool bestTool = toolMap.get(mat);
         if(bestTool == null) bestTool = Tool.NONE;
-        //main.debug("Best ToolType for "+mat+" is "+bestTool.name());
+        main.debug("Best ToolType for "+mat+" is "+bestTool.name());
         return bestTool;
     }
 
@@ -162,7 +166,7 @@ public class BestToolsHandler {
         // TODO: Take this into account: https://minecraft.gamepedia.com/Item_durability
         // TODO: itemMeta instanceof Damageable may also mean the tool is unused!
         if(instaBreakableByHand.contains(target) && !hoes.contains(currentItem.getType()) ||
-            !isTool(currentItem))
+            !isToolOrRoscoe(currentItem))
             return currentItem;
 
         for(ItemStack item: items) {
@@ -184,7 +188,7 @@ public class BestToolsHandler {
     ItemStack getBestItemStackFromArray(@NotNull Tool tool, @NotNull ItemStack[] items, boolean trySilktouch, ItemStack currentItem, Material target) {
 
         if(tool == Tool.NONE) {
-            //main.debug("getNonToolItemFromArray");
+            main.debug("getNonToolItemFromArray");
             return getNonToolItemFromArray(items,currentItem,target);
         }
 
@@ -214,6 +218,31 @@ public class BestToolsHandler {
         return list.get(0);
     }
 
+    @Nullable
+    ItemStack getBestRoscoeFromArray(@NotNull ItemStack[] items, ItemStack currentItem, EntityType enemy) {
+
+        ArrayList<ItemStack> list = new ArrayList<>();
+        for(ItemStack item : items) {
+            if(item==null) continue; // IntelliJ says this is always false
+            // TODO: Check if durability is 1
+
+            if(isRoscoe(item)) {
+                list.add(item);
+            }
+        }
+        if(list.size()==0) {
+            return null;
+        }
+        list.sort((o1, o2) -> SwordUtils.getDamage(o1,enemy) < SwordUtils.getDamage(o2,enemy) ? 1 : -1);
+        return list.get(0);
+    }
+
+    // Roscoes are only axes and swords, weapons are roscoes + bow, crossbow, etc
+    private boolean isRoscoe(ItemStack item) {
+         return swords.contains(item.getType())
+                 || axes.contains(item.getType());
+    }
+
 
     ItemStack[] inventoryToArray(Player p,boolean hotbarOnly) {
         PlayerInventory inv = p.getInventory();
@@ -232,18 +261,37 @@ public class BestToolsHandler {
      */
     @Nullable
     ItemStack getBestToolFromInventory(@NotNull Material mat, Player p, boolean hotbarOnly,ItemStack currentItem) {
-        PlayerInventory inv = p.getInventory();
-
         ItemStack[] items = inventoryToArray(p,hotbarOnly);
 
         Tool bestType = getBestToolType(mat);
         ItemStack bestStack = getBestItemStackFromArray(bestType,items,profitsFromSilkTouch(mat),currentItem,mat);
         if(bestStack==null) {
-            bestStack = getNonToolItemFromArray(items,currentItem,mat);
+            main.debug("bestStack is null");
+            return getNonToolItemFromArray(items,currentItem,mat);
         }
+        main.debug("bestStack is "+bestStack.toString());
         return bestStack;
 
     }
+
+    /**
+     * Tries to get the roscoe that is the best for this block
+     * @param p Player
+     * @return
+     */
+    @Nullable
+    ItemStack getBestRoscoeFromInventory(@NotNull EntityType enemy, Player p, boolean hotbarOnly, ItemStack currentItem) {
+        ItemStack[] items = inventoryToArray(p,hotbarOnly);
+
+        ItemStack bestRoscoe = getBestRoscoeFromArray(items,currentItem,enemy);
+        //if(bestRoscoe==null) {
+        //    bestRoscoe = getNonToolItemFromArray(items,currentItem,mat);
+        //}
+        return bestRoscoe;
+
+    }
+
+
 
     /*@Nullable
     ItemStack getBestToomFromInventory(Entity e, Player p) {
@@ -263,7 +311,7 @@ public class BestToolsHandler {
             ItemStack currentItem = inv.getItem(i);
             if(currentItem==null) continue;
             if(currentItem.equals(Objects.requireNonNull(item,"Item must not be null"))) {
-                //main.debug(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
+                main.debug(String.format("Found perfect tool %s at slot %d",currentItem.getType().name(),i));
                 return i;
             }
         }
@@ -277,7 +325,7 @@ public class BestToolsHandler {
      * @param inv Player's inventory
      */
     void moveToolToSlot(int source, int dest, @NotNull PlayerInventory inv) {
-        //main.debug(String.format("Moving item from slot %d to %d",source,dest));
+        main.debug(String.format("Moving item from slot %d to %d",source,dest));
         inv.setHeldItemSlot(dest);
         if(source==dest) return;
         ItemStack sourceItem = inv.getItem(source);
@@ -299,7 +347,13 @@ public class BestToolsHandler {
         if(item==null) return false;
         if(!item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
-        return meta instanceof Damageable;
+        if( meta instanceof Damageable) {
+            main.debug(item.getType().name() + " is damageable");
+            return true;
+        } else {
+            main.debug(item.getType().name() + " is NOT damageable");
+            return false;
+        }
     }
 
     /**
@@ -321,7 +375,7 @@ public class BestToolsHandler {
         // If the item is not damageable, we don't have to move it
         if(!isDamageable(item)) return;
 
-        //main.debug(String.format("Trying to free slot %d",source));
+        main.debug(String.format("Trying to free slot %d",source));
 
         // Try to combine the item with existing stacks
         inv.setItem(source, null);
@@ -329,26 +383,26 @@ public class BestToolsHandler {
 
         // If the item was moved to the same slot, we have to move it somewhere else
         if(inv.getItem(source)==null) {
-            //main.debug("Freed slot");
+            main.debug("Freed slot");
             inv.setHeldItemSlot(source);
             return;
         }
-        //main.debug("Could not free slot yet...");
+        main.debug("Could not free slot yet...");
         for(int i = source; i < inventorySize; i++) {
             if(inv.getItem(i)==null) {
                 inv.setItem(i,item);
                 inv.setItem(source,null);
                 inv.setHeldItemSlot(source);
-                //main.debug("Freed slot on second try");
+                main.debug("Freed slot on second try");
                 return;
             }
         }
 
-        //main.debug("WARNING: COULD NOT FREE SLOT AT ALL");
+        main.debug("WARNING: COULD NOT FREE SLOT AT ALL");
 
         for(int i = 0; i < hotbarSize ; i++) {
             if(inv.getItem(i) == null || !isDamageable(inv.getItem(i))) {
-                //main.debug("Found not damageable item at slot "+i);
+                main.debug("Found not damageable item at slot "+i);
                 inv.setHeldItemSlot(i);
             }
         }

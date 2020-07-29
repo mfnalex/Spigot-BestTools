@@ -73,9 +73,9 @@ public class CommandBestTools implements CommandExecutor {
 
         // Toggle bestToolEnabled
         if (main.getPlayerSetting(p).toggleBestToolsEnabled()) {
-            p.sendMessage(main.messages.MSG_BESTTOOL_ENABLED);
+            if(!main.messages.MSG_BESTTOOL_ENABLED.equals("")) p.sendMessage(main.messages.MSG_BESTTOOL_ENABLED);
         } else {
-            p.sendMessage(main.messages.MSG_BESTTOOL_DISABLED);
+            if(!main.messages.MSG_BESTTOOL_DISABLED.equals("")) p.sendMessage(main.messages.MSG_BESTTOOL_DISABLED);
         }
         return true;
     }
