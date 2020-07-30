@@ -485,6 +485,7 @@ public class BestToolsUtils {
         addToMap("SANDSTONE", Tool.PICKAXE);
         addToMap("SANDSTONE_SLAB", Tool.PICKAXE);
         addToMap("SANDSTONE_STAIRS", Tool.PICKAXE);
+        addToMap("SEA_LANTERN",Tool.PICKAXE);
         addToMap("SMOOTH_QUARTZ", Tool.PICKAXE);
         addToMap("SMOOTH_RED_SANDSTONE", Tool.PICKAXE);
         addToMap("SMOOTH_SANDSTONE", Tool.PICKAXE);
@@ -536,11 +537,17 @@ public class BestToolsUtils {
 
             String n = mat.name();
 
+            if(n.contains("GLASS")) {
+                addToMap(mat,Tool.PICKAXE);
+                continue;
+            }
+
             // Fallback for all wooden things
             for(String woodType : wood) {
                 if(n.contains(woodType)) {
                     if(n.contains("STAIRS") || n.contains("LOG") || n.contains("PLANK")) {
                         addToMap(mat, Tool.AXE);
+                        continue;
                     }
                 }
             }

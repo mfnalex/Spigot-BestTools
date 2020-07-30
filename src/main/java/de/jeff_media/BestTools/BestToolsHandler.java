@@ -120,6 +120,7 @@ public class BestToolsHandler {
             case ENDER_CHEST:
             case QUARTZ:
             case SPAWNER:
+            case SEA_LANTERN:
                 return true;
         }
         if(name.equals("NETHER_GOLD_ORE")) return true; // Fortune also improves this, but according to wiki even fortune 3 on avg only gives 8.8 nuggets which is less than 1 ingot

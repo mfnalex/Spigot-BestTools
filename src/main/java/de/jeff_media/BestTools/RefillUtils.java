@@ -2,6 +2,7 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -21,6 +22,40 @@ public class RefillUtils {
         this.main=main;
     }
 
+    boolean isBowlOrBottle(Material mat) {
+        return (mat == Material.GLASS_BOTTLE || mat == Material.BOWL);
+    }
+
+    boolean moveBowlsAndBottles(Inventory inv, int slot) {
+        if(!isBowlOrBottle(inv.getItem(slot).getType())) return false;
+        ItemStack toBeMoved = inv.getItem(slot);
+        inv.clear(slot);
+        HashMap<Integer, ItemStack> leftovers = inv.addItem(toBeMoved);
+        if(inv.getItem(slot)==null || inv.getItem(slot).getAmount()==0 || inv.getItem(slot).getType() == Material.AIR) {
+            return true;
+        }
+        if(leftovers.size()>0) {
+            main.getLogger().warning("Possible item loss detected due to RefillUtils#moveBowlsAndBottles, dropping leftover items...");
+            for(ItemStack leftover : leftovers.values()) {
+                if(!(inv.getHolder() instanceof Player)) {
+                    main.getLogger().warning("Could not drop items because inventory has no player as holder :(");
+                    return false;
+                }
+                Player p = (Player) inv.getHolder();
+                p.getWorld().dropItem(p.getLocation(),leftover);
+            }
+            return false;
+        }
+        for(int i = 35;i>=0;i--) {
+            inv.clear(slot);
+            if(inv.getItem(i)==null || inv.getItem(i).getAmount()==0 || inv.getItem(i).getType()==Material.AIR) {
+                inv.setItem(i,toBeMoved);
+                return true;
+            }
+        }
+        return false;
+    }
+
     void refillStack(Inventory inv, int source, int dest, ItemStack stack) {
         Bukkit.getScheduler().runTask(main, () -> {
             if(inv.getItem(source)==null) return;
@@ -28,7 +63,7 @@ public class RefillUtils {
                 main.getLogger().warning("Refill failed, because source ItemStack has changed. Aborting Refill to prevent item loss.");
                 return;
             }
-            if(inv.getItem(dest)!=null) {
+            if(inv.getItem(dest)!=null && !moveBowlsAndBottles(inv,dest)) {
                 main.getLogger().warning("Refill failed, because destination slot is not empty anymore. Aborting Refill to prevent item loss.");
                 return;
             }

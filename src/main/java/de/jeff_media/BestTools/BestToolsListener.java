@@ -14,6 +14,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.plugin.RegisteredListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -72,6 +73,13 @@ public class BestToolsListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
+
+        // DEBUG
+        for (RegisteredListener registeredListener : event.getHandlers().getRegisteredListeners()) {
+            main.debug(registeredListener.getPlugin().getName()+": "+registeredListener.getListener().getClass().getName() + " @ "+registeredListener.getPriority().name());
+        }
+        //
+
         long st= main.measurePerformance ? System.nanoTime() : 0;
 
         // Check the cache as soon as possible

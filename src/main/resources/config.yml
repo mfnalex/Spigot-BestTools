@@ -80,9 +80,10 @@ dont-switch-during-battle: true
 # NOT IMPLEMENTED YET
 #prevent-item-break: true
 
-# Allow /besttools to switch to your sword when attacking mobs?
+# Allow /besttools to switch to your sword/axe (whatever is better) when attacking mobs?
+use-sword-on-hostile-mobs: true
+
 # NOT IMPLEMENTED YET, comes with next update
-#use-sword-on-hostile-mobs: true
 #use-sword-on-friendly-mobs: false
 #use-sword-on-players: false
 
@@ -232,4 +233,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 10
+config-version: 11

@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.6.3
+## 1.8.0
+- Empty soup bowls and potion bottles will ne be moved to another free slot when refill is enabled
+
+## 1.7.0
 - Added possibility to disable hint messages (just set them to an empty string (""))
 - Added option to automatically switch to best sword/axe when attacking monsters
+- Added silk touch and pickaxe as best tool to  kinds of glass and sea lanterns
 
 ## 1.6.2
 - Nether gold ore, quartz and monster spawners will now be preferably mined with silk touch

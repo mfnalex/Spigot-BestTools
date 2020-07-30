@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 10;
+    final int configVersion = 11;
 
     final int mcVersion = getMcVersion();
 
