@@ -35,10 +35,10 @@ public class RefillUtils {
             return true;
         }
         if(leftovers.size()>0) {
-            main.getLogger().warning("Possible item loss detected due to RefillUtils#moveBowlsAndBottles, dropping leftover items...");
+            main.debug("Possible item loss detected due to RefillUtils#moveBowlsAndBottles, dropping leftover items...");
             for(ItemStack leftover : leftovers.values()) {
                 if(!(inv.getHolder() instanceof Player)) {
-                    main.getLogger().warning("Could not drop items because inventory has no player as holder :(");
+                    main.debug("Could not drop items because inventory has no player as holder :(");
                     return false;
                 }
                 Player p = (Player) inv.getHolder();

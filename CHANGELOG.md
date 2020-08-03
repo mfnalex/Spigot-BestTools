@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.2
+- Removed console message when attempting to refill bonemeal after right-clicking a block that can not be fertilized by bone meal
+
 ## 1.8.1
 - Refill now works for many new items like bone meal, ender pearls or ender eyes. 
 
