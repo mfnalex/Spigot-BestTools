@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1
+- Refill now works for many new items like bone meal, ender pearls or ender eyes. 
+
 ## 1.8.0
 - Empty soup bowls and potion bottles will ne be moved to another free slot when refill is enabled
 
