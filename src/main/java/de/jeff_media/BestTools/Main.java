@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
-    final int configVersion = 11;
+    final int configVersion = 12;
 
     final int mcVersion = getMcVersion();
 
@@ -194,6 +194,7 @@ public class Main extends JavaPlugin {
         getConfig().addDefault("dont-switch-during-battle",true);
         getConfig().addDefault("puns",false);
         getConfig().addDefault("use-sword-on-hostile-mobs",true);
+        getConfig().addDefault("use-axe-as-sword",false);
 
         verbose = getConfig().getBoolean("verbose",true);
         debug = getConfig().getBoolean("debug",false);

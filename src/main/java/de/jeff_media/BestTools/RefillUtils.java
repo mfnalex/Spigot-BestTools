@@ -60,11 +60,11 @@ public class RefillUtils {
         Bukkit.getScheduler().runTask(main, () -> {
             if(inv.getItem(source)==null) return;
             if(!inv.getItem(source).equals(stack)) {
-                main.getLogger().warning("Refill failed, because source ItemStack has changed. Aborting Refill to prevent item loss.");
+                main.debug("Refill failed, because source ItemStack has changed. Aborting Refill to prevent item loss.");
                 return;
             }
             if(inv.getItem(dest)!=null && !moveBowlsAndBottles(inv,dest)) {
-                main.getLogger().warning("Refill failed, because destination slot is not empty anymore. Aborting Refill to prevent item loss.");
+                main.debug("Refill failed, because destination slot is not empty anymore. Aborting Refill to prevent item loss.");
                 return;
             }
             inv.setItem(source, null);

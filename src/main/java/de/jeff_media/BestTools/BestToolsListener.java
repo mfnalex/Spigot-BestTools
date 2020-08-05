@@ -23,10 +23,12 @@ public class BestToolsListener implements Listener {
 
     final BestToolsHandler handler;
     final Main main;
+    boolean useAxeAsWeapon;
 
     BestToolsListener(@NotNull Main main) {
         this.main=Objects.requireNonNull(main,"Main must not be null");
         handler=Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null");
+        useAxeAsWeapon = main.getConfig().getBoolean("use-axe-as-sword");
     }
 
 
@@ -57,7 +59,7 @@ public class BestToolsListener implements Listener {
         main.debug("Getting the best roscoe for "+enemy.getType().name());
 
         PlayerInventory inv = p.getInventory();
-        ItemStack bestRoscoe = handler.getBestRoscoeFromInventory(enemy.getType(), p,playerSetting.hotbarOnly,inv.getItemInMainHand());
+        ItemStack bestRoscoe = handler.getBestRoscoeFromInventory(enemy.getType(), p,playerSetting.hotbarOnly,inv.getItemInMainHand(),useAxeAsWeapon);
 
         if(bestRoscoe==null || bestRoscoe.equals(inv.getItemInMainHand())) {
             main.meter.add(st,false);

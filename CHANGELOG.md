@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.8.2
+## 1.9.0
 - Removed console message when attempting to refill bonemeal after right-clicking a block that can not be fertilized by bone meal
+- Added possibility to disable using axes as weapons
 
 ## 1.8.1
 - Refill now works for many new items like bone meal, ender pearls or ender eyes. 

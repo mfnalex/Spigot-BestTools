@@ -83,6 +83,9 @@ dont-switch-during-battle: true
 # Allow /besttools to switch to your sword/axe (whatever is better) when attacking mobs?
 use-sword-on-hostile-mobs: true
 
+# Use axe instead of sword when the axe does more damage (it's slower though and does not deal sweep damage)
+use-axe-as-sword: false
+
 # NOT IMPLEMENTED YET, comes with next update
 #use-sword-on-friendly-mobs: false
 #use-sword-on-players: false
@@ -233,4 +236,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 11
+config-version: 12

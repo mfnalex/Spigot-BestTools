@@ -220,14 +220,14 @@ public class BestToolsHandler {
     }
 
     @Nullable
-    ItemStack getBestRoscoeFromArray(@NotNull ItemStack[] items, ItemStack currentItem, EntityType enemy) {
+    ItemStack getBestRoscoeFromArray(@NotNull ItemStack[] items, ItemStack currentItem, EntityType enemy, boolean useAxe) {
 
         ArrayList<ItemStack> list = new ArrayList<>();
         for(ItemStack item : items) {
             if(item==null) continue; // IntelliJ says this is always false
             // TODO: Check if durability is 1
 
-            if(isRoscoe(item)) {
+            if(isRoscoe(item,useAxe)) {
                 list.add(item);
             }
         }
@@ -239,9 +239,11 @@ public class BestToolsHandler {
     }
 
     // Roscoes are only axes and swords, weapons are roscoes + bow, crossbow, etc
-    private boolean isRoscoe(ItemStack item) {
-         return swords.contains(item.getType())
-                 || axes.contains(item.getType());
+    private boolean isRoscoe(ItemStack item, boolean useAxe) {
+         return useAxe ?
+                 swords.contains(item.getType())
+                         || axes.contains(item.getType())
+                 : swords.contains(item.getType());
     }
 
 
@@ -281,10 +283,10 @@ public class BestToolsHandler {
      * @return
      */
     @Nullable
-    ItemStack getBestRoscoeFromInventory(@NotNull EntityType enemy, Player p, boolean hotbarOnly, ItemStack currentItem) {
+    ItemStack getBestRoscoeFromInventory(@NotNull EntityType enemy, Player p, boolean hotbarOnly, ItemStack currentItem, boolean useAxe) {
         ItemStack[] items = inventoryToArray(p,hotbarOnly);
 
-        ItemStack bestRoscoe = getBestRoscoeFromArray(items,currentItem,enemy);
+        ItemStack bestRoscoe = getBestRoscoeFromArray(items,currentItem,enemy,useAxe);
         //if(bestRoscoe==null) {
         //    bestRoscoe = getNonToolItemFromArray(items,currentItem,mat);
         //}
