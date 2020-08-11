@@ -77,9 +77,9 @@ public class BestToolsListener implements Listener {
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
 
         // DEBUG
-        for (RegisteredListener registeredListener : event.getHandlers().getRegisteredListeners()) {
-            main.debug(registeredListener.getPlugin().getName()+": "+registeredListener.getListener().getClass().getName() + " @ "+registeredListener.getPriority().name());
-        }
+        //for (RegisteredListener registeredListener : event.getHandlers().getRegisteredListeners()) {
+        //    main.debug(registeredListener.getPlugin().getName()+": "+registeredListener.getListener().getClass().getName() + " @ "+registeredListener.getPriority().name());
+        //}
         //
 
         long st= main.measurePerformance ? System.nanoTime() : 0;

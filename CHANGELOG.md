@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.1
+- Refill works with the offhand as well
+
 ## 1.9.0
 - Removed console message when attempting to refill bonemeal after right-clicking a block that can not be fertilized by bone meal
 - Added possibility to disable using axes as weapons

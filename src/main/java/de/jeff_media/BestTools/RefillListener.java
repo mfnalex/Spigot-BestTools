@@ -37,16 +37,23 @@ public class RefillListener implements Listener {
     }
 
     private void attemptRefill(Player p) {
+        attemptRefill(p,true);
+        attemptRefill(p,false);
+    }
+
+    private void attemptRefill(Player p, boolean offHand) {
         if(!PlayerUtils.isAllowedGamemode(p,main.getConfig().getBoolean("allow-in-adventure-mode"))) {
             return;
         }
         PlayerInventory inv = p.getInventory();
         PlayerSetting playerSetting = main.getPlayerSetting(p);
-        ItemStack item = inv.getItemInMainHand();
+        ItemStack item = offHand ? inv.getItemInOffHand() : inv.getItemInMainHand();
         Material mat = item.getType();
         int currentSlot = inv.getHeldItemSlot();
 
         if (item.getAmount() != 1) return;
+
+        main.debug("Attempting to refill "+mat.name());
 
         if (!p.hasPermission("besttools.refill")) return;
         if (!playerSetting.refillEnabled) {
@@ -58,9 +65,9 @@ public class RefillListener implements Listener {
             return;
         }
 
-        int refillSlot = RefillUtils.getMatchingStackPosition(inv, mat, inv.getHeldItemSlot());
+        int refillSlot = RefillUtils.getMatchingStackPosition(inv, mat, offHand ? 45 : inv.getHeldItemSlot());
         if (refillSlot != -1) {
-            main.refillUtils.refillStack(inv, refillSlot, currentSlot, inv.getItem(refillSlot));
+            main.refillUtils.refillStack(inv, refillSlot, offHand ? 40 : currentSlot, inv.getItem(refillSlot));
         }
     }
 }
