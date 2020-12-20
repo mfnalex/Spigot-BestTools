@@ -136,12 +136,20 @@ public class BestToolsListener implements Listener {
             playerSetting.btcache.validate(block.getType());
             return;
         }
-        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType(),playerSetting.favoriteSlot);
+        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType()/*,playerSetting.favoriteSlot*/);
         playerSetting.btcache.validate(block.getType());
         main.meter.add(st,false);
     }
 
-    private void switchToBestTool(Player p, ItemStack bestTool, boolean hotbarOnly, Material target,int favoriteSlot) {
+    private int getFavoriteSlot(Player player) {
+        if(main.getConfig().getInt("favorite-slot")==-1) {
+            return player.getInventory().getHeldItemSlot();
+        } else {
+            return main.getConfig().getInt("favorite-slot");
+        }
+    }
+
+    private void switchToBestTool(Player p, ItemStack bestTool, boolean hotbarOnly, Material target) {
 
         PlayerInventory inv = p.getInventory();
         if(bestTool == null) {
@@ -159,16 +167,16 @@ public class BestToolsListener implements Listener {
             bestTool = handler.getNonToolItemFromArray(handler.inventoryToArray(p,hotbarOnly),currentItem,target);
         }
         if(bestTool == null) {
-            handler.freeSlot(favoriteSlot,inv);
+            handler.freeSlot(getFavoriteSlot(p),inv);
             main.debug("Could not find any appropiate tool");
             return;
         }
         int positionInInventory = handler.getPositionInInventory(bestTool,inv) ;
         if(positionInInventory != -1) {
-            handler.moveToolToSlot(positionInInventory,favoriteSlot,inv);
+            handler.moveToolToSlot(positionInInventory,getFavoriteSlot(p),inv);
             main.debug("Found tool");
         } else {
-            handler.freeSlot(favoriteSlot,inv);
+            handler.freeSlot(getFavoriteSlot(p),inv);
             main.debug("Use no tool");
         }
 

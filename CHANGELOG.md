@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.0
+- Added option to always use the current slot as favorite slot (set favorite-slot to -1)
+
 ## 1.9.1
 - Refill works with the offhand as well
 

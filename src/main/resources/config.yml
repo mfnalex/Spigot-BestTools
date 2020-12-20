@@ -66,6 +66,7 @@ hotbar-only: true
 # The preferred slot where BestTools should move the tool if it's not in the hotbar
 # and hotbar-only is set to false. Must be a number between 0 (leftmost hotbar slot)
 # and 8 (rightmost hotbar slot)
+# Set this to -1 to always use the player's current slot
 favorite-slot: 8
 
 # When set to false, /besttools and /refill will only work in survival game mode
@@ -236,4 +237,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 12
+config-version: 13
