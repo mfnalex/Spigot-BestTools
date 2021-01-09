@@ -216,6 +216,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
+##### Turkish
+#message-besttools-enabled: "&7BestTools &aaktif edildi&7."
+#message-besttools-disabled: "&7BestTools &cdeaktif edildi&7."
+#message-refill-enabled: "&7Otomatik doldurma &aaktif edildi&7."
+#message-refill-disabled: "&7Otomatik doldurma &cdeaktif edildi&7."
+#message-besttools-usage: "&7İpucu: Blok kırarken otomatik olarak en iyi aleti kullanmak için &6/besttols&7 veya &6/bt&7 yazınız."
+#message-refill-usage": "&7İpucu: Slotunuzdaki blokları otomatik doldurmak için &6/refill&7 veya &6/rf&7 yazınız."
+#message-hotbar-only-enabled: "&7BestTools sadece slotlarınızdaki aletleri kullanacaktır."
+#message-hotbar-only-disabled: "&7BestTools envanterinizdeki bütün aletleri kullanacaktır."
+#gui-favorite-slot: "Favori slot olarak seç"
+#gui-favorite-slot-lore: "Eğer seçmiş olduğunuz slot zaten doluysa ve BestTools envanterinizdeki bir aleti kullanıyorsa, alet otomatik olarak bu slota yerleştirilecektir."
+#gui-besttools-lore: "Blok kırarken otomatik olarak en iyi aleti seçer."
+#gui-hotbar-lore: "Aktifken, BestTools envanterinizdeki öğeler yerine sadece slotlarınızdaki aletleri kullanır."
+#gui-refill-lore: "Automatically refills empty hotbar slots."
+
 ############################
 ##### Technical stuff! #####
 ############################
