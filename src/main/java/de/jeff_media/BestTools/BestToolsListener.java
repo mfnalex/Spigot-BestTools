@@ -108,6 +108,10 @@ public class BestToolsListener implements Listener {
             return;
         }
 
+        if(block.getType() == Material.AIR) {
+            return;
+        }
+
         // Blacklist
         if(playerSetting.getBlacklist().contains(block.getType()))
             return;

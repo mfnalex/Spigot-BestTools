@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.1
+- Fixed BestTools trying to choose a tool for AIR in rare cases
+
 ## 1.10.0
 - Added option to always use the current slot as favorite slot (set favorite-slot to -1)
 
