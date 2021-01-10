@@ -244,7 +244,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-favorite-slot-lore: "Eğer seçmiş olduğunuz slot zaten doluysa ve BestTools envanterinizdeki bir aleti kullanıyorsa, alet otomatik olarak bu slota yerleştirilecektir."
 #gui-besttools-lore: "Blok kırarken otomatik olarak en iyi aleti seçer."
 #gui-hotbar-lore: "Aktifken, BestTools envanterinizdeki öğeler yerine sadece slotlarınızdaki aletleri kullanır."
-#gui-refill-lore: "Automatically refills empty hotbar slots."
+#gui-refill-lore: "Otomatik olarak boş slotlarınızı doldurur."
 
 ############################
 ##### Technical stuff! #####
