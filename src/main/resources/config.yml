@@ -201,6 +201,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "Wenn aktiviert wird BestTools nur Werkzeuge aus deiner Hotbar benutzen."
 #gui-refill-lore: "Füllt automatisch leere Hotbar-Slots auf."
 
+##### Russian - Thanks to @GEEK for translating!
+#message-besttools-enabled: "&7BestTools &aактивирован&7."
+#message-besttools-disabled: "&7BestTools &cдеактивирован&7."
+#message-refill-enabled: "&7Заполнение &aактивировано&7."
+#message-refill-disabled: "&7Заполнение &cдеактивировано&7."
+#message-besttools-usage: "&7Подсказка: Введите &6/besttools&7 или &6/bt&7 чтобы автоматически использовать лучший предмет для ломания блоков."
+#message-refill-usage": "&7Подсказка: Введите &6/refill&7 или &6/rf&7 чтобы автоматически наполнять ваши предметы в инвентаре."
+#message-hotbar-only-enabled: "&7BestTools будет использовать только инструменты с вашей панели быстрого доступа."
+#message-hotbar-only-disabled: "&7BestTools будет использовать все инструменты из вашего инвентаря."
+#gui-favorite-slot: "Установить любимый слот"
+#gui-favorite-slot-lore: "Если ваша панель быстрого доступа заполнена и BestTools использует инструмент из вашего инвентаря, он будет размещен в этом слоте."
+#gui-besttools-lore: "Автоматически выбирает лучшие инструменты при ломании блоков."
+#gui-hotbar-lore: "Когда этот параметр включен, BestTools будет использовать инструменты только из вашей панели быстрого доступа, а не из всего вашего инвентаря."
+#gui-refill-lore: "Автоматически заполняет пустые слоты панели быстрого доступа."
+
 ##### Spanish
 #message-besttools-enabled: "&7BestTools ha sido &ahabilitado&7."
 #message-besttools-disabled: "&7BestTools ha sido &cdeshabilitado&7."
@@ -237,4 +252,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 13
+config-version: 14

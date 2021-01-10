@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.2
+- Added Russian translation
+
 ## 1.10.1
 - Fixed BestTools trying to choose a tool for AIR in rare cases
 
