@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -78,15 +79,15 @@ public class ConfigUpdater {
                 continue;
             }*/
 
-            /*else if (line.startsWith("disabled-worlds:")) {
+            else if (line.startsWith("global-block-blacklist:")) {
                 newline = null;
-                newLines.add("disabled-worlds:");
-                if (main.disabledWorlds != null) {
-                    for (String disabledWorld : main.disabledWorlds) {
-                        newLines.add("- " + disabledWorld);
+                newLines.add("global-block-blacklist:");
+                if (main.toolHandler != null && main.toolHandler.globalBlacklist != null) {
+                    for (Material disabledBlock : main.toolHandler.globalBlacklist) {
+                        newLines.add("- " + disabledBlock.name());
                     }
                 }
-            } */
+            }
 
             else {
                 for (String node : oldValues.keySet()) {

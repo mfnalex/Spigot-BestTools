@@ -92,6 +92,23 @@ use-axe-as-sword: false
 #use-sword-on-players: false
 
 ###############################
+####### Global blacklist ######
+###############################
+
+# You can add blocks to the global blacklist here that will apply to ALL players.
+# Blocks broken that are mentioned in this list will not trigger BestTools.
+
+# Example:
+#
+# global-block-blacklist:
+# - POTATOES
+# - BEETROOTS
+# - CARROTS
+# - WHEAT
+
+global-block-blacklist:
+
+###############################
 ####### Update checker  #######
 ###############################
 
@@ -267,4 +284,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 14
+config-version: 15

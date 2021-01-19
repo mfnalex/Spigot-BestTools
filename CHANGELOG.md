@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.11.0
+- Added global block blacklist
+
 ## 1.10.2
 - Added Russian translation
 

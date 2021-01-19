@@ -33,7 +33,7 @@ public class BestToolsHandler {
     // Configurable End //
 
     final HashMap<Material,Tool> toolMap = new HashMap<>();
-
+    final HashSet<Material> globalBlacklist = new HashSet<>();
     ArrayList<Tag<Material>> usedTags = new ArrayList<>();
 
     // TODO: Cache valid tool materials here
@@ -54,7 +54,15 @@ public class BestToolsHandler {
         this.main=Objects.requireNonNull(main,"Main must not be null");
         //this.favoriteSlot=main.getConfig().getInt("favorite-slot");
 
-
+        for(String name : main.getConfig().getStringList("global-block-blacklist")) {
+            Material mat = Material.valueOf(name.toUpperCase());
+            if(mat==null) {
+                main.getLogger().warning("Invalid material on global-block-blacklist: "+name);
+                continue;
+            }
+            main.debug("Adding to global block blacklist: " + mat.name());
+            globalBlacklist.add(mat);
+        }
 
 
     }

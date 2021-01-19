@@ -1,6 +1,6 @@
 main: de.jeff_media.BestTools.Main
 name: BestTools
-version: 1.10.2
+version: 1.11.0
 api-version: "1.13"
 description: Automatically chooses the best tool when breaking blocks
 author: mfnalex

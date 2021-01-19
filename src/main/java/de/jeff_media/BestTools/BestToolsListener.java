@@ -112,6 +112,10 @@ public class BestToolsListener implements Listener {
             return;
         }
 
+        if(main.toolHandler.globalBlacklist.contains(block.getType())) {
+            return;
+        }
+
         // Blacklist
         if(playerSetting.getBlacklist().contains(block.getType()))
             return;
