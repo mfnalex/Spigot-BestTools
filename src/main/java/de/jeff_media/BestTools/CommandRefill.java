@@ -45,9 +45,9 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
         // Toggle AutoRefill //
         if(playerSetting.toggleRefillEnabled()) {
-            p.sendMessage(main.messages.MSG_REFILL_ENABLED);
+            Messages.sendMessage(p,main.messages.MSG_REFILL_ENABLED);
         } else {
-            p.sendMessage(main.messages.MSG_REFILL_DISABLED);
+            Messages.sendMessage(p,main.messages.MSG_REFILL_DISABLED);
         }
 
         return true;

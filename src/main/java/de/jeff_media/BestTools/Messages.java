@@ -2,6 +2,8 @@ package de.jeff_media.BestTools;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -112,6 +114,13 @@ public class Messages {
             strings[i]=ChatColor.translateAlternateColorCodes('&',strings[i]);
         }
         return strings;
+    }
+
+    public static void sendMessage(CommandSender player, String message) {
+        if(message == null || message.equals("")) {
+            return;
+        }
+        player.sendMessage(message);
     }
 
 }

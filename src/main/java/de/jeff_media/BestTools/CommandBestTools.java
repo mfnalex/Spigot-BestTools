@@ -56,9 +56,9 @@ public class CommandBestTools implements CommandExecutor {
                     || args[0].equalsIgnoreCase("hotbar")) {
 
                 if (setting.toggleHotbarOnly()) {
-                    p.sendMessage(main.messages.MSG_HOTBAR_ONLY_ENABLED);
+                    Messages.sendMessage(p,main.messages.MSG_HOTBAR_ONLY_ENABLED);
                 } else {
-                    p.sendMessage(main.messages.MSG_HOTBAR_ONLY_DISABLED);
+                    Messages.sendMessage(p,main.messages.MSG_HOTBAR_ONLY_DISABLED);
                 }
                 return true;
             }
@@ -73,9 +73,9 @@ public class CommandBestTools implements CommandExecutor {
 
         // Toggle bestToolEnabled
         if (main.getPlayerSetting(p).toggleBestToolsEnabled()) {
-            if(!main.messages.MSG_BESTTOOL_ENABLED.equals("")) p.sendMessage(main.messages.MSG_BESTTOOL_ENABLED);
+            Messages.sendMessage(p,main.messages.MSG_BESTTOOL_ENABLED);
         } else {
-            if(!main.messages.MSG_BESTTOOL_DISABLED.equals("")) p.sendMessage(main.messages.MSG_BESTTOOL_DISABLED);
+            Messages.sendMessage(p,main.messages.MSG_BESTTOOL_DISABLED);
         }
         return true;
     }

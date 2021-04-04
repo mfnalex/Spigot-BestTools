@@ -58,7 +58,7 @@ public class RefillListener implements Listener {
         if (!p.hasPermission("besttools.refill")) return;
         if (!playerSetting.refillEnabled) {
             if (!playerSetting.hasSeenRefillMessage) {
-                p.sendMessage(main.messages.MSG_REFILL_USAGE);
+                Messages.sendMessage(p,main.messages.MSG_REFILL_USAGE);
                 playerSetting.setHasSeenRefillMessage(true);
             }
             main.debug("ABORTING");

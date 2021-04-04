@@ -56,7 +56,7 @@ public class Blacklist {
     void print(Player p,Main main) {
 
         if(mats.size()==0) {
-            p.sendMessage(main.messages.BL_EMPTY);
+            Messages.sendMessage(p,main.messages.BL_EMPTY);
             return;
         }
 

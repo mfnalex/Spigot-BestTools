@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.12.1
+- Updated config version (to show the new hint from 1.12.0)
+
+## 1.12.0
+- You can set messages to an empty String ("") to avoid them from being shown to the player.
+
 ## 1.11.0
 - Added global block blacklist
 

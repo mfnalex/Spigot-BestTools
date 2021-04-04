@@ -143,6 +143,8 @@ check-interval: 4
 
 # Please note that using color codes in the GUI is not supported yet.
 
+# You can set messages to an empty String ("") to avoid displaying those messages.
+
 ##### You can edit these messages yourself or uncomment the existing translations (see below)
 message-besttools-enabled: "&7BestTools has been &aenabled&7."
 message-besttools-disabled: "&7BestTools has been &cdisabled&7."
@@ -284,4 +286,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 15
+config-version: 16

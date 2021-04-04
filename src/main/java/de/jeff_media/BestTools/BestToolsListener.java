@@ -226,7 +226,7 @@ public class BestToolsListener implements Listener {
     private boolean hasBestToolsEnabled(Player p, PlayerSetting playerSetting) {
         if(!playerSetting.bestToolsEnabled) {
             if (!playerSetting.hasSeenBestToolsMessage) {
-                p.sendMessage(main.messages.MSG_BESTTOOL_USAGE);
+                Messages.sendMessage(p,main.messages.MSG_BESTTOOL_USAGE);
                 playerSetting.setHasSeenBestToolsMessage(true);
             }
             return false;
