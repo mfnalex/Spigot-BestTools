@@ -205,6 +205,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
+##### Dutch
+#message-besttools-enabled: "&7BestTools is nu &aingeschakeld&7."
+#message-besttools-disabled: "&7BestTools is nu &cuitgeschakelt&7."
+#message-refill-enabled: "&7Hervullen is nu &aingeschakeld&7."
+#message-refill-disabled: "&7Hervullen is nu &cuitgeschakelt&7."
+#message-besttools-usage: "&7Hint: Type &6/besttools&7 of &6/bt&7 om automatisch de beste tool te bruiker om blokken te breken."
+#message-refill-usage": "&7Hint: Type &6/refill&7 of &6/rf&7 om automatisch lege items uit je inventory te hervullen."
+#message-hotbar-only-enabled: "&7BestTools zult nu alleen tools uit je hotbar gebruiken."
+#message-hotbar-only-disabled: "&7BestTools zult nu alle tools uit je inventory gebruiken."
+#gui-favorite-slot: "Ze als favoriete slot"
+#gui-favorite-slot-lore: "Als je hotbar vol is en BestTools gebruikt een tool van je inventory dan word deze geplaats in dit slot."
+#gui-besttools-lore: "Kiest automatisch welke tools het beste is voor het breken van een blok."
+#gui-hotbar-lore: "Wanneer ingeschakeld, BestTools zult alleen tools gebruiken van je hotbar in plaats van je hele inventory."
+#gui-refill-lore: "Hervult automatische lege hotbar slots."
+
 ##### German
 #message-besttools-enabled: "&7BestTools wurde &aaktiviert&7."
 #message-besttools-disabled: "&7BestTools wurde &cdeaktiviert&7."
