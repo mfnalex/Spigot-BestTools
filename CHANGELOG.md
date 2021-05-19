@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.13.0
+- Updated ChestSortAPI to version 3.0.0. If you have ChestSort installed, you must use at least ChestSort 10.0.0!
+
 ## 1.12.1
 - Updated config version (to show the new hint from 1.12.0)
 
