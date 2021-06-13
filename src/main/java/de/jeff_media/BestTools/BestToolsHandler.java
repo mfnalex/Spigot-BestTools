@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import de.jeff_media.BestTools.tags.v1_17;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.enchantments.Enchantment;

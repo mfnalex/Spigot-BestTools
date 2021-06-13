@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import de.jeff_media.BestTools.tags.v1_17;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.jetbrains.annotations.NotNull;
@@ -118,6 +119,15 @@ public class BestToolsUtils {
             if(Material.getMaterial(s)!=null) {
                 main.toolHandler.allTools.add(Material.getMaterial(s));
             }
+        }
+
+        // 1.17+
+        try {
+            for(Material mat : v1_17.getPickaxeMaterials()) {
+                addToMap(mat,Tool.PICKAXE);
+            }
+        } catch (Throwable t) {
+            // 1.17+
         }
 
         //uToolMap = Map.copyOf(main.toolHandler.toolMap); // Java 10+ only

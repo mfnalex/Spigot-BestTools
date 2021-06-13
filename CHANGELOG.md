@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.0
+- Added support for many new 1.17 materials. If some are still missing, please let me know on my Discord or in the discussion.
+- Updated ChestSortAPI
+
 ## 1.13.0
 - Updated ChestSortAPI to version 3.0.0. If you have ChestSort installed, you must use at least ChestSort 10.0.0!
 
