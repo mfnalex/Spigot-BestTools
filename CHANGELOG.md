@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.14.3
+- Fixed UpdateChecker showing the wrong version
+
+## 1.14.2
+- Fixed all the amethyst blocks not being broken by pickaxes
+
 ## 1.14.0
 - Added support for many new 1.17 materials. If some are still missing, please let me know on my Discord or in the discussion.
 - Updated ChestSortAPI

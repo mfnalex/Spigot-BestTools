@@ -528,6 +528,18 @@ public class BestToolsUtils {
         addToMap("YELLOW_CONCRETE", Tool.PICKAXE);
         addToMap("YELLOW_CONCRETE_POWDER", Tool.SHOVEL);
 
+        // 1.17
+        for (Material mat : Material.values()) {
+            try {
+                if (mat.name().contains("AMETHYST")) {
+                    addToMap(mat.name(), Tool.PICKAXE);
+                }
+                addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
+            } catch (Throwable ignored) {
+
+            }
+        }
+
 
         long endTime = System.nanoTime();
         //printMap();
