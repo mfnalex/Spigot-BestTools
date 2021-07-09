@@ -1,35 +1,38 @@
 package de.jeff_media.BestTools;
 
+import de.jeff_media.BestTools.BestToolsHandler.Tool;
 import de.jeff_media.BestTools.tags.v1_17;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import de.jeff_media.BestTools.BestToolsHandler.Tool;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Please don't cry because I use Strings instead of Material. It's for backward compatability and the map only gets built once on startup, so don't worry
  */
 public class BestToolsUtils {
 
-    final String[] wood = {"BIRCH","ACACIA","OAK","DARK_OAK","SPRUCE","JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
-    final String[] weapons = {"BOW","CROSSBOW","TRIDENT","NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
-    final String[] instaBreakableByHand = {"COMPARATOR","REPEATER","REDSTONE_WIRE","REDSTONE_TORCH","REDSTONE_WALL_TORCH","TORCH","SOUL_TORCH","WALL_TORCH","SOUL_WALL_TORCH",
-            "SCAFFOLDING","SLIME_BLOCK","HONEY_BLOCK","TNT","TRIPWIRE","TRIPWIRE_HOOK","GRASS","SUGAR_CANE","LILY_PAD",
-            "OAK_SAPLING","SPRUCE_SAPLING","BIRCH_SAPLING","JUNGLE_SAPLING","ACACIA_SAPLING","DARK_OAK_SAPLING",
-            "BROWN_MUSHROOM","RED_MUSHROOM","CRIMSON_FUNGUS","WARPED_FUNGUS","CRIMSON_ROOTS","WARPED_ROOTS","WEEPING VINES","TWISTING_VINES",
-            "DEAD_BUSH","WHEAT","CARROTS","POTATOES","BEETROOTS","PUMPKIN_STEM","MELON_STEM","NETHER_WART","FLOWER_POT",
-            "DANDELION","POPPY","BLUE_ORCHID","ALLIUM","AZURE_BLUET","RED_TULIP","ORANGE_TULIP","WHITE_TULIP","PINK_TULIP","OXEYE_DAISY","CORNFLOWER","LILY_OF_THE_VALLEY","WITHER_ROSE","SUNFLOWER","LILAC","ROSE_BUSH","PEONY",
-            "POTTED_DANDELION","POTTED_POPPY","POTTED_BLUE_ORCHID","POTTED_ALLIUM","POTTED_AZURE_BLUET","POTTED_RED_TULIP","POTTED_ORANGE_TULIP","POTTED_WHITE_TULIP","POTTED_PINK_TULIP","POTTED_OXEYE_DAISY","POTTED_CORNFLOWER","POTTED_LILY_OF_THE_VALLEY","POTTED_WITHER_ROSE","POTTED_SUNFLOWER","POTTED_LILAC","POTTED_ROSE_BUSH","POTTED_PEONY",
-            "TUBE_CORAL","BRAIN_CORAL","BUBBLE_CORAL","FIRE_CORAL","HORN_CORAL","DEAD_TUBE_CORAL","DEAD_BRAIN_CORAL","DEAD_BUBBLE_CORAL","DEAD_FIRE_CORAL","DEAD_HORN_CORAL"};
-            // TODO: Add grass only in 1.13+ instead of always
-    final String[] hoes = {"NETHERITE_HOE","DIAMOND_HOE","GOLDEN_HOE","IRON_HOE","STONE_HOE","WOODEN_HOE"};
-    final String[] pickaxes = {"NETHERITE_PICKAXE","DIAMOND_PICKAXE","GOLDEN_PICKAXE","IRON_PICKAXE","STONE_PICKAXE","WOODEN_PICKAXE"};
-    final String[] axes = {"NETHERITE_AXE","DIAMOND_AXE","GOLDEN_AXE","IRON_AXE","STONE_AXE","WOODEN_AXE"};
-    final String[] shovels = {"NETHERITE_SHOVEL","DIAMOND_SHOVEL","GOLDEN_SHOVEL","IRON_SHOVEL","STONE_SHOVEL","WOODEN_SHOVEL"};
-    final String[] swords = {"NETHERITE_SWORD","DIAMOND_SWORD","GOLDEN_SWORD","IRON_SWORD","STONE_SWORD","WOODEN_SWORD"};
+    final String[] wood = {"BIRCH", "ACACIA", "OAK", "DARK_OAK", "SPRUCE", "JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
+    final String[] weapons = {"BOW", "CROSSBOW", "TRIDENT", "NETHERITE_SWORD", "DIAMOND_SWORD", "GOLDEN_SWORD", "IRON_SWORD", "STONE_SWORD", "WOODEN_SWORD"};
+    final String[] instaBreakableByHand = {"COMPARATOR", "REPEATER", "REDSTONE_WIRE", "REDSTONE_TORCH", "REDSTONE_WALL_TORCH", "TORCH", "SOUL_TORCH", "WALL_TORCH", "SOUL_WALL_TORCH",
+            "SCAFFOLDING", "SLIME_BLOCK", "HONEY_BLOCK", "TNT", "TRIPWIRE", "TRIPWIRE_HOOK", "GRASS", "SUGAR_CANE", "LILY_PAD",
+            "OAK_SAPLING", "SPRUCE_SAPLING", "BIRCH_SAPLING", "JUNGLE_SAPLING", "ACACIA_SAPLING", "DARK_OAK_SAPLING",
+            "BROWN_MUSHROOM", "RED_MUSHROOM", "CRIMSON_FUNGUS", "WARPED_FUNGUS", "CRIMSON_ROOTS", "WARPED_ROOTS", "WEEPING VINES", "TWISTING_VINES",
+            "DEAD_BUSH", "WHEAT", "CARROTS", "POTATOES", "BEETROOTS", "PUMPKIN_STEM", "MELON_STEM", "NETHER_WART", "FLOWER_POT",
+            "DANDELION", "POPPY", "BLUE_ORCHID", "ALLIUM", "AZURE_BLUET", "RED_TULIP", "ORANGE_TULIP", "WHITE_TULIP", "PINK_TULIP", "OXEYE_DAISY", "CORNFLOWER", "LILY_OF_THE_VALLEY", "WITHER_ROSE", "SUNFLOWER", "LILAC", "ROSE_BUSH", "PEONY",
+            "POTTED_DANDELION", "POTTED_POPPY", "POTTED_BLUE_ORCHID", "POTTED_ALLIUM", "POTTED_AZURE_BLUET", "POTTED_RED_TULIP", "POTTED_ORANGE_TULIP", "POTTED_WHITE_TULIP", "POTTED_PINK_TULIP", "POTTED_OXEYE_DAISY", "POTTED_CORNFLOWER", "POTTED_LILY_OF_THE_VALLEY", "POTTED_WITHER_ROSE", "POTTED_SUNFLOWER", "POTTED_LILAC", "POTTED_ROSE_BUSH", "POTTED_PEONY",
+            "TUBE_CORAL", "BRAIN_CORAL", "BUBBLE_CORAL", "FIRE_CORAL", "HORN_CORAL", "DEAD_TUBE_CORAL", "DEAD_BRAIN_CORAL", "DEAD_BUBBLE_CORAL", "DEAD_FIRE_CORAL", "DEAD_HORN_CORAL"};
+    // TODO: Add grass only in 1.13+ instead of always
+    final String[] hoes = {"NETHERITE_HOE", "DIAMOND_HOE", "GOLDEN_HOE", "IRON_HOE", "STONE_HOE", "WOODEN_HOE"};
+    final String[] pickaxes = {"NETHERITE_PICKAXE", "DIAMOND_PICKAXE", "GOLDEN_PICKAXE", "IRON_PICKAXE", "STONE_PICKAXE", "WOODEN_PICKAXE"};
+    final String[] axes = {"NETHERITE_AXE", "DIAMOND_AXE", "GOLDEN_AXE", "IRON_AXE", "STONE_AXE", "WOODEN_AXE"};
+    final String[] shovels = {"NETHERITE_SHOVEL", "DIAMOND_SHOVEL", "GOLDEN_SHOVEL", "IRON_SHOVEL", "STONE_SHOVEL", "WOODEN_SHOVEL"};
+    final String[] swords = {"NETHERITE_SWORD", "DIAMOND_SWORD", "GOLDEN_SWORD", "IRON_SWORD", "STONE_SWORD", "WOODEN_SWORD"};
     final Material[] defaultMats = {
             Material.DIAMOND_PICKAXE,
             Material.DIAMOND_AXE,
@@ -69,62 +72,61 @@ public class BestToolsUtils {
     //final Map<Material,Tool> uToolMap;
 
 
-
     // This is called AFTER BestToolsHandler, so the Utils can affect the Handler
     public BestToolsUtils(@NotNull Main main) {
 
-        this.main = Objects.requireNonNull(main,"Main must not be null");
-        Objects.requireNonNull(main.toolHandler,"BestToolsHandler must be instantiated before BestToolUtils!");
-        
+        this.main = Objects.requireNonNull(main, "Main must not be null");
+        Objects.requireNonNull(main.toolHandler, "BestToolsHandler must be instantiated before BestToolUtils!");
+
         // Register valid weapons
-        for(String weapon : weapons) {
-            if(Material.getMaterial(weapon) != null) {
+        for (String weapon : weapons) {
+            if (Material.getMaterial(weapon) != null) {
                 main.toolHandler.weapons.add(Material.getMaterial(weapon));
             }
         }
 
         // Register all InstaBreaksByHand
-        for(String s : instaBreakableByHand) {
-            addToMap(s,main.toolHandler.instaBreakableByHand);
+        for (String s : instaBreakableByHand) {
+            addToMap(s, main.toolHandler.instaBreakableByHand);
         }
 
         // Hoes
-        for(String s : hoes) {
-            addToMap(s,main.toolHandler.hoes);
+        for (String s : hoes) {
+            addToMap(s, main.toolHandler.hoes);
         }
 
         // Pickaxes
-        for(String s : pickaxes) {
-            addToMap(s,main.toolHandler.pickaxes);
+        for (String s : pickaxes) {
+            addToMap(s, main.toolHandler.pickaxes);
         }
 
         // Axes
-        for(String s : axes) {
-            addToMap(s,main.toolHandler.axes);
+        for (String s : axes) {
+            addToMap(s, main.toolHandler.axes);
         }
 
         // Shovels
-        for(String s : shovels) {
-            addToMap(s,main.toolHandler.shovels);
+        for (String s : shovels) {
+            addToMap(s, main.toolHandler.shovels);
         }
 
         // Swords
-        for(String s : swords) {
-            addToMap(s,main.toolHandler.swords);
+        for (String s : swords) {
+            addToMap(s, main.toolHandler.swords);
         }
 
 
         main.toolHandler.allTools.addAll(Arrays.asList(defaultMats));
-        for(String s : netheriteTools) {
-            if(Material.getMaterial(s)!=null) {
+        for (String s : netheriteTools) {
+            if (Material.getMaterial(s) != null) {
                 main.toolHandler.allTools.add(Material.getMaterial(s));
             }
         }
 
         // 1.17+
         try {
-            for(Material mat : v1_17.getPickaxeMaterials()) {
-                addToMap(mat,Tool.PICKAXE);
+            for (Material mat : v1_17.getPickaxeMaterials()) {
+                addToMap(mat, Tool.PICKAXE);
             }
         } catch (Throwable t) {
             // 1.17+
@@ -135,28 +137,28 @@ public class BestToolsUtils {
 
     private void addToMap(String name, ArrayList<Material> list) {
         Material mat = Material.getMaterial(name);
-        if(mat != null) {
+        if (mat != null) {
             list.add(mat);
         } else {
-            main.debug("Skipping unknown Material "+name);
+            main.debug("Skipping unknown Material " + name);
         }
     }
 
     private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool) {
-        tagToMap(Objects.requireNonNull(tag,"Tag must not be null"),
-                Objects.requireNonNull(tool,"Tool must not be null"),
+        tagToMap(Objects.requireNonNull(tag, "Tag must not be null"),
+                Objects.requireNonNull(tool, "Tool must not be null"),
                 null);
     }
 
     private void tagToMap(@NotNull Tag<Material> tag, @NotNull Tool tool, @Nullable String match) {
-        Objects.requireNonNull(tag,"Tag must not be null");
-        Objects.requireNonNull(tool,"Tool must not be null");
-        for(Material mat : tag.getValues()) {
-            if(match==null) {
-                addToMap(mat,tool);
+        Objects.requireNonNull(tag, "Tag must not be null");
+        Objects.requireNonNull(tool, "Tool must not be null");
+        for (Material mat : tag.getValues()) {
+            if (match == null) {
+                addToMap(mat, tool);
             } else {
                 if (mat.name().contains(match)) {
-                    addToMap(mat,tool);
+                    addToMap(mat, tool);
                 }
             }
         }
@@ -169,26 +171,24 @@ public class BestToolsUtils {
 
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
-        if(mat == null) {
-            main.debug("Skipping unknown fallback Material "+matName);
+        if (mat == null) {
+            main.debug("Skipping unknown fallback Material " + matName);
             return;
         }
-        addToMap(mat,tool);
+        addToMap(mat, tool);
     }
 
     private void addToMap(@NotNull Material mat, @NotNull Tool tool) {
-        Objects.requireNonNull(Objects.requireNonNull(main.toolHandler,"ToolHandler must not be null").
-                toolMap,"ToolMap must not be null")
-                .put(Objects.requireNonNull(mat,"Material must not be null"),
-                Objects.requireNonNull(tool,"Tool must not be null"));
+        Objects.requireNonNull(Objects.requireNonNull(main.toolHandler, "ToolHandler must not be null").
+                toolMap, "ToolMap must not be null")
+                .put(Objects.requireNonNull(mat, "Material must not be null"),
+                        Objects.requireNonNull(tool, "Tool must not be null"));
     }
 
     void initMap() {
         long startTime = System.nanoTime();
 
         initFallbackMaterials();
-
-
 
 
         // Versions before 1.13 do not support Tags at all
@@ -204,19 +204,19 @@ public class BestToolsUtils {
 
             // WATCH OUT FOR ORDER - START //
             tagToMap(Tag.BUTTONS, Tool.AXE);
-            tagToMap(Tag.BUTTONS, Tool.PICKAXE,"STONE");
+            tagToMap(Tag.BUTTONS, Tool.PICKAXE, "STONE");
 
             tagToMap(Tag.DOORS, Tool.AXE);
-            tagToMap(Tag.DOORS, Tool.PICKAXE,"IRON");
+            tagToMap(Tag.DOORS, Tool.PICKAXE, "IRON");
 
             tagToMap(Tag.TRAPDOORS, Tool.AXE);
-            tagToMap(Tag.TRAPDOORS, Tool.PICKAXE,"IRON");
+            tagToMap(Tag.TRAPDOORS, Tool.PICKAXE, "IRON");
 
-            tagToMap(Tag.SLABS,Tool.PICKAXE);
-            tagToMap(Tag.WOODEN_SLABS,Tool.AXE);
+            tagToMap(Tag.SLABS, Tool.PICKAXE);
+            tagToMap(Tag.WOODEN_SLABS, Tool.AXE);
 
-            tagToMap(Tag.STAIRS,Tool.PICKAXE);
-            tagToMap(Tag.WOODEN_STAIRS,Tool.PICKAXE);
+            tagToMap(Tag.STAIRS, Tool.PICKAXE);
+            tagToMap(Tag.WOODEN_STAIRS, Tool.PICKAXE);
 
             // WATCH OUT FOR ORDER - END //
 
@@ -224,10 +224,9 @@ public class BestToolsUtils {
             tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
 
 
-
         } catch (NoClassDefFoundError ignored) {
             // GRASS_BLOCK prior to 1.13 is called GRASS
-            addToMap("GRASS",Tool.SHOVEL);
+            addToMap("GRASS", Tool.SHOVEL);
         }
 
         // Tags for 1.14+
@@ -238,13 +237,13 @@ public class BestToolsUtils {
 
             // Order important START
             tagToMap(Tag.FENCES, Tool.AXE);
-            tagToMap(Tag.FENCES, Tool.PICKAXE,"NETHER");
-            tagToMap(Tag.FENCES, Tool.PICKAXE,"BRICK");
+            tagToMap(Tag.FENCES, Tool.PICKAXE, "NETHER");
+            tagToMap(Tag.FENCES, Tool.PICKAXE, "BRICK");
             // Order important END
-        } catch(NoSuchFieldError | NoClassDefFoundError ignored) {
-            String[] bamboo_plantable_on = { "GRASS_BLOCK", "DIRT","COARSE_DIRT","GRAVEL","MYCELIUM","PODZOL","SAND","RED_SAND"};
-            for(String s : bamboo_plantable_on) {
-                addToMap(s,Tool.SHOVEL);
+        } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
+            String[] bamboo_plantable_on = {"GRASS_BLOCK", "DIRT", "COARSE_DIRT", "GRAVEL", "MYCELIUM", "PODZOL", "SAND", "RED_SAND"};
+            for (String s : bamboo_plantable_on) {
+                addToMap(s, Tool.SHOVEL);
             }
         }
 
@@ -257,22 +256,20 @@ public class BestToolsUtils {
             tagToMap(Tag.CROPS, Tool.NONE);
             tagToMap(Tag.FLOWERS, Tool.NONE);
 
-        } catch(NoSuchFieldError | NoClassDefFoundError ignored) { }
+        } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
+        }
 
         // Tags for 1.16+
         try {
             tagToMap(Tag.CRIMSON_STEMS, Tool.AXE);
             tagToMap(Tag.FENCE_GATES, Tool.AXE);
-            tagToMap(Tag.NYLIUM,Tool.PICKAXE);
+            tagToMap(Tag.NYLIUM, Tool.PICKAXE);
             // Important order START //
             tagToMap(Tag.PRESSURE_PLATES, Tool.PICKAXE);
             tagToMap(Tag.WOODEN_PRESSURE_PLATES, Tool.AXE);
             // Important order STOP //
-        } catch(NoSuchFieldError | NoClassDefFoundError ignored) { }
-
-
-
-
+        } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
+        }
 
 
         // Some of the following definitions are redundant because of the tags above
@@ -281,45 +278,45 @@ public class BestToolsUtils {
         // plugin is enabled
 
         // Issue #1
-        addToMap("BASALT",Tool.PICKAXE);
-        addToMap("POLISHED_BASALT",Tool.PICKAXE);
-        addToMap("GLOWSTONE",Tool.PICKAXE); // TODO: Prefer SilkTouch
-        addToMap("NETHER_GOLD_ORE",Tool.PICKAXE);
+        addToMap("BASALT", Tool.PICKAXE);
+        addToMap("POLISHED_BASALT", Tool.PICKAXE);
+        addToMap("GLOWSTONE", Tool.PICKAXE); // TODO: Prefer SilkTouch
+        addToMap("NETHER_GOLD_ORE", Tool.PICKAXE);
         // Issue #1 End
 
         // Issue #2
-        addToMap("SPONGE",Tool.HOE);
-        addToMap("WET_SPONGE",Tool.HOE);
-        addToMap("PISTON",Tool.PICKAXE);
-        addToMap("STICKY_PISTON",Tool.PICKAXE);
-        addToMap("PISTON_HEAD",Tool.PICKAXE);
-        addToMap("MOVING_PISTON",Tool.PICKAXE);
-        addToMap("CHORUS_PLANT",Tool.AXE);
-        addToMap("CHORUS_FLOWER",Tool.AXE);
-        addToMap("CARVED_PUMPKIN",Tool.AXE);
-        addToMap("HAY_BLOCK",Tool.HOE);
-        addToMap("OBSERVER",Tool.PICKAXE);
-        addToMap("NETHER_WART_BLOCK",Tool.HOE);
-        addToMap("WARPED_WART_BLOCK",Tool.HOE);
-        addToMap("MAGMA_BLOCK",Tool.PICKAXE);
+        addToMap("SPONGE", Tool.HOE);
+        addToMap("WET_SPONGE", Tool.HOE);
+        addToMap("PISTON", Tool.PICKAXE);
+        addToMap("STICKY_PISTON", Tool.PICKAXE);
+        addToMap("PISTON_HEAD", Tool.PICKAXE);
+        addToMap("MOVING_PISTON", Tool.PICKAXE);
+        addToMap("CHORUS_PLANT", Tool.AXE);
+        addToMap("CHORUS_FLOWER", Tool.AXE);
+        addToMap("CARVED_PUMPKIN", Tool.AXE);
+        addToMap("HAY_BLOCK", Tool.HOE);
+        addToMap("OBSERVER", Tool.PICKAXE);
+        addToMap("NETHER_WART_BLOCK", Tool.HOE);
+        addToMap("WARPED_WART_BLOCK", Tool.HOE);
+        addToMap("MAGMA_BLOCK", Tool.PICKAXE);
         // Issue #2 End
 
         // Issue #3
-        addToMap("TARGET",Tool.HOE);
-        addToMap("SHROOMLIGHT",Tool.HOE);
-        addToMap("BELL",Tool.PICKAXE);
-        addToMap("STONECUTTER",Tool.PICKAXE);
-        addToMap("SMITHING_TABLE",Tool.AXE);
-        addToMap("LECTERN",Tool.AXE);
-        addToMap("GRINDSTONE",Tool.PICKAXE);
-        addToMap("FLETCHING_TABLE",Tool.AXE);
-        addToMap("CARTOGRAPHY_TABLE",Tool.AXE);
-        addToMap("BLAST_FURNACE",Tool.PICKAXE);
-        addToMap("SMOKER",Tool.PICKAXE);
-        addToMap("BARREL",Tool.AXE);
-        addToMap("COMPOSTER",Tool.AXE);
-        addToMap("LOOM",Tool.AXE);
-        addToMap("DRIED_KELP_BLOCK",Tool.HOE);
+        addToMap("TARGET", Tool.HOE);
+        addToMap("SHROOMLIGHT", Tool.HOE);
+        addToMap("BELL", Tool.PICKAXE);
+        addToMap("STONECUTTER", Tool.PICKAXE);
+        addToMap("SMITHING_TABLE", Tool.AXE);
+        addToMap("LECTERN", Tool.AXE);
+        addToMap("GRINDSTONE", Tool.PICKAXE);
+        addToMap("FLETCHING_TABLE", Tool.AXE);
+        addToMap("CARTOGRAPHY_TABLE", Tool.AXE);
+        addToMap("BLAST_FURNACE", Tool.PICKAXE);
+        addToMap("SMOKER", Tool.PICKAXE);
+        addToMap("BARREL", Tool.AXE);
+        addToMap("COMPOSTER", Tool.AXE);
+        addToMap("LOOM", Tool.AXE);
+        addToMap("DRIED_KELP_BLOCK", Tool.HOE);
         // Issue #3 End
 
         addToMap("ACACIA_BUTTON", Tool.AXE);
@@ -495,7 +492,7 @@ public class BestToolsUtils {
         addToMap("SANDSTONE", Tool.PICKAXE);
         addToMap("SANDSTONE_SLAB", Tool.PICKAXE);
         addToMap("SANDSTONE_STAIRS", Tool.PICKAXE);
-        addToMap("SEA_LANTERN",Tool.PICKAXE);
+        addToMap("SEA_LANTERN", Tool.PICKAXE);
         addToMap("SMOOTH_QUARTZ", Tool.PICKAXE);
         addToMap("SMOOTH_RED_SANDSTONE", Tool.PICKAXE);
         addToMap("SMOOTH_SANDSTONE", Tool.PICKAXE);
@@ -529,45 +526,50 @@ public class BestToolsUtils {
         addToMap("YELLOW_CONCRETE_POWDER", Tool.SHOVEL);
 
         // 1.17
-        for (Material mat : Material.values()) {
-            try {
+        try {
+            for (Material mat : Material.values()) {
+
                 if (mat.name().contains("AMETHYST")) {
                     addToMap(mat.name(), Tool.PICKAXE);
                 }
-                addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
-            } catch (Throwable ignored) {
+                if(mat.name().endsWith("_ORE")) {
+                    addToMap(mat.name(), Tool.PICKAXE);
+                }
 
             }
+            addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
+        } catch (Throwable ignored) {
+
         }
 
 
         long endTime = System.nanoTime();
         //printMap();
-        if(main.verbose) {
-            main.getLogger().info(String.format("Building the <Block,Tool> map took %d ms",(endTime-startTime)/1000000));
+        if (main.verbose) {
+            main.getLogger().info(String.format("Building the <Block,Tool> map took %d ms", (endTime - startTime) / 1000000));
         }
     }
 
     // F****** Spigot API is not "forward compatible" with new Material enums
     private void initFallbackMaterials() {
 
-        for(Material mat : Material.values()) {
+        for (Material mat : Material.values()) {
 
-            if(!mat.isBlock()) {
+            if (!mat.isBlock()) {
                 continue;
             }
 
             String n = mat.name();
 
-            if(n.contains("GLASS")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("GLASS")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
 
             // Fallback for all wooden things
-            for(String woodType : wood) {
-                if(n.contains(woodType)) {
-                    if(n.contains("STAIRS") || n.contains("LOG") || n.contains("PLANK")) {
+            for (String woodType : wood) {
+                if (n.contains(woodType)) {
+                    if (n.contains("STAIRS") || n.contains("LOG") || n.contains("PLANK")) {
                         addToMap(mat, Tool.AXE);
                         continue;
                     }
@@ -575,98 +577,98 @@ public class BestToolsUtils {
             }
 
             // Fallback for Tag.WALLS
-            if(n.contains("STONE") || n.contains("BRICK")) {
+            if (n.contains("STONE") || n.contains("BRICK")) {
                 addToMap(mat, Tool.PICKAXE);
                 continue;
             }
             // End Tag.WALLS
 
             // Issue #1
-            if(n.contains("BLACKSTONE")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("BLACKSTONE")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("NETHER_BRICK")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("NETHER_BRICK")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
             // Issue #1 End
 
             // Issue #2
-            if(n.contains("TERRACOTTA")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("TERRACOTTA")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("PURPUR")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("PURPUR")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("INFESTED")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("INFESTED")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("ENDSTONE_BRICK")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("ENDSTONE_BRICK")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("QUARTZ")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("QUARTZ")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("CORAL_BLOCK")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("CORAL_BLOCK")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
-            if(n.contains("PRISMARINE")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("PRISMARINE")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
             // Issue #2 End
 
             // Tags only in 1.16+ START
-            if(n.contains("FENCE_GATE")) {
+            if (n.contains("FENCE_GATE")) {
                 addToMap(mat, Tool.AXE);
                 continue;
             }
-            if(n.contains("PRESSURE_PLATE")) {
-                if(n.contains("STONE") || n.contains("IRON") || n.contains("GOLD")) {
-                    addToMap(mat,Tool.PICKAXE);
+            if (n.contains("PRESSURE_PLATE")) {
+                if (n.contains("STONE") || n.contains("IRON") || n.contains("GOLD")) {
+                    addToMap(mat, Tool.PICKAXE);
                     continue;
                 }
-                addToMap(mat,Tool.AXE);
+                addToMap(mat, Tool.AXE);
                 continue;
             }
             // Tags only in 1.16+ END
 
             // Tags only in 1.15+ START
-            if(n.contains("SHULKER_BOX")) {
-                addToMap(mat,Tool.PICKAXE);
+            if (n.contains("SHULKER_BOX")) {
+                addToMap(mat, Tool.PICKAXE);
                 continue;
             }
             // Tags only in 1.15+ END
 
             // Tags only in 1.14+ START
-            if(n.contains("FENCE")) {
-                if(n.contains("NETHER") || n.contains("BRICK")) {
-                    addToMap(mat,Tool.PICKAXE);
+            if (n.contains("FENCE")) {
+                if (n.contains("NETHER") || n.contains("BRICK")) {
+                    addToMap(mat, Tool.PICKAXE);
                     continue;
                 }
-                addToMap(mat,Tool.AXE);
+                addToMap(mat, Tool.AXE);
                 continue;
             }
-            if(n.contains("SIGN")) {
-                addToMap(mat,Tool.AXE);
+            if (n.contains("SIGN")) {
+                addToMap(mat, Tool.AXE);
                 continue;
             }
             // Tags only in 1.14+ END
 
             // Different item names < 1.13
-            if(n.equals("LEAVES") || n.equals("WOOL")) {
-                addToMap(mat,Tool.SHEARS);
+            if (n.equals("LEAVES") || n.equals("WOOL")) {
+                addToMap(mat, Tool.SHEARS);
                 continue;
             }
-            if(n.equals("WORKBENCH")) {
-                addToMap(mat,Tool.AXE);
+            if (n.equals("WORKBENCH")) {
+                addToMap(mat, Tool.AXE);
                 continue;
             }
 

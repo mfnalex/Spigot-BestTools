@@ -9,7 +9,7 @@
     <name>BestTools</name>
     <!--<url>https://www.chestsort.de</url>-->
     <description>Automatically switches to the best tools. Most efficient Auto-Tool plugin!</description>
-    <version>1.14.3</version>
+    <version>1.14.4</version>
     <packaging>jar</packaging>
 
     <properties>

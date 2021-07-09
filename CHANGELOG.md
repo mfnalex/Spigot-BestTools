@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.14.4
+- Fixed some of the new ores not being detected
+
 ## 1.14.3
 - Fixed UpdateChecker showing the wrong version
 
