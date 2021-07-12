@@ -205,7 +205,7 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
-##### English
+##### Dutch
 #message-besttools-enabled: "&7BestTools is &aingeschakeld&7."
 #message-besttools-disabled: "&7BestTools is &cuitgeschakeld&7."
 #message-refill-enabled: "&7Hervullen is &aingeschakeld&7."
