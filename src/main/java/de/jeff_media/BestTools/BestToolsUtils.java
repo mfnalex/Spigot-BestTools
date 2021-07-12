@@ -535,7 +535,9 @@ public class BestToolsUtils {
                 if(mat.name().endsWith("_ORE")) {
                     addToMap(mat.name(), Tool.PICKAXE);
                 }
-
+                if(mat.name().contains("BASALT")) {
+                    addToMap(mat.name(), Tool.PICKAXE);
+                }
             }
             addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
         } catch (Throwable ignored) {

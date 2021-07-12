@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.5
+- Fixed smooth basalt and other blocks not being detected
+- Added Polish translation
+
 ## 1.14.4
 - Fixed some of the new ores not being detected
 

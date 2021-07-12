@@ -235,7 +235,22 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "Wenn aktiviert wird BestTools nur Werkzeuge aus deiner Hotbar benutzen."
 #gui-refill-lore: "Füllt automatisch leere Hotbar-Slots auf."
 
-##### Russian - Thanks to @GEEK for translating!
+##### Polish
+#message-besttools-enabled: "&7BestTools zostało &awłączone&7."
+#message-besttools-disabled: "&7BestTools zostało &cwyłączone&7."
+#message-refill-enabled: "&7Auto-refill został &awłączony&7."
+#message-refill-disabled: "&7Auto-refill został &cwyłączony&7."
+#message-besttools-usage: "&7Podpowiedź: Wpisz &6/besttools&7 lub &6/bt&7 by automatycznie użyć naodpowiedniejszych narzędzi do niszczenia danego typu bloków."
+#message-refill-usage": "&7Podpowiedź: Wpisz &6/refill&7 lub &6/rf&7 by automatycznie wypełnić pasek szybkiego wyboru przedmiotami z ekwipunku."
+#message-hotbar-only-enabled: "&7BestTools będzie używać tylko narzędzi z paska szybkiego wyboru."
+#message-hotbar-only-disabled: "&7BestTools będzie używać wszystkich narzędzi z ekwipunku."
+#gui-favorite-slot: "Ustaw ten slot jako ulubiony"
+#gui-favorite-slot-lore: "Jeśli twój pasek szybkiego wyboru jest pełen, a BestTools używa narzędzia z twojego ekwipunku, będzie ono automatycznie umieszczone w tym slocie."
+#gui-besttools-lore: "Automatycznie używa najodpowiedniejszego narzędzia do niszczenia danego typu bloków."
+#gui-hotbar-lore: "Gdy włączony, BestTools użyje tylko narzędzia z paska szybkiego wyboru zamiast z całego ekwipunku."
+#gui-refill-lore: "Automatycznie wypełnia puste sloty paska szybkiego wyboru."
+
+##### Russian
 #message-besttools-enabled: "&7BestTools &aактивирован&7."
 #message-besttools-disabled: "&7BestTools &cдеактивирован&7."
 #message-refill-enabled: "&7Заполнение &aактивировано&7."
@@ -301,4 +316,4 @@ puns: false
 
 # Do not change the following line! It is used to automatically update
 # your config to the latest version. Your changes will be kept.
-config-version: 16
+config-version: 17
