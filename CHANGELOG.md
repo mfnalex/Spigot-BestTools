@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.14.7
+- Fixed some deepslate blocks not being detected
+
+## 1.14.6
+- Fixed calcite not being detected
+
 ## 1.14.5
 - Fixed smooth basalt and other blocks not being detected
 - Added Polish translation

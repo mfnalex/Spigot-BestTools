@@ -9,7 +9,7 @@
     <name>BestTools</name>
     <!--<url>https://www.chestsort.de</url>-->
     <description>Automatically switches to the best tools. Most efficient Auto-Tool plugin!</description>
-    <version>1.14.5</version>
+    <version>1.14.7</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -18,7 +18,6 @@
     </properties>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

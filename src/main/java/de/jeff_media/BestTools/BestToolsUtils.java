@@ -538,8 +538,12 @@ public class BestToolsUtils {
                 if(mat.name().contains("BASALT")) {
                     addToMap(mat.name(), Tool.PICKAXE);
                 }
+                if(mat.name().contains("DEEPSLATE")) {
+                    addToMap(mat.name(), Tool.PICKAXE);
+                }
             }
             addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
+            addToMap(Material.CALCITE, Tool.PICKAXE);
         } catch (Throwable ignored) {
 
         }
