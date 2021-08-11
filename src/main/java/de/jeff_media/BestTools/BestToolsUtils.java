@@ -277,6 +277,8 @@ public class BestToolsUtils {
         // Shouldn't harm because building the map takes only take 2 ms when the
         // plugin is enabled
 
+        addToMap("BONE_BLOCK", Tool.PICKAXE);
+
         // Issue #1
         addToMap("BASALT", Tool.PICKAXE);
         addToMap("POLISHED_BASALT", Tool.PICKAXE);

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.14.8
+- Fixed bone block not being detected
+
 ## 1.14.7
 - Fixed some deepslate blocks not being detected
 
