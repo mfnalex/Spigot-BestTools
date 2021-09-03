@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.14.9
+- Fixed some copper blocks not being detected
+
 ## 1.14.8
 - Fixed bone block not being detected
 

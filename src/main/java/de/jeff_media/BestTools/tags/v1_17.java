@@ -30,8 +30,11 @@ public class v1_17 {
         for(Material mat : Material.values()) {
             if(mat.name().toLowerCase(Locale.ROOT).contains("cobbled")) {
                 list.add(mat);
+            } else if(mat.name().toLowerCase(Locale.ROOT).contains("copper")) {
+                list.add(mat);
             }
         }
+
 
         return list;
 
