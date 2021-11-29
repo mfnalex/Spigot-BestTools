@@ -1,6 +1,6 @@
 package de.jeff_media.BestTools;
 
-import de.jeff_media.chestsort.ChestSortEvent;
+import de.jeff_media.chestsort.api.ChestSortEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -104,10 +104,10 @@ public class GUIHandler implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onChestSortEvent(ChestSortEvent e) {
         if (isGUIInventory(e.getInventory())) e.setCancelled(true);
-    }
+    }*/
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent e) {
