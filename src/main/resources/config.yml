@@ -280,6 +280,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "&7Cuando está activado, la selección automática de herramientas solo utilizará las herramientas de tu cinturón vez de las existentes en tu inventario."
 #gui-refill-lore: "&7Rellena automáticamente las ranuras del cinturón."
 
+##### Swedish
+#message-besttools-enabled: "&7BestTools har &aaktiverats&7."
+#message-besttools-disabled: "&7BestTools har &cinaktiverats&7."
+#message-refill-enabled: "&7Refill har &aaktiverats&7."
+#message-refill-disabled: "&7Refill has been &cdisabled&7."
+#message-besttools-usage: "&7Tips: Skriv &6/besttools&7 eller &6/bt&7 för att automatiskt använda det bästa verktyget när du bryter block."
+#message-refill-usage": "&7Tips: Skriv &6/refill&7 eller &6/rf&7 för att automatiskt fylla på tomma föremål från ditt lager."
+#message-hotbar-only-enabled: "&7BestTools kommer endast att använda verktyg från din hotbar."
+#message-hotbar-only-disabled: "&7BestTools kommer att använda alla verktyg från ditt inventarium."
+#gui-favorite-slot: "Ange som favoritplats"
+#gui-favorite-slot-lore: "Om din hotbar är full och BestTools använder ett verktyg från ditt lager, kommer den att placeras i denna plats."
+#gui-besttools-lore: "Väljer automatiskt de bästa verktygen när man bryter block."
+#gui-hotbar-lore: "När det är aktiverat kommer BestTools bara att använda verktyg från din hotbar istället för från hela ditt inventarium."
+#gui-refill-lore: "Fyller automatiskt på tomma hotbar-fack."
+
 ##### Turkish
 #message-besttools-enabled: "&7BestTools &aaktif edildi&7."
 #message-besttools-disabled: "&7BestTools &cdeaktif edildi&7."
