@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +19,9 @@ public class PlayerListener implements Listener {
         Player p = event.getPlayer();
         if(!main.playerSettings.containsKey(p.getUniqueId())) return;
         PlayerSetting setting = main.getPlayerSetting(p);
-        setting.save(main.getPlayerDataFile(p.getUniqueId()),main);
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            setting.save(main.getPlayerDataFile(p.getUniqueId()), main);
+        });
         main.playerSettings.remove(p.getUniqueId());
     }
 

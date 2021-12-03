@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.15.1
+- Playerdata is saved async now
+
 ## 1.14.9
 - Fixed some copper blocks not being detected
 
