@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.16.0
+- BestTools will now also consider hoes and swords (if you want) for leaves. It will still prefer shears if you got any (because only they give drops), then try to use a hoe if you have any. There's now a config to also consider swords, however it's disabled by default because swords take twice the usual damage when using them on leaves.
+
 ## 1.15.1
 - Playerdata is saved async now
 

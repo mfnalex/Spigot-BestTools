@@ -275,7 +275,20 @@ public class BestToolsHandler {
     ItemStack getBestToolFromInventory(@NotNull Material mat, Player p, boolean hotbarOnly,ItemStack currentItem) {
         ItemStack[] items = inventoryToArray(p,hotbarOnly);
 
-        Tool bestType = getBestToolType(mat);
+        Tool bestType;
+        if(!LeavesUtils.isLeaves(mat)) {
+            bestType=getBestToolType(mat);
+        } else {
+            if(LeavesUtils.hasShears(hotbarOnly, p.getInventory().getStorageContents())) {
+                bestType = Tool.SHEARS;
+            }  else if(LeavesUtils.hasHoe(hotbarOnly,p.getInventory().getStorageContents())) {
+                bestType = Tool.HOE;
+            } else if(main.getConfig().getBoolean("consider-swords-for-leaves") && LeavesUtils.hasSword(hotbarOnly, p.getInventory().getStorageContents())) {
+                bestType = Tool.SWORD;
+            } else {
+                bestType = Tool.NONE;
+            }
+        }
         ItemStack bestStack = getBestItemStackFromArray(bestType,items,profitsFromSilkTouch(mat),currentItem,mat);
         if(bestStack==null) {
             main.debug("bestStack is null");

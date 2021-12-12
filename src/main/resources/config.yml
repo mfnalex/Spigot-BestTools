@@ -77,9 +77,11 @@ allow-in-adventure-mode: false
 # holding a sword, crossbow, bow or trident
 dont-switch-during-battle: true
 
-# Don't use items if they are going to break with this usage
-# NOT IMPLEMENTED YET
-#prevent-item-break: true
+# The best tool for leaves are shears as only those give drops. BestTools will try to
+# use hoes instead if you don't have any shears. You can also make BestTools try to use
+# swords if you don't have both, however swords will take twice the damage when breaking
+# leaves with it.
+consider-swords-for-leaves: false
 
 # Allow /besttools to switch to your sword/axe (whatever is better) when attacking mobs?
 use-sword-on-hostile-mobs: true
