@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.17.0
+- BestTools will now only use a golden pickaxe for diamond ore or deepslate diamond ore when you do not have an iron, diamond or netherite pickaxe
+
+## 1.16.1
+- Fixed dirth paths not being detected
+
 ## 1.16.0
 - BestTools will now also consider hoes and swords (if you want) for leaves. It will still prefer shears if you got any (because only they give drops), then try to use a hoe if you have any. There's now a config to also consider swords, however it's disabled by default because swords take twice the usual damage when using them on leaves.
 

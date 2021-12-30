@@ -408,6 +408,7 @@ public class BestToolsUtils {
         addToMap("GRANITE", Tool.PICKAXE);
         addToMap("GRASS_BLOCK", Tool.SHOVEL);
         addToMap("GRASS_PATH", Tool.SHOVEL);
+        addToMap("DIRT_PATH", Tool.SHOVEL);
         addToMap("GRAVEL", Tool.SHOVEL);
         addToMap("GRAY_CONCRETE", Tool.PICKAXE);
         addToMap("GRAY_CONCRETE_POWDER", Tool.SHOVEL);

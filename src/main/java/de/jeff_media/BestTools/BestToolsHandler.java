@@ -1,10 +1,8 @@
 package de.jeff_media.BestTools;
 
-import de.jeff_media.BestTools.tags.v1_17;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * This will probably be a separate plugin called BestTool or something
@@ -202,7 +202,7 @@ public class BestToolsHandler {
             return getNonToolItemFromArray(items,currentItem,target);
         }
 
-        ArrayList<ItemStack> list = new ArrayList<>();
+        List<ItemStack> list = new ArrayList<>();
         for(ItemStack item : items) {
              if(item==null) continue; // IntelliJ says this is always false
             // TODO: Check if durability is 1
@@ -225,7 +225,27 @@ public class BestToolsHandler {
             }
         }
         list.sort(Comparator.comparingInt(EnchantmentUtils::getMultiplier).reversed());
+        if(target.name().endsWith("DIAMOND_ORE")) {
+            list = putIronPlusBeforeGoldPickaxes(list);
+        }
         return list.get(0);
+    }
+
+    private List<ItemStack> putIronPlusBeforeGoldPickaxes(List<ItemStack> list) {
+        if(list == null || list.isEmpty()) return list;
+        if(main.toolHandler.isTool(Tool.PICKAXE,list.get(0))) {
+            List<ItemStack> newList = list.stream().filter(itemStack -> {
+                switch (itemStack.getType()) {
+                    case WOODEN_PICKAXE:
+                    case STONE_PICKAXE:
+                    case GOLDEN_PICKAXE:
+                        return false;
+                    default: return true;
+                }
+            }).collect(Collectors.toList());
+            if(!newList.isEmpty()) return newList;
+        }
+        return list;
     }
 
     @Nullable
