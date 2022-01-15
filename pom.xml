@@ -44,15 +44,15 @@
                     <relocations>
                         <relocation>
                             <pattern>de.jeff_media.updatechecker</pattern>
-                            <shadedPattern>de.jeff_media.BestTools</shadedPattern>
+                            <shadedPattern>de.jeff_media.BestTools.updatechecker</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>de.jeff_media.BestTools</shadedPattern>
+                            <shadedPattern>de.jeff_media.BestTools.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.jeff_media.morepersistentdatatypes</pattern>
-                            <shadedPattern>de.jeff_media.BestTools.pdc</shadedPattern>
+                            <shadedPattern>de.jeff_media.BestTools.morepersistentdatatypes</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>

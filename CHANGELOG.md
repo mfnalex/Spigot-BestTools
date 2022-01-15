@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+- PlayerData will now be stored without any files. Old playerdata will be converted when a player joins.
+- Fixed console error when setting "favorite-slot" to -1
+
 ## 1.17.0
 - BestTools will now only use a golden pickaxe for diamond ore or deepslate diamond ore when you do not have an iron, diamond or netherite pickaxe
 

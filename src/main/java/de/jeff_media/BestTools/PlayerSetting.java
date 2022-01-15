@@ -26,7 +26,7 @@ public class PlayerSetting {
 
         @Getter private boolean hotbarOnly;
 
-        @Getter private int favoriteSlot = 0;
+        private int favoriteSlot = 0;
 
         @Getter private boolean swordOnMobs;
 
@@ -39,6 +39,11 @@ public class PlayerSetting {
         @Getter private final BestToolsCache btcache = new BestToolsCache();
 
         private final Player player;
+
+        public int getFavoriteSlot() {
+                if(favoriteSlot >= 0 && favoriteSlot <= 8) return favoriteSlot;
+                return player.getInventory().getHeldItemSlot();
+        }
 
         PlayerSetting(Player player, File file) {
                 this.player = player;
@@ -66,8 +71,8 @@ public class PlayerSetting {
                 conf.set("hasSeenRefillMessage",hasSeenRefillMessage);
                 conf.set("refillEnabled",refillEnabled);
                 conf.set("hotbarOnly",hotbarOnly);
-                conf.set("swordOnMobs",swordOnMobs);
-                conf.set("favoriteSlot",main.getConfig().getInt("favorite-slot"));
+                //conf.set("swordOnMobs",swordOnMobs);
+                //conf.set("favoriteSlot",main.getConfig().getInt("favorite-slot"));
                 player.getPersistentDataContainer().set(DATA,DataType.FILE_CONFIGURATION,conf);
         }
 
