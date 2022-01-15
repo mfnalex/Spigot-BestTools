@@ -1,12 +1,15 @@
 package de.jeff_media.BestTools;
 
 import de.jeff_media.BestTools.placeholders.BestToolsPlaceholders;
-import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
+import de.jeff_media.updatechecker.UpdateChecker;
+import de.jeff_media.updatechecker.UserAgentBuilder;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -20,11 +23,20 @@ import java.util.regex.Pattern;
 
 public class Main extends JavaPlugin {
 
+    {
+        instance = this;
+    }
+
+    private static Main instance;
+
+    public static Main getInstance() {
+        return instance;
+    }
+
     final int configVersion = 17;
 
     final int mcVersion = getMcVersion();
 
-    PluginUpdateChecker updateChecker;
     BestToolsHandler toolHandler;
     BestToolsUtils toolUtils;
     RefillListener refillListener;
@@ -58,11 +70,6 @@ public class Main extends JavaPlugin {
 
     }
 
-    @Override
-    public void onDisable() {
-        saveAllPlayerSettings();
-    }
-
     void debug(String text) {
         if(debug) getLogger().info("[Debug] "+text);
     }
@@ -82,10 +89,11 @@ public class Main extends JavaPlugin {
         File file = getPlayerDataFile(player.getUniqueId());
         if(file.exists()) {
             debug("Loading player setting for "+player.getName()+" from file");
-            setting = new PlayerSetting(file,this);
+            setting = new PlayerSetting(player,file);
+            file.delete();
         } else {
             debug("Creating new player setting for "+player.getName());
-            setting = new PlayerSetting(
+            setting = new PlayerSetting(player,
                     getConfig().getBoolean("besttools-enabled-by-default"),
                     getConfig().getBoolean("refill-enabled-by-default"),
                     getConfig().getBoolean("hotbar-only"),
@@ -94,14 +102,6 @@ public class Main extends JavaPlugin {
         }
         playerSettings.put(player.getUniqueId(),setting);
         return setting;
-    }
-
-    void saveAllPlayerSettings() {
-        for(Map.Entry<UUID,PlayerSetting> entry : playerSettings.entrySet()) {
-            if(entry.getValue().changed) {
-                entry.getValue().save(getPlayerDataFile(entry.getKey()),this);
-            }
-        }
     }
 
     File getPlayerDataFile(UUID uuid) {
@@ -116,9 +116,7 @@ public class Main extends JavaPlugin {
         playerdataFolder.mkdir();
 
         if(reload) {
-            if(updateChecker!=null) {
-                updateChecker.stop();
-            }
+            UpdateChecker.getInstance().stop();
             HandlerList.unregisterAll(this);
             reloadConfig();
 
@@ -132,7 +130,10 @@ public class Main extends JavaPlugin {
 
         loadDefaultValues();
 
-        updateChecker = new PluginUpdateChecker(this,"http://api.jeff-media.de/besttools/latest-version.txt","https://www.spigotmc.org/resources/1-13-1-16-besttools.81490/","https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md","https://www.chestsort.de/donate");
+        UpdateChecker.init(this,"http://api.jeff-media.de/besttools/latest-version.txt").setDownloadLink("https://www.spigotmc.org/resources/besttools.81490/")
+                .setChangelogLink("https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md")
+                .setDonationLink("https://www.chestsort.de/donate")
+                .suppressUpToDateMessage(true).setUserAgent(UserAgentBuilder.getDefaultUserAgent());
         toolHandler = new BestToolsHandler(this);
         toolUtils = new BestToolsUtils(this);
         refillListener = new RefillListener(this);
@@ -171,10 +172,10 @@ public class Main extends JavaPlugin {
         registerMetrics();
 
         if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-            updateChecker.check(getConfig().getInt("check-interval")*60*60);
+            UpdateChecker.getInstance().checkEveryXHours(getConfig().getInt("check-interval")).checkNow();
         } // When set to on-startup, we check right now (delay 0)
         else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-            updateChecker.check();
+            UpdateChecker.getInstance().checkNow();
         }
 
     }

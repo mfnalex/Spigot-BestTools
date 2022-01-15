@@ -40,7 +40,7 @@ public class CommandBestTools implements CommandExecutor {
 
         p = (Player) sender;
         setting = main.getPlayerSetting(p);
-        setting.btcache.invalidated();
+        setting.getBtcache().invalidated();
 
         if(args.length>0 && (args[0].equalsIgnoreCase("blacklist") || args[0].equalsIgnoreCase("bl"))) {
             String[] newArgs = Arrays.copyOfRange(args,1,args.length);

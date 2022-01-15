@@ -94,19 +94,19 @@ public class BestToolsPlaceholders extends PlaceholderExpansion {
         }
 
         if(identifier.equals("btenabled")){
-            return Boolean.toString(main.getPlayerSetting(player).bestToolsEnabled);
+            return Boolean.toString(main.getPlayerSetting(player).isBestToolsEnabled());
         }
 
         if(identifier.equals("rfenabled")){
-            return Boolean.toString(main.getPlayerSetting(player).refillEnabled);
+            return Boolean.toString(main.getPlayerSetting(player).isRefillEnabled());
         }
 
         if(identifier.equals("favoriteslot")){
-            return Integer.toString(main.getPlayerSetting(player).favoriteSlot);
+            return Integer.toString(main.getPlayerSetting(player).getFavoriteSlot());
         }
 
         if(identifier.equals("hotbaronly")){
-            return Boolean.toString(main.getPlayerSetting(player).hotbarOnly);
+            return Boolean.toString(main.getPlayerSetting(player).isHotbarOnly());
         }
 
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)

@@ -1,39 +1,47 @@
 package de.jeff_media.BestTools;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
+import lombok.Getter;
+import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
 import java.io.IOException;
 
 public class PlayerSetting {
 
-        Blacklist blacklist;
+        private static final Main main = Main.getInstance();
+        private static final NamespacedKey DATA = new NamespacedKey(main, "data");
 
-         // BestTool enabled for this player?
-        public boolean bestToolsEnabled;
+        @Getter private Blacklist blacklist;
 
-        // Automatic refill enabled for this player?
-        public boolean refillEnabled;
+        @Getter
+        private boolean bestToolsEnabled;
 
-        // Use only tools from the hotbar?
-        public boolean hotbarOnly;
+        @Getter private boolean refillEnabled;
 
-        public int favoriteSlot = 0;
+        @Getter private boolean hotbarOnly;
 
-        boolean swordOnMobs;
+        @Getter private int favoriteSlot = 0;
 
-        boolean hasSeenBestToolsMessage = false;
-        boolean hasSeenRefillMessage = false;
+        @Getter private boolean swordOnMobs;
+
+        @Getter private boolean hasSeenBestToolsMessage = false;
+        @Getter private boolean hasSeenRefillMessage = false;
 
         // Do we have to save these settings?
         boolean changed = false;
 
-        final BestToolsCache btcache = new BestToolsCache();
+        @Getter private final BestToolsCache btcache = new BestToolsCache();
 
-        boolean invChanged = true;
+        private final Player player;
 
-        PlayerSetting(File file,Main main) {
+        PlayerSetting(Player player, File file) {
+                this.player = player;
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
                 blacklist = new Blacklist(yaml.getStringList("blacklist"));
                 this.bestToolsEnabled = yaml.getBoolean("bestToolsEnabled",false);
@@ -46,16 +54,35 @@ public class PlayerSetting {
                 main.debug("Loaded player setting from file "+file.getPath());
         }
 
-        PlayerSetting(boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly, int favoriteSlot, boolean swordOnMobs) {
+        private static <T,Z> Z getPdc(Player player, NamespacedKey key, PersistentDataType<T,Z> type, Z defaultValue) {
+                return player.getPersistentDataContainer().getOrDefault(key,type,defaultValue);
+        }
+
+        private void save() {
+                FileConfiguration conf = new YamlConfiguration();
+                conf.set("blacklist",blacklist.toStringList());
+                conf.set("bestToolsEnabled",bestToolsEnabled);
+                conf.set("hasSeenBestToolsMessage",hasSeenBestToolsMessage);
+                conf.set("hasSeenRefillMessage",hasSeenRefillMessage);
+                conf.set("refillEnabled",refillEnabled);
+                conf.set("hotbarOnly",hotbarOnly);
+                conf.set("swordOnMobs",swordOnMobs);
+                conf.set("favoriteSlot",main.getConfig().getInt("favorite-slot"));
+                player.getPersistentDataContainer().set(DATA,DataType.FILE_CONFIGURATION,conf);
+        }
+
+        PlayerSetting(Player player, boolean bestToolsEnabled, boolean refillEnabled, boolean hotbarOnly, int favoriteSlot, boolean swordOnMobs) {
+                this.player = player;
                 this.blacklist = new Blacklist();
                 this.bestToolsEnabled = bestToolsEnabled;
                 this.refillEnabled = refillEnabled;
                 this.hasSeenBestToolsMessage = false;
                 this.hasSeenRefillMessage = false;
                 this.hotbarOnly = hotbarOnly;
-                this.swordOnMobs=swordOnMobs;
+                this.swordOnMobs= swordOnMobs;
                 this.changed = true;
                 this.favoriteSlot = favoriteSlot;
+
         }
 
         Blacklist getBlacklist() {
@@ -97,8 +124,8 @@ public class PlayerSetting {
                 changed = true;
         }
 
-        void save(File file,Main main) {
-                main.debug("Saving player setting to file "+file.getPath());
+        void save(Player player) {
+                //main.debug("Saving player setting to file "+file.getPath());
                 YamlConfiguration yaml = new YamlConfiguration();
                 yaml.set("bestToolsEnabled", bestToolsEnabled);
                 yaml.set("hotbarOnly",hotbarOnly);
@@ -108,12 +135,13 @@ public class PlayerSetting {
                 yaml.set("favoriteSlot",favoriteSlot);
                 yaml.set("swordOnMobs",swordOnMobs);
                 yaml.set("blacklist",blacklist.toStringList());
-                try {
+                player.getPersistentDataContainer().set(DATA, DataType.FILE_CONFIGURATION,yaml);
+                /*try {
                         yaml.save(file);
                 } catch (IOException e) {
                         main.getLogger().warning("Error while saving playerdata file "+file.getName());
                         //e.printStackTrace();
-                }
+                }*/
         }
 
 }

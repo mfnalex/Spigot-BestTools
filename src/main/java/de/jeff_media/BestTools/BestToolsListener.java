@@ -43,7 +43,7 @@ public class BestToolsListener implements Listener {
         if(!p.hasPermission("besttools.use")) return;
         main.debug("EntityDamageByEntity 3");
         PlayerSetting playerSetting = main.getPlayerSetting(p);
-        if(!playerSetting.bestToolsEnabled) return;
+        if(!playerSetting.isBestToolsEnabled()) return;
         main.debug("EntityDamageByEntity 4");
         Entity enemy = e.getEntity();
 
@@ -52,22 +52,22 @@ public class BestToolsListener implements Listener {
         }
 
         if (!
-                (enemy instanceof Monster && playerSetting.swordOnMobs)
+                (enemy instanceof Monster && playerSetting.isSwordOnMobs())
             // || (enemy instanceof Player && playerSetting.swordOnPlayers)
         ) return;
 
         main.debug("Getting the best roscoe for "+enemy.getType().name());
 
         PlayerInventory inv = p.getInventory();
-        ItemStack bestRoscoe = handler.getBestRoscoeFromInventory(enemy.getType(), p,playerSetting.hotbarOnly,inv.getItemInMainHand(),useAxeAsWeapon);
+        ItemStack bestRoscoe = handler.getBestRoscoeFromInventory(enemy.getType(), p,playerSetting.isHotbarOnly(),inv.getItemInMainHand(),useAxeAsWeapon);
 
         if(bestRoscoe==null || bestRoscoe.equals(inv.getItemInMainHand())) {
             main.meter.add(st,false);
-            //playerSetting.btcache.validate(enemy.getType());
+            //playerSetting.getBtcache().validate(enemy.getType());
             return;
         }
-        switchToBestRoscoe(p, bestRoscoe,playerSetting.hotbarOnly,playerSetting.favoriteSlot);
-        //playerSetting.btcache.validate(enemy.getType());
+        switchToBestRoscoe(p, bestRoscoe,playerSetting.isHotbarOnly(),playerSetting.getFavoriteSlot());
+        //playerSetting.getBtcache().validate(enemy.getType());
         main.meter.add(st,false);
 
     }
@@ -86,9 +86,9 @@ public class BestToolsListener implements Listener {
 
         // Check the cache as soon as possible
         PlayerSetting playerSetting = main.getPlayerSetting(event.getPlayer());
-        if(playerSetting.btcache.valid
+        if(playerSetting.getBtcache().valid
                 && event.getClickedBlock()!=null
-                && event.getClickedBlock().getType() == playerSetting.btcache.lastMat) {
+                && event.getClickedBlock().getType() == playerSetting.getBtcache().lastMat) {
             main.meter.add(st,true);
             //main.wtfdebug("Cache valid!");
             return;
@@ -134,15 +134,15 @@ public class BestToolsListener implements Listener {
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
 
-        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p,playerSetting.hotbarOnly,inv.getItemInMainHand());
+        ItemStack bestTool = handler.getBestToolFromInventory(block.getType(), p,playerSetting.isHotbarOnly(),inv.getItemInMainHand());
 
         if(bestTool==null || bestTool.equals(inv.getItemInMainHand())) {
             main.meter.add(st,false);
-            playerSetting.btcache.validate(block.getType());
+            playerSetting.getBtcache().validate(block.getType());
             return;
         }
-        switchToBestTool(p, bestTool,playerSetting.hotbarOnly,block.getType()/*,playerSetting.favoriteSlot*/);
-        playerSetting.btcache.validate(block.getType());
+        switchToBestTool(p, bestTool,playerSetting.isHotbarOnly(),block.getType()/*,playerSetting.getFavoriteSlot()*/);
+        playerSetting.getBtcache().validate(block.getType());
         main.meter.add(st,false);
     }
 
@@ -221,8 +221,8 @@ public class BestToolsListener implements Listener {
     }
 
     private boolean hasBestToolsEnabled(Player p, PlayerSetting playerSetting) {
-        if(!playerSetting.bestToolsEnabled) {
-            if (!playerSetting.hasSeenBestToolsMessage) {
+        if(!playerSetting.isBestToolsEnabled()) {
+            if (!playerSetting.isHasSeenBestToolsMessage()) {
                 Messages.sendMessage(p,main.messages.MSG_BESTTOOL_USAGE);
                 playerSetting.setHasSeenBestToolsMessage(true);
             }

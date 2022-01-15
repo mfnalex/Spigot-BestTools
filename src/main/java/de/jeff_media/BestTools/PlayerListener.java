@@ -18,10 +18,6 @@ public class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player p = event.getPlayer();
         if(!main.playerSettings.containsKey(p.getUniqueId())) return;
-        PlayerSetting setting = main.getPlayerSetting(p);
-        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
-            setting.save(main.getPlayerDataFile(p.getUniqueId()), main);
-        });
         main.playerSettings.remove(p.getUniqueId());
     }
 

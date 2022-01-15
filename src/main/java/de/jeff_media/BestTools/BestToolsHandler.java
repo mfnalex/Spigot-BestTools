@@ -53,7 +53,7 @@ public class BestToolsHandler {
     BestToolsHandler(Main main) {
 
         this.main=Objects.requireNonNull(main,"Main must not be null");
-        //this.favoriteSlot=main.getConfig().getInt("favorite-slot");
+        //this.getFavoriteSlot()=main.getConfig().getInt("favorite-slot");
 
         for(String name : main.getConfig().getStringList("global-block-blacklist")) {
             Material mat = Material.valueOf(name.toUpperCase());
