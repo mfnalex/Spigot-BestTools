@@ -79,7 +79,10 @@ public class Main extends JavaPlugin {
 
     public PlayerSetting getPlayerSetting(Player player) {
 
+        //System.out.println("Getting player setting...");
+
         if(Objects.requireNonNull(playerSettings,"PlayerSettings must not be null").containsKey(player.getUniqueId())) {
+            //System.out.println("Found loaded setting");
             return playerSettings.get(player.getUniqueId());
         }
 
@@ -88,10 +91,12 @@ public class Main extends JavaPlugin {
 
         File file = getPlayerDataFile(player.getUniqueId());
         if(file.exists()) {
+            //System.out.println("Getting setting from legacy file");
             debug("Loading player setting for "+player.getName()+" from file");
             setting = new PlayerSetting(player,file);
             file.delete();
         } else {
+            //System.out.println("Creating setting from PDC");
             debug("Creating new player setting for "+player.getName());
             setting = new PlayerSetting(player,
                     getConfig().getBoolean("besttools-enabled-by-default"),

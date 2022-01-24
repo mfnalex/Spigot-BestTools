@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1
+- Fixed playerdata not being saved correctly
+- Fixed crimson and warped stairs using pickaxe instead of axe
+- Fixed seagrass and tall seagrass not using shears
+
 ## 2.0.0
 - PlayerData will now be stored without any files. Old playerdata will be converted when a player joins.
 - Fixed console error when setting "favorite-slot" to -1

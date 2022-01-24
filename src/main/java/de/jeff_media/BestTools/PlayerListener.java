@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
@@ -20,5 +21,11 @@ public class PlayerListener implements Listener {
         if(!main.playerSettings.containsKey(p.getUniqueId())) return;
         main.playerSettings.remove(p.getUniqueId());
     }
+
+/*    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+    }*/
 
 }

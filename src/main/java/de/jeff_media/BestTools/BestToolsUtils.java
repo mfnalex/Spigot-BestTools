@@ -223,6 +223,9 @@ public class BestToolsUtils {
             tagToMap(Tag.SAND, Tool.SHOVEL);
             tagToMap(Tag.STONE_BRICKS, Tool.PICKAXE);
 
+            addToMap("SEAGRASS",Tool.SHEARS);
+            addToMap("TALL_SEAGRASS",Tool.SHEARS);
+
 
         } catch (NoClassDefFoundError ignored) {
             // GRASS_BLOCK prior to 1.13 is called GRASS
@@ -268,9 +271,13 @@ public class BestToolsUtils {
             tagToMap(Tag.PRESSURE_PLATES, Tool.PICKAXE);
             tagToMap(Tag.WOODEN_PRESSURE_PLATES, Tool.AXE);
             // Important order STOP //
+
         } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
         }
 
+        // Stairs in 1.16+
+        addToMap("WARPED_STAIRS",Tool.AXE);
+        addToMap("CRIMSON_STAIRS",Tool.AXE);
 
         // Some of the following definitions are redundant because of the tags above
         // However I don't want to miss something, so they are still defined here
