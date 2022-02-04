@@ -252,6 +252,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "Gdy włączony, BestTools użyje tylko narzędzia z paska szybkiego wyboru zamiast z całego ekwipunku."
 #gui-refill-lore: "Automatycznie wypełnia puste sloty paska szybkiego wyboru."
 
+##### Portuguese
+#message-besttools-enabled: "&7BestTools foi &ahabilitado&7."
+#message-besttools-disabled: "&7BestTools foi &cdesabilitado&7."
+#message-refill-enabled: "&7Reabastecimento foi &ahabilitado&7."
+#message-refill-disabled: "&7Reabastecimento foi &cdesabilitado&7."
+#message-besttools-usage: "&7Dica: Digite &6/besttools&7 ou &6/bt&7 para usar a melhor ferramente automaticamente ao quebrar blocos."
+#message-refill-usage": "&7Dica: Digite &6/refill&7 ou &6/rf&7 para reabastecer-se automaticamente com itens do inventário."
+#message-hotbar-only-enabled: "&7BestTools usará apenas as ferramentas da sua barra rápida."
+#message-hotbar-only-disabled: "&7BestTools usará todas as ferramentas do seu inventário."
+#gui-favorite-slot: "Definir como slot favorito"
+#gui-favorite-slot-lore: "Se sua barra rápida estiver cheia e o BestTools usar uma ferramenta do seu inventário, ela será colocada neste slot."
+#gui-besttools-lore: "Escolhe automaticamente as melhores ferramentas ao quebrar blocos."
+#gui-hotbar-lore: "Quando ativado, o BestTools usará apenas ferramentas da sua barra rápida em vez de todo o seu inventário."
+#gui-refill-lore: "Reabastece automaticamente os slots vazios da barra rápida."
+
 ##### Russian
 #message-besttools-enabled: "&7BestTools &aактивирован&7."
 #message-besttools-disabled: "&7BestTools &cдеактивирован&7."
