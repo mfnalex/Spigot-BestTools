@@ -222,6 +222,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "Wanneer ingeschakeld, zal BestTools alleen gereedschap uit je hotbar gebruiken in plaats van je gehele inventaris."
 #gui-refill-lore: "Hervult automatisch lege hotbar vakken."
 
+##### French
+#message-besttools-enabled: "&7BestTools a été &aactivé&7."
+#message-besttools-disabled: "&7BestTools a été &cdésactivé&7."
+#message-refill-enabled: "&7La recharge a été &activée&7."
+#message-refill-disabled: "&7La recharge a été &cdésactivée&7."
+#message-besttools-usage: "&7Astuce: Tapez &6/bt&7 pour utiliser automatiquement le BestTools lors de la rupture des blocs."
+#message-refill-usage": "&7Astuce: Tapez &6/rf&7 pour remplir automatiquement les articles vides de votre inventaire."
+#message-hotbar-only-enabled: "&7BestTools n'utilisera que les outils de votre hotbar."
+#message-hotbar-only-disabled: "&7BestTools utilisera tous les outils de votre inventaire."
+#gui-favorite-slot: "Définir comme emplacement favori"
+#gui-favorite-slot-lore: "Si votre hotbar est pleine et que BestTools utilise un outil de votre inventaire, il sera placé dans cet emplacement."
+#gui-besttools-lore: "Choisit automatiquement les meilleurs outils lors de la rupture de blocs."
+#gui-hotbar-lore: "Lorsqu'il est activé, BestTools n'utilisera que les outils de votre barre de raccourcis au lieu de l'ensemble de votre inventaire."
+#gui-refill-lore: "Remplit automatiquement les emplacements vides de la barre de raccourcis."
+
 ##### German
 #message-besttools-enabled: "&7BestTools wurde &aaktiviert&7."
 #message-besttools-disabled: "&7BestTools wurde &cdeaktiviert&7."
