@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.2
+- Fixed RAW_IRON_BLOCK not changing to a proper tool
+
 ## 2.0.1
 - Fixed playerdata not being saved correctly
 - Fixed crimson and warped stairs using pickaxe instead of axe

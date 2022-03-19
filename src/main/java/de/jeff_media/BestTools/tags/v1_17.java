@@ -35,7 +35,10 @@ public class v1_17 {
             }
         }
 
-        list.addAll(Arrays.asList(Material.RAW_COPPER_BLOCK, Material.RAW_IRON, Material.RAW_GOLD_BLOCK));
+        list.addAll(Arrays.asList(
+                Material.RAW_IRON_BLOCK,
+                Material.RAW_COPPER_BLOCK,
+                Material.RAW_GOLD_BLOCK));
 
         return list;
 
