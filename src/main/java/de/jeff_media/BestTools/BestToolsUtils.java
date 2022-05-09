@@ -254,9 +254,9 @@ public class BestToolsUtils {
         try {
             tagToMap(Tag.BEEHIVES, Tool.AXE);
             tagToMap(Tag.SHULKER_BOXES, Tool.PICKAXE);
+            tagToMap(Tag.CROPS, Tool.HOE);
 
             // The following kind of unneccessary anyway
-            tagToMap(Tag.CROPS, Tool.NONE);
             tagToMap(Tag.FLOWERS, Tool.NONE);
 
         } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
