@@ -1,6 +1,5 @@
 package de.jeff_media.BestTools;
 
-import de.jeff_media.chestsort.api.ChestSortEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

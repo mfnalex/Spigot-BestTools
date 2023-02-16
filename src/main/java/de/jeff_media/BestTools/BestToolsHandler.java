@@ -47,6 +47,8 @@ public class BestToolsHandler {
     final ArrayList<Material> allTools = new ArrayList<>();
     final ArrayList<Material> instaBreakableByHand = new ArrayList<>();
 
+    final EnumSet<Material> leaves = EnumSet.noneOf(Material.class);
+
 
     final ArrayList<Material> weapons = new ArrayList<>();
 
@@ -64,6 +66,12 @@ public class BestToolsHandler {
             main.debug("Adding to global block blacklist: " + mat.name());
             globalBlacklist.add(mat);
         }
+
+        Arrays.stream(Material.values()).forEach(material -> {
+            if(material.name().endsWith("_LEAVES")) {
+                leaves.add(material);
+            }
+        });
 
 
     }
@@ -296,14 +304,14 @@ public class BestToolsHandler {
         ItemStack[] items = inventoryToArray(p,hotbarOnly);
 
         Tool bestType;
-        if(!LeavesUtils.isLeaves(mat)) {
+        if(!LeavesUtils.isLeaves(mat) && mat != Material.COBWEB) {
             bestType=getBestToolType(mat);
         } else {
             if(LeavesUtils.hasShears(hotbarOnly, p.getInventory().getStorageContents())) {
                 bestType = Tool.SHEARS;
-            }  else if(LeavesUtils.hasHoe(hotbarOnly,p.getInventory().getStorageContents())) {
+            }  else if(LeavesUtils.hasHoe(hotbarOnly,p.getInventory().getStorageContents()) && mat != Material.COBWEB) {
                 bestType = Tool.HOE;
-            } else if(main.getConfig().getBoolean("consider-swords-for-leaves") && LeavesUtils.hasSword(hotbarOnly, p.getInventory().getStorageContents())) {
+            } else if(((main.getConfig().getBoolean("consider-swords-for-cobwebs") && mat == Material.COBWEB)||(mat != Material.COBWEB && main.getConfig().getBoolean("consider-swords-for-leaves"))) && LeavesUtils.hasSword(hotbarOnly, p.getInventory().getStorageContents())) {
                 bestType = Tool.SWORD;
             } else {
                 bestType = Tool.NONE;

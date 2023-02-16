@@ -1,13 +1,18 @@
 package de.jeff_media.BestTools;
 
+import de.jeff_media.BestTools.events.BestToolsNotifyEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -72,6 +77,20 @@ public class BestToolsListener implements Listener {
 
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void onBreak(BlockBreakEvent event) {
+        //System.out.println("BlockBreakEvent LISTENER");
+        //System.out.println(event.getBlock());
+        Bukkit.getScheduler().runTaskLater(main, () -> {
+            Bukkit.getPluginManager().callEvent(new BestToolsNotifyEvent(event.getPlayer(), event.getBlock()));
+            //Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(event.getPlayer(), Action.LEFT_CLICK_BLOCK, event.getPlayer().getInventory().getItemInMainHand(),event.getBlock(),BlockFace.SELF,EquipmentSlot.HAND));
+        },1);
+    }
+
+    @EventHandler
+    public void onNotify(BestToolsNotifyEvent event) {
+        onPlayerInteractWithBlock(new PlayerInteractEvent(event.getPlayer(), Action.LEFT_CLICK_BLOCK, event.getPlayer().getInventory().getItemInMainHand(),event.getBlock(),BlockFace.SELF,EquipmentSlot.HAND));
+    }
 
     @EventHandler
     public void onPlayerInteractWithBlock(PlayerInteractEvent event) {
@@ -80,6 +99,9 @@ public class BestToolsListener implements Listener {
         //for (RegisteredListener registeredListener : event.getHandlers().getRegisteredListeners()) {
         //    main.debug(registeredListener.getPlugin().getName()+": "+registeredListener.getListener().getClass().getName() + " @ "+registeredListener.getPriority().name());
         //}
+//        if(main.debug && event.getAction() == Action.LEFT_CLICK_BLOCK) {
+//            main.getLogger().warning(event.getClickedBlock().getType().name());
+//        }
         //
 
         long st= main.measurePerformance ? System.nanoTime() : 0;

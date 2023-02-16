@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.1
+- Got rid of ChestSortAPI as shaded dependency
+- Fixed leaves not using the proper tool
+- Fixed BestTools sometimes not recognizing interaction when mining cobblestone generators for hours
+- Added config option "consider-swords-for-cobwebs" (default: false)
+
+## 2.2.0
+- Added config option "consider-swords-for-cobwebs"
+
+## 2.1.0
+- Added support for BentoBox/OneBlock's magic block generator
+
 ## 2.0.2
 - Fixed RAW_IRON_BLOCK not changing to a proper tool
 
