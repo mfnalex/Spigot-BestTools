@@ -180,6 +180,21 @@ gui-refill-lore: "Automatically refills empty hotbar slots."
 #gui-hotbar-lore: "When enabled, BestTools will only use tools from your hotbar instead of from your whole inventory."
 #gui-refill-lore: "Automatically refills empty hotbar slots."
 
+##### Bulgarian
+#message-besttools-enabled: "&7BestTools беше &aактивиран&7."
+#message-besttools-disabled: "&7BestTools беше &cдеактивиран&7."
+#message-refill-enabled: "&7Пренапълването беше &aактивирано&7."
+#message-refill-disabled: "&7Пренапълването беше &cдеактивирано&7."
+#message-besttools-usage: "&7Забележка: Напишете &6/besttools&7 или &6/bt&7, за да използвате автоматично най-добрият инструмент, когато чупите блокове."
+#message-refill-usage": "&7Забележка: Напишете &6/refill&7 или &6/rf&7, за да пренапълните автоматично празните предмети от Вашият инвентар."
+#message-hotbar-only-enabled: "&7BestTools ще използва единствено предмети от Вашият хотбар."
+#message-hotbar-only-disabled: "&7BestTools ще използва единствено предмети от Вашият хотбар."
+#gui-favorite-slot: "Зададен като любим слот"
+#gui-favorite-slot-lore: "Ако Вашият хотбар е пълен и BestTools използва инструмент от Вашият инвентар, ще бъде поставен в този слот."
+#gui-besttools-lore: "Автоматично избира най-добрите инструменти при чупене на блокове"
+#gui-hotbar-lore: "Когато е активирано, BestTools ще използва единствено предмети от Вашият хотбар вместо такива от целият Ви инвентар."
+#gui-refill-lore: "Автоматично пренапълва празни слотове в хотбара Ви."
+
 ##### Chinese
 #message-besttools-enabled: "&7自动切换最佳工具 &a已启用&7."
 #message-besttools-disabled: "&7自动切换最佳工具 &c已禁用&7."
