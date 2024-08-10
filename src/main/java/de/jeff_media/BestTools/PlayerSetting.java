@@ -6,11 +6,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
-import java.io.IOException;
 
 public class PlayerSetting {
 
@@ -109,10 +107,6 @@ public class PlayerSetting {
                 this.favoriteSlot = favoriteSlot;
                 getPDCValues(player);
                 this.save();
-        }
-
-        Blacklist getBlacklist() {
-                return blacklist;
         }
 
         boolean toggleBestToolsEnabled() {

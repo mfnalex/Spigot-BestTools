@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GUIHandler implements Listener {
@@ -38,21 +37,6 @@ public class GUIHandler implements Listener {
     private int coords2slot(int row, int col) {
         if (col > 9 || col < 1 || row > 6 || row < 1) throw new IllegalArgumentException();
         return (9 * (row - 1)) + col - 1;
-    }
-
-    /**
-     * Slot number to coordinates
-     * @param i slot number
-     * @return int[] coordinates where int[0] is row and int[1] is col
-     */
-    private int[] coords2slot(int i) {
-        if(i<0||i>54) throw new IllegalArgumentException();
-        int row = 0;
-        while(i>8) {
-            row++;
-            i-=8;
-        }
-        return new int[] {row,i+1};
     }
 
     private ItemStack createGUIItem(@NotNull Material mat, @Nullable String name, @Nullable String[] lores) {
@@ -153,7 +137,7 @@ public class GUIHandler implements Listener {
         ItemStack is = createGUIItem(mat,String.format("BestTools: %s",getEnabledString(ps.isBestToolsEnabled())),main.messages.GUI_BESTTOOLS_LORE);
         if(ps.isBestToolsEnabled()) {
             ItemMeta meta = is.getItemMeta();
-            meta.addEnchant(Enchantment.DIG_SPEED,5,false);
+            meta.addEnchant(Enchantment.EFFICIENCY,5,false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             is.setItemMeta(meta);
         }
@@ -167,7 +151,6 @@ public class GUIHandler implements Listener {
     }
 
     private void addRefillButton(PlayerSetting ps, Inventory gui) {
-        int slot = coords2slot(REFILL_SLOT[0],REFILL_SLOT[1]);
         Material mat = ps.isRefillEnabled() ? Material.MILK_BUCKET : Material.BUCKET;
         addItem(gui,2,8,mat,String.format("Refill: %s",getEnabledString(ps.isRefillEnabled())),main.messages.GUI_REFILL_LORE);
     }

@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -130,6 +129,7 @@ public class BestToolsHandler {
 
     // TODO: Optimize all of this by caching valid Materials instead of doing String checks everytime
 
+    @SuppressWarnings("incomplete-switch")
     boolean profitsFromSilkTouch(Material mat) {
         String name = mat.name();
         switch(mat) {

@@ -3,19 +3,16 @@ package de.jeff_media.BestTools;
 import de.jeff_media.BestTools.placeholders.BestToolsPlaceholders;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -228,7 +225,7 @@ public class Main extends JavaPlugin {
         Matcher m = p.matcher((Bukkit.getBukkitVersion()));
         int version = -1;
         while(m.find()) {
-            if(NumberUtils.isNumber(m.group(1)))
+            if(NumberUtils.isCreatable(m.group(1)))
                 version = Integer.parseInt(m.group(1));
         }
         return version;

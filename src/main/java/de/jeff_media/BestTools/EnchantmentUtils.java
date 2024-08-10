@@ -10,8 +10,8 @@ public class EnchantmentUtils {
         int base = getBaseMultiplier(item);
         if(!item.hasItemMeta()) return base;
         ItemMeta meta = item.getItemMeta();
-        if(!meta.hasEnchant(Enchantment.DIG_SPEED)) return base;
-        int efficiencyLevel = meta.getEnchantLevel(Enchantment.DIG_SPEED);
+        if(!meta.hasEnchant(Enchantment.EFFICIENCY)) return base;
+        int efficiencyLevel = meta.getEnchantLevel(Enchantment.EFFICIENCY);
         return base + (efficiencyLevel * efficiencyLevel) + 1;
     }
 
