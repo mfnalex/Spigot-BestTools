@@ -104,15 +104,15 @@ public class BestToolsHandler {
      * @param item
      * @return Durability left, or -1 if not damageable
      */
-    private int getDurability(@Nullable ItemStack item) {
-        // TODO: Delete? Its unused
-        if(item==null) return -1;
-        if(!(item.getItemMeta() instanceof Damageable)) {
-            return -1;
-        }
-        Damageable damageable = (Damageable) item.getItemMeta();
-        return item.getType().getMaxDurability() - damageable.getDamage();
-    }
+    // private int getDurability(@Nullable ItemStack item) {
+    //     // TODO: Delete? Its unused
+    //     if(item==null) return -1;
+    //     if(!(item.getItemMeta() instanceof Damageable)) {
+    //         return -1;
+    //     }
+    //     Damageable damageable = (Damageable) item.getItemMeta();
+    //     return item.getType().getMaxDurability() - damageable.getDamage();
+    // }
 
     /**
      * Gets the best tool type for a material

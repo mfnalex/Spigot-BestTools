@@ -92,6 +92,7 @@ public class RefillUtils {
 
         Map<Integer,Integer> sortedSlots = MapUtils.sortByValue(slots);
         Set<Entry<Integer,Integer>> entrySet = sortedSlots.entrySet();
+        @SuppressWarnings("unchecked")
         Entry<Integer,Integer>[] entries = entrySet.toArray(new Entry[0]);
 
         return entries[entries.length-1].getKey();

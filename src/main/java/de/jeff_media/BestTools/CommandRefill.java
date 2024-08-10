@@ -55,8 +55,8 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,  @NotNull String[] str) {
-        final String[] args = {"toggle","on","off","preventItemBreak","hotbar","hotbarOnly"};
-        final String[] trueFalse = {"true","false"};
+        // final String[] args = {"toggle","on","off","preventItemBreak","hotbar","hotbarOnly"};
+        // final String[] trueFalse = {"true","false"};
 
 
         return null;

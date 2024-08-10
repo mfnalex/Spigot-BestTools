@@ -6,8 +6,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
-
 import java.io.File;
 
 public class PlayerSetting {
@@ -76,9 +74,9 @@ public class PlayerSetting {
                 }
         }
 
-        private static <T,Z> Z getPdc(Player player, NamespacedKey key, PersistentDataType<T,Z> type, Z defaultValue) {
-                return player.getPersistentDataContainer().getOrDefault(key,type,defaultValue);
-        }
+        // private static <T,Z> Z getPdc(Player player, NamespacedKey key, PersistentDataType<T,Z> type, Z defaultValue) {
+        //         return player.getPersistentDataContainer().getOrDefault(key,type,defaultValue);
+        // }
 
         private void save() {
                 //System.out.println("Saving to PDC...");

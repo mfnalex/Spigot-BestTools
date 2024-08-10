@@ -183,6 +183,7 @@ public class Main extends JavaPlugin {
     }
 
     private void registerMetrics() {
+        @SuppressWarnings("unused")
         Metrics metrics = new Metrics(this,8187);
     }
 

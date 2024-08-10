@@ -89,17 +89,17 @@ public class SwordUtils {
             Enchantment e = entry.getKey();
             int l = entry.getValue();
             // Sharpness
-            if (e.equals(Enchantment.SHARPNESS)) {
+            if (e.equals(Enchantment.DAMAGE_ALL)) {
                 bonus += (0.5 * l + 0.5);
             }
             // Bane of Anthropods
-            else if(e.equals(Enchantment.BANE_OF_ARTHROPODS)) {
+            else if(e.equals(Enchantment.DAMAGE_ARTHROPODS)) {
                 if(isAnthropod(enemy)) {
                     bonus += (2.5 * l);
                 }
             }
             // Smite
-            else if(e.equals(Enchantment.SMITE)) {
+            else if(e.equals(Enchantment.DAMAGE_UNDEAD)) {
                 if(isUndead(enemy)) {
                     bonus += (2.5*l);
                 }

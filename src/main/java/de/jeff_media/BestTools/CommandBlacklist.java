@@ -51,7 +51,7 @@ public class CommandBlacklist implements CommandExecutor {
 
         ArrayList<Material> candidates = new ArrayList<>();
         ArrayList<String> errors = new ArrayList<>();
-        ArrayList<Material> alreadyAdded = new ArrayList<>();
+        // ArrayList<Material> alreadyAdded = new ArrayList<>();
         ArrayList<Material> successes = new ArrayList<>();
 
         String option;

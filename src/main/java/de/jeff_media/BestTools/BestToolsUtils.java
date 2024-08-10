@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -165,9 +164,9 @@ public class BestToolsUtils {
         //usedTags.add(tag);
     }
 
-    private void printMap(HashMap<Material, Tool> toolMap) {
-        toolMap.forEach((mat, tool) -> System.out.println(String.format("%0$30s -> %s", mat.name(), tool.name())));
-    }
+    // private void printMap(HashMap<Material, Tool> toolMap) {
+    //     toolMap.forEach((mat, tool) -> System.out.println(String.format("%0$30s -> %s", mat.name(), tool.name())));
+    // }
 
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
