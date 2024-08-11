@@ -2,7 +2,6 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -199,7 +198,7 @@ public class BestToolsHandler {
     boolean hasSilktouch(ItemStack item) {
         if(item==null) return false;
         if(!item.hasItemMeta()) return false;
-        return item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH);
+        return item.getItemMeta().hasEnchant(EnchantmentUtils.getSilkTouch());
     }
 
     @Nullable

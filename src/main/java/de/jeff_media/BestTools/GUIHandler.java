@@ -3,7 +3,6 @@ package de.jeff_media.BestTools;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -137,7 +136,7 @@ public class GUIHandler implements Listener {
         ItemStack is = createGUIItem(mat,String.format("BestTools: %s",getEnabledString(ps.isBestToolsEnabled())),main.messages.GUI_BESTTOOLS_LORE);
         if(ps.isBestToolsEnabled()) {
             ItemMeta meta = is.getItemMeta();
-            meta.addEnchant(Enchantment.EFFICIENCY,5,false);
+            meta.addEnchant(EnchantmentUtils.getEfficiency(),5,false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             is.setItemMeta(meta);
         }
