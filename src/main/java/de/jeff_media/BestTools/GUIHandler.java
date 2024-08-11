@@ -137,7 +137,7 @@ public class GUIHandler implements Listener {
         ItemStack is = createGUIItem(mat,String.format("BestTools: %s",getEnabledString(ps.isBestToolsEnabled())),main.messages.GUI_BESTTOOLS_LORE);
         if(ps.isBestToolsEnabled()) {
             ItemMeta meta = is.getItemMeta();
-            meta.addEnchant(Enchantment.DIG_SPEED,5,false);
+            meta.addEnchant(Enchantment.EFFICIENCY,5,false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             is.setItemMeta(meta);
         }
