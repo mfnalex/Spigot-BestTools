@@ -553,6 +553,7 @@ public class BestToolsUtils {
 
         }
 
+        // This is fairly expensive, but 2ms vs 8ms isn't a meaningful difference.
         try {
             tagToMap(Tag.MINEABLE_AXE, Tool.AXE);
             tagToMap(Tag.MINEABLE_HOE, Tool.HOE);
@@ -570,6 +571,7 @@ public class BestToolsUtils {
     }
 
     // F****** Spigot API is not "forward compatible" with new Material enums
+    // TODO: I believe we can avoid compatibility issues by using Registry<Material>
     private void initFallbackMaterials() {
 
         for (Material mat : Material.values()) {

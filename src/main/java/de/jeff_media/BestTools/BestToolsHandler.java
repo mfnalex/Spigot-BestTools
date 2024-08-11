@@ -144,6 +144,7 @@ public class BestToolsHandler {
         return false;
     }
 
+    // TODO: Implement profitsFromFortune()
 
     boolean isTool(Tool tool, ItemStack item) {
         Material m = item.getType();

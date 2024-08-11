@@ -7,7 +7,6 @@
     <groupId>de.jeff_media</groupId>
     <artifactId>BestTools</artifactId>
     <name>BestTools</name>
-    <!--<url>https://www.chestsort.de</url>-->
     <description>Automatically switches to the best tools. Most efficient Auto-Tool plugin!</description>
     <version>2.2.1</version>
     <packaging>jar</packaging>
@@ -78,14 +77,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <!-- <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>3.4.1</version>
-            </extension>
-        </extensions> -->
-
     </build>
 
     <repositories>
