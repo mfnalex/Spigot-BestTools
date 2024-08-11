@@ -12,7 +12,7 @@ public class EnchantmentUtils {
         int base = getBaseMultiplier(item);
         if(!item.hasItemMeta()) return base;
         ItemMeta meta = item.getItemMeta();
-        Enchantment efficiency = EnchantmentUtils.getEfficiency();
+        Enchantment efficiency = EnchantmentUtils.getEnchantment("efficiency");
         if(!meta.hasEnchant(efficiency)) return base;
         int efficiencyLevel = meta.getEnchantLevel(efficiency);
         return base + (efficiencyLevel * efficiencyLevel) + 1;
@@ -30,23 +30,7 @@ public class EnchantmentUtils {
         return 1;
     }
 
-    static Enchantment getEfficiency() {
-        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft("efficiency"));
-    }
-
-    static Enchantment getBaneOfArthropods() {
-        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft("bane_of_arthropods"));
-    }
-
-    static Enchantment getSmite() {
-        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft("smite"));
-    }
-
-    static Enchantment getSharpness() {
-        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft("sharpness"));
-    }
-
-    static Enchantment getSilkTouch() {
-        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft("silk_touch"));
+    static Enchantment getEnchantment(String enchantmentKey) {
+        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft(enchantmentKey));
     }
 }

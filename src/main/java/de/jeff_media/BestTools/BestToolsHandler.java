@@ -199,7 +199,7 @@ public class BestToolsHandler {
     boolean hasSilktouch(ItemStack item) {
         if(item==null) return false;
         if(!item.hasItemMeta()) return false;
-        return item.getItemMeta().hasEnchant(EnchantmentUtils.getSilkTouch());
+        return item.getItemMeta().hasEnchant(EnchantmentUtils.getEnchantment("silk_touch"));
     }
 
     @Nullable
