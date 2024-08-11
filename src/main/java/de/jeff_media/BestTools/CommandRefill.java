@@ -1,5 +1,6 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 public class CommandRefill implements CommandExecutor, TabCompleter {
 
@@ -26,7 +26,7 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             if(!sender.hasPermission("besttools.reload")) {
-                sender.sendMessage(Objects.requireNonNull(command.getPermissionMessage()));
+                sender.sendMessage(ChatColor.YELLOW + main.getName() + ": you don't have permission to use this command.");
                 return true;
             }
             CommandReload.reload(sender,command,main);
@@ -55,8 +55,8 @@ public class CommandRefill implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s,  @NotNull String[] str) {
-        final String[] args = {"toggle","on","off","preventItemBreak","hotbar","hotbarOnly"};
-        final String[] trueFalse = {"true","false"};
+        // final String[] args = {"toggle","on","off","preventItemBreak","hotbar","hotbarOnly"};
+        // final String[] trueFalse = {"true","false"};
 
 
         return null;

@@ -2,7 +2,6 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -52,6 +51,7 @@ public class SwordUtils {
         return base + getBonus(is,enemy);
     }
 
+    @SuppressWarnings("incomplete-switch")
     static double getBaseDamage(Material mat) {
         switch (mat) {
             case IRON_AXE:
@@ -89,17 +89,17 @@ public class SwordUtils {
             Enchantment e = entry.getKey();
             int l = entry.getValue();
             // Sharpness
-            if (e.equals(Enchantment.DAMAGE_ALL)) {
+            if (e.equals(EnchantmentUtils.getEnchantment("sharpness"))) {
                 bonus += (0.5 * l + 0.5);
             }
             // Bane of Anthropods
-            else if(e.equals(Enchantment.DAMAGE_ARTHROPODS)) {
+            else if(e.equals(EnchantmentUtils.getEnchantment("bane_of_arthropods"))) {
                 if(isAnthropod(enemy)) {
                     bonus += (2.5 * l);
                 }
             }
             // Smite
-            else if(e.equals(Enchantment.DAMAGE_UNDEAD)) {
+            else if(e.equals(EnchantmentUtils.getEnchantment("smite"))) {
                 if(isUndead(enemy)) {
                     bonus += (2.5*l);
                 }

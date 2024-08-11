@@ -2,6 +2,7 @@ package de.jeff_media.BestTools;
 
 import de.jeff_media.BestTools.BestToolsHandler.Tool;
 import de.jeff_media.BestTools.tags.v1_17;
+
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Objects;
 public class BestToolsUtils {
 
     final String[] wood = {"BIRCH", "ACACIA", "OAK", "DARK_OAK", "SPRUCE", "JUNGLE"}; // Crimson and Warped stems are not needed, this is only for old versions
-    final String[] weapons = {"BOW", "CROSSBOW", "TRIDENT", "NETHERITE_SWORD", "DIAMOND_SWORD", "GOLDEN_SWORD", "IRON_SWORD", "STONE_SWORD", "WOODEN_SWORD"};
+    final String[] weapons = {"BOW", "CROSSBOW", "TRIDENT", "NETHERITE_SWORD", "DIAMOND_SWORD", "GOLDEN_SWORD", "IRON_SWORD", "STONE_SWORD", "WOODEN_SWORD", "MACE"};
     final String[] instaBreakableByHand = {"COMPARATOR", "REPEATER", "REDSTONE_WIRE", "REDSTONE_TORCH", "REDSTONE_WALL_TORCH", "TORCH", "SOUL_TORCH", "WALL_TORCH", "SOUL_WALL_TORCH",
             "SCAFFOLDING", "SLIME_BLOCK", "HONEY_BLOCK", "TNT", "TRIPWIRE", "TRIPWIRE_HOOK", "GRASS", "SUGAR_CANE", "LILY_PAD",
             "OAK_SAPLING", "SPRUCE_SAPLING", "BIRCH_SAPLING", "JUNGLE_SAPLING", "ACACIA_SAPLING", "DARK_OAK_SAPLING",
@@ -115,7 +115,6 @@ public class BestToolsUtils {
             addToMap(s, main.toolHandler.swords);
         }
 
-
         main.toolHandler.allTools.addAll(Arrays.asList(defaultMats));
         for (String s : netheriteTools) {
             if (Material.getMaterial(s) != null) {
@@ -123,14 +122,7 @@ public class BestToolsUtils {
             }
         }
 
-        // 1.17+
-        try {
-            for (Material mat : v1_17.getPickaxeMaterials()) {
-                addToMap(mat, Tool.PICKAXE);
-            }
-        } catch (Throwable t) {
-            // 1.17+
-        }
+        this.initMap();
 
         //uToolMap = Map.copyOf(main.toolHandler.toolMap); // Java 10+ only
     }
@@ -165,9 +157,9 @@ public class BestToolsUtils {
         //usedTags.add(tag);
     }
 
-    private void printMap(HashMap<Material, Tool> toolMap) {
-        toolMap.forEach((mat, tool) -> System.out.println(String.format("%0$30s -> %s", mat.name(), tool.name())));
-    }
+    // private void printMap(HashMap<Material, Tool> toolMap) {
+    //     toolMap.forEach((mat, tool) -> System.out.println(String.format("%0$30s -> %s", mat.name(), tool.name())));
+    // }
 
     private void addToMap(@NotNull String matName, @NotNull Tool tool) {
         Material mat = Material.getMaterial(matName);
@@ -339,7 +331,6 @@ public class BestToolsUtils {
         addToMap("ANDESITE", Tool.PICKAXE);
         addToMap("BAMBOO", Tool.AXE);
         addToMap("BAMBOO_SAPLING", Tool.AXE);
-        addToMap("BASALT", Tool.PICKAXE);
         addToMap("BIRCH_BUTTON", Tool.AXE);
         addToMap("BIRCH_FENCE", Tool.AXE);
         addToMap("BIRCH_FENCE_GATE", Tool.AXE);
@@ -538,7 +529,6 @@ public class BestToolsUtils {
         // 1.17
         try {
             for (Material mat : Material.values()) {
-
                 if (mat.name().contains("AMETHYST")) {
                     addToMap(mat.name(), Tool.PICKAXE);
                 }
@@ -552,10 +542,24 @@ public class BestToolsUtils {
                     addToMap(mat.name(), Tool.PICKAXE);
                 }
             }
+
+            for (Material mat : v1_17.getPickaxeMaterials()) {
+                addToMap(mat, Tool.PICKAXE);
+            }
+
             addToMap(Material.GLOW_LICHEN, Tool.SHEARS);
             addToMap(Material.CALCITE, Tool.PICKAXE);
         } catch (Throwable ignored) {
 
+        }
+
+        // This is fairly expensive, but 2ms vs 8ms isn't a meaningful difference.
+        try {
+            tagToMap(Tag.MINEABLE_AXE, Tool.AXE);
+            tagToMap(Tag.MINEABLE_HOE, Tool.HOE);
+            tagToMap(Tag.MINEABLE_PICKAXE, Tool.PICKAXE);
+            tagToMap(Tag.MINEABLE_SHOVEL, Tool.SHOVEL);
+        } catch (NoSuchFieldError | NoClassDefFoundError ignored) {
         }
 
 
@@ -567,6 +571,7 @@ public class BestToolsUtils {
     }
 
     // F****** Spigot API is not "forward compatible" with new Material enums
+    // TODO: I believe we can avoid compatibility issues by using Registry<Material>
     private void initFallbackMaterials() {
 
         for (Material mat : Material.values()) {

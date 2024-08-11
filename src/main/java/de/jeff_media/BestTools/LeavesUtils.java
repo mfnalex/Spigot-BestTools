@@ -1,7 +1,6 @@
 package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class LeavesUtils {

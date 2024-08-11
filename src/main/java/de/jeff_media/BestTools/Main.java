@@ -1,21 +1,19 @@
 package de.jeff_media.BestTools;
 
 import de.jeff_media.BestTools.placeholders.BestToolsPlaceholders;
-import de.jeff_media.updatechecker.UpdateChecker;
-import de.jeff_media.updatechecker.UserAgentBuilder;
-import org.apache.commons.lang.math.NumberUtils;
+
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -50,6 +48,7 @@ public class Main extends JavaPlugin {
     CommandBlacklist commandBlacklist;
     Messages messages;
     GUIHandler guiHandler;
+    UpdateChecker updateChecker;
 
     boolean debug=false;
     boolean wtfdebug=false;
@@ -121,7 +120,7 @@ public class Main extends JavaPlugin {
         playerdataFolder.mkdir();
 
         if(reload) {
-            UpdateChecker.getInstance().stop();
+            updateChecker.stop();
             HandlerList.unregisterAll(this);
             reloadConfig();
 
@@ -135,10 +134,11 @@ public class Main extends JavaPlugin {
 
         loadDefaultValues();
 
-        UpdateChecker.init(this,"http://api.jeff-media.de/besttools/latest-version.txt").setDownloadLink("https://www.spigotmc.org/resources/besttools.81490/")
-                .setChangelogLink("https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md")
-                .setDonationLink("https://www.chestsort.de/donate")
-                .suppressUpToDateMessage(true).setUserAgent(UserAgentBuilder.getDefaultUserAgent());
+        updateChecker = new UpdateChecker(this, UpdateCheckSource.SPIGOT, "81490")
+            //.setDownloadLink("https://www.spigotmc.org/resources/besttools.81490/")
+            //.setChangelogLink("https://github.com/JEFF-Media-GbR/Spigot-BestTools/blob/master/CHANGELOG.md")
+            .setDonationLink("https://www.chestsort.de/donate")
+            .suppressUpToDateMessage(true);
         toolHandler = new BestToolsHandler(this);
         toolUtils = new BestToolsUtils(this);
         refillListener = new RefillListener(this);
@@ -155,8 +155,6 @@ public class Main extends JavaPlugin {
         guiHandler = new GUIHandler(this);
 
         meter = new PerformanceMeter(this);
-
-        toolUtils.initMap();
 
         getServer().getPluginManager().registerEvents(refillListener,this);
         getServer().getPluginManager().registerEvents(bestToolsListener,this);
@@ -177,15 +175,16 @@ public class Main extends JavaPlugin {
         registerMetrics();
 
         if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-            UpdateChecker.getInstance().checkEveryXHours(getConfig().getInt("check-interval")).checkNow();
+            updateChecker.checkEveryXHours(getConfig().getInt("check-interval")).checkNow();
         } // When set to on-startup, we check right now (delay 0)
         else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-            UpdateChecker.getInstance().checkNow();
+            updateChecker.checkNow();
         }
 
     }
 
     private void registerMetrics() {
+        @SuppressWarnings("unused")
         Metrics metrics = new Metrics(this,8187);
     }
 
@@ -224,11 +223,11 @@ public class Main extends JavaPlugin {
 
     // Returns 16 for 1.16, etc.
     static int getMcVersion() {
-        Pattern p = Pattern.compile("^1\\.(\\d*)\\.");
-        Matcher m = p.matcher((Bukkit.getBukkitVersion()));
+        Pattern p = Pattern.compile("^1\\.(\\d*)");
+        Matcher m = p.matcher((Bukkit.getVersion()));
         int version = -1;
         while(m.find()) {
-            if(NumberUtils.isNumber(m.group(1)))
+            if(NumberUtils.isCreatable(m.group(1)))
                 version = Integer.parseInt(m.group(1));
         }
         return version;
