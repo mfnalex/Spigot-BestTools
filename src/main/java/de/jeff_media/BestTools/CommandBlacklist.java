@@ -4,15 +4,11 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +51,7 @@ public class CommandBlacklist implements CommandExecutor {
 
         ArrayList<Material> candidates = new ArrayList<>();
         ArrayList<String> errors = new ArrayList<>();
-        ArrayList<Material> alreadyAdded = new ArrayList<>();
+        // ArrayList<Material> alreadyAdded = new ArrayList<>();
         ArrayList<Material> successes = new ArrayList<>();
 
         String option;

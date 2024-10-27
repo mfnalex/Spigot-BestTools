@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.util.Objects;
 
 public class CommandDebug {
 
@@ -12,7 +11,7 @@ public class CommandDebug {
 
 
         if (!sender.hasPermission("besttools.debug")) {
-            sender.sendMessage(Objects.requireNonNull(command.getPermissionMessage()));
+            sender.sendMessage(ChatColor.YELLOW + main.getName() + ": you don't have permission to use this command.");
             return;
         }
         if(arg.equalsIgnoreCase("debug")) {

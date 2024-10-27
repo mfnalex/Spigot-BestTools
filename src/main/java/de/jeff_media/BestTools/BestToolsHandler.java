@@ -2,7 +2,6 @@ package de.jeff_media.BestTools;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -105,15 +103,15 @@ public class BestToolsHandler {
      * @param item
      * @return Durability left, or -1 if not damageable
      */
-    private int getDurability(@Nullable ItemStack item) {
-        // TODO: Delete? Its unused
-        if(item==null) return -1;
-        if(!(item.getItemMeta() instanceof Damageable)) {
-            return -1;
-        }
-        Damageable damageable = (Damageable) item.getItemMeta();
-        return item.getType().getMaxDurability() - damageable.getDamage();
-    }
+    // private int getDurability(@Nullable ItemStack item) {
+    //     // TODO: Delete? Its unused
+    //     if(item==null) return -1;
+    //     if(!(item.getItemMeta() instanceof Damageable)) {
+    //         return -1;
+    //     }
+    //     Damageable damageable = (Damageable) item.getItemMeta();
+    //     return item.getType().getMaxDurability() - damageable.getDamage();
+    // }
 
     /**
      * Gets the best tool type for a material
@@ -130,6 +128,7 @@ public class BestToolsHandler {
 
     // TODO: Optimize all of this by caching valid Materials instead of doing String checks everytime
 
+    @SuppressWarnings("incomplete-switch")
     boolean profitsFromSilkTouch(Material mat) {
         String name = mat.name();
         switch(mat) {
@@ -145,6 +144,7 @@ public class BestToolsHandler {
         return false;
     }
 
+    // TODO: Implement profitsFromFortune()
 
     boolean isTool(Tool tool, ItemStack item) {
         Material m = item.getType();
@@ -199,7 +199,7 @@ public class BestToolsHandler {
     boolean hasSilktouch(ItemStack item) {
         if(item==null) return false;
         if(!item.hasItemMeta()) return false;
-        return item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH);
+        return item.getItemMeta().hasEnchant(EnchantmentUtils.getEnchantment("silk_touch"));
     }
 
     @Nullable

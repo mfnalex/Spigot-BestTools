@@ -1,5 +1,7 @@
 package de.jeff_media.BestTools;
 
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -10,8 +12,9 @@ public class EnchantmentUtils {
         int base = getBaseMultiplier(item);
         if(!item.hasItemMeta()) return base;
         ItemMeta meta = item.getItemMeta();
-        if(!meta.hasEnchant(Enchantment.DIG_SPEED)) return base;
-        int efficiencyLevel = meta.getEnchantLevel(Enchantment.DIG_SPEED);
+        Enchantment efficiency = EnchantmentUtils.getEnchantment("efficiency");
+        if(!meta.hasEnchant(efficiency)) return base;
+        int efficiencyLevel = meta.getEnchantLevel(efficiency);
         return base + (efficiencyLevel * efficiencyLevel) + 1;
     }
 
@@ -25,5 +28,9 @@ public class EnchantmentUtils {
         if(n.startsWith("WOOD")) return 2;
         if(n.startsWith("GOLD")) return 12;
         return 1;
+    }
+
+    static Enchantment getEnchantment(String enchantmentKey) {
+        return Registry.ENCHANTMENT.get(NamespacedKey.minecraft(enchantmentKey));
     }
 }

@@ -9,13 +9,13 @@ public class v1_17 {
 
     public static Collection<Material> getPickaxeMaterials() {
         //org.bukkit.Tag
-        Tag<Material> [] tags = new Tag[]{
+        List<Tag<Material>> tags = Arrays.asList(
                 Tag.STONE_BRICKS, Tag.STONE_PRESSURE_PLATES,
                 Tag.BASE_STONE_NETHER, Tag.BASE_STONE_OVERWORLD,
                 Tag.REDSTONE_ORES, Tag.COAL_ORES, Tag.COPPER_ORES,
                 Tag.DIAMOND_ORES, Tag.EMERALD_ORES, Tag.GOLD_ORES,
                 Tag.IRON_ORES, Tag.LAPIS_ORES
-        };
+        );
 
         Set<Material> list = new HashSet<>();
 
