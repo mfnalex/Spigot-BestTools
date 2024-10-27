@@ -338,7 +338,6 @@ public class BestToolsUtils {
         addToMap("ANCIENT_DEBRIS", Tool.PICKAXE);
         addToMap("ANDESITE", Tool.PICKAXE);
         addToMap("BAMBOO", Tool.AXE);
-        addToMap("BAMBOO_SAPLING", Tool.AXE);
         addToMap("BASALT", Tool.PICKAXE);
         addToMap("BIRCH_BUTTON", Tool.AXE);
         addToMap("BIRCH_FENCE", Tool.AXE);
