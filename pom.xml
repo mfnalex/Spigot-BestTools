@@ -8,7 +8,7 @@
     <artifactId>BestTools</artifactId>
     <name>BestTools</name>
     <description>Automatically switches to the best tools. Most efficient Auto-Tool plugin!</description>
-    <version>2.2.1</version>
+    <version>2.3.0</version>
     <packaging>jar</packaging>
 
     <properties>
